@@ -1,11 +1,10 @@
-"use client"
-
+import Layout from "@/components/Layout";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div>
+    <Layout>
       <h1>Map Meal Page</h1>
       <p>
         오늘의 추천 요리
@@ -36,6 +35,6 @@ export default function Home() {
           <Link href={"/users/login"}>로그인 페이지</Link>
         </li>
       </ul>
-    </div>
+    </Layout>
   );
 }
