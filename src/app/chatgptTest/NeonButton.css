@@ -1,0 +1,72 @@
+/* NeonButton.css */
+.neon-button {
+  position: relative;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #fff;
+  padding: 10px 20px;
+  overflow: hidden;
+}
+
+.neon-text {
+  position: relative;
+  z-index: 1;
+}
+
+.neon-border,
+.neon-spot {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.neon-border::before,
+.neon-spot::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #f06, #9f6);
+  opacity: 0.8;
+  filter: blur(10px);
+}
+
+.neon-border::before {
+  top: 0;
+  left: -150%;
+  transform: rotate(-45deg);
+  animation: neon-border-animation 2s linear infinite;
+}
+
+.neon-spot::before {
+  top: -150%;
+  left: 0;
+  animation: neon-spot-animation 2s linear infinite;
+}
+
+@keyframes neon-border-animation {
+  0% {
+    left: -150%;
+  }
+  50% {
+    left: 150%;
+  }
+  100% {
+    left: -150%;
+  }
+}
+
+@keyframes neon-spot-animation {
+  0% {
+    top: -150%;
+  }
+  50% {
+    top: 150%;
+  }
+  100% {
+    top: -150%;
+  }
+}
