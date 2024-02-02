@@ -1,5 +1,7 @@
+"use client";
+
 import Layout from "@/components/Layout";
-import Image from "next/image";
+import Openai from "@/components/openai/Openai";
 import Link from "next/link";
 
 export default function Home() {
@@ -9,9 +11,10 @@ export default function Home() {
       <p>
         오늘의 추천 요리
       </p>
-      <p>
+      <div>
         레시피 요청 input
-      </p>
+        <Openai />
+      </div>
       <ul>
         <li>
           <Link href={"/recipe"}>레시피 목록</Link>
