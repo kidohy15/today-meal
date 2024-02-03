@@ -53,7 +53,7 @@ table {
 
 /* 커스텀 */
 .navbar {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
   align-items: center;
   position: fixed;
@@ -61,33 +61,43 @@ table {
   top: 0;
   height: 60px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-  background-color: bisque;
+  background-color: bisque; */
+
+  @apply flex justify-between items-center fixed w-full h-[60px] top-0 shadow-sm bg-slate-300
 }
 
 .navbar__logo {
-  color:blue;
+  /* color:blue;
   font-size: 22px;
   font-weight: 700;
   cursor: pointer;
-  padding: 0px 22px
+  padding: 0px 22px */
+
+  @apply text-blue-800 text-lg font-semibold cursor-pointer px-[22px] py-0
 }
 
 .navbar__list {
-  display: flex;
+  /* display: flex;
   cursor: pointer;
   padding: 0px 22px;
   gap: 12px;
-  align-items: center;
+  align-items: center; */
+
+  @apply flex cursor-pointer py-0 px-[22px] items-center
 }
 
 .navbar__list__item {
-
+  @apply cursor-pointer
 }
 
 .navbar__list__item:hover {
-  color: aqua;
+  /* color: aqua; */
+
+  @apply text-teal-200
 }
 
 .layout{
   padding-top: 72px;
+
+  @apply pt-[72px]
 }

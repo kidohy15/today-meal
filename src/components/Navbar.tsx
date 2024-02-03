@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <>
       <div className="navbar">
-        <div className="navbar__logo">로고</div>
+        <Link href={"/"} className="navbar__logo">로고</Link>
         <div className="navbar__list">
           <Link href={"/recipe"} className="navbar__list__item">
             레시피 목록

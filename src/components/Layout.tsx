@@ -8,7 +8,6 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className='layout'>
-      <Navbar />
       {children}
     </div>
   )
