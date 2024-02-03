@@ -39,7 +39,7 @@ export default function Chatgpt() {
     <div>
       <div>
         <div>
-          <div>촘</div>
+          <div>??</div>
           <p>111</p>
         </div>
         <div>

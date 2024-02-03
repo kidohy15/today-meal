@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import Providers from "./utils/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Layout>
-          <Navbar />
-          {children}
-        </Layout>
+        <Providers>
+          <Layout>
+            <Navbar />
+            {children}
+          </Layout>
+        </Providers>
       </body>
     </html>
   );

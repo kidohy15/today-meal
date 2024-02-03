@@ -83,7 +83,7 @@ table {
   gap: 12px;
   align-items: center; */
 
-  @apply flex cursor-pointer py-0 px-[22px] items-center
+  @apply flex cursor-pointer py-0 px-[22px] gap-x-[12px] items-center
 }
 
 .navbar__list__item {
@@ -97,7 +97,7 @@ table {
 }
 
 .layout{
-  padding-top: 72px;
+  /* padding-top: 72px; */
 
   @apply pt-[72px]
 }

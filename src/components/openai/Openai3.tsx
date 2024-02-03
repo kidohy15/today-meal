@@ -4,7 +4,7 @@ import axios from "axios";
 import OpenAI from "openai";
 import React, { useState } from "react";
 
-export default function Openai() {
+export default function Openai111() {
   const [userInput, setUserInput] = useState("");
   const [chatHistory, setChatHistory] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function Openai() {
     <div className="mx-2">
       <div className="mx-2">
         <div className="mx-2">
-          <div>촘</div>
+          <div>촘1</div>
         </div>
         <div className="mx-2">
           {chatHistory.map((message: any, index: any) => (

@@ -1,13 +1,12 @@
 "use client";
 
 import Layout from "@/components/Layout";
-import Openai from "@/components/openai/Openai3";
+import Openai from "@/components/openai/Openai";
 import Link from "next/link";
+import { QueryClient } from "react-query";
 
+const queryClient = new QueryClient();
 export default function Home() {
-  const fetchData: any = getData(); 
-  // console.log("fetchData", fetchData);
-
   return (
     <div className="w-[100%] h-[100%]">
       <h1>Map Meal Page</h1>
@@ -45,24 +44,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
-
-
-export async function getData() {
-  // fetch 로 데이터 가져오는 방법
-  // const stores = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_URL}/api/stores`
-  // ).then((res) => res.json());
-
-  // axios 로 데이터 가져오는 방법
-  const fetchData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/fetch`, {
-      cache: "no-store",
-    }
-  );
-
-  return {
-    props: { fetchData: fetchData },
-    // revalidate: 60 * 60,
-  };
 }
