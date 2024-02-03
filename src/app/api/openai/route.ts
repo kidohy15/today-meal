@@ -7,14 +7,17 @@ const app = express();
 app.use(bodyParser.json());
 
 // export default async function handler(req: any, res: any) {
-  // app.post("/api/openai" , async (req: any, res: any) => {
-  export default async function (req: any, res: any) {
+// app.post("/api/openai" , async (req: any, res: any) => {
+export async function GET(req: any, res: any) {
   const openai = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   });
 
   console.log("req", req);
-  console.log("process.env.NEXT_PUBLIC_OPENAI_API_KEY", process.env.NEXT_PUBLIC_OPENAI_API_KEY);
+  console.log(
+    "process.env.NEXT_PUBLIC_OPENAI_API_KEY",
+    process.env.NEXT_PUBLIC_OPENAI_API_KEY
+  );
 
   const userInput = req.body.userInput; // Example: Assuming the user input is sent in the request body
   const chatHistory = req.body.chatHistory;
