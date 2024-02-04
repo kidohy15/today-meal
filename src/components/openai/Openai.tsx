@@ -9,10 +9,23 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true, // 브라우저에서 사용 허용
 });
 
-export default function Chatgpt() {
-  const [userInput, setUserInput] = useState<any>("");
+export default function Openai() {
+  const [userInput, setUserInput] = useState<any>();
   const [chatHistory, setChatHistory] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<any>(false);
+
+  const recipeText = `
+    음식명:
+
+    재료:
+
+    과정:
+    
+    주의사항:
+
+    1. 답변할 때 상단의 형식으로 알려주세요.
+    2. ${userInput} 의 레시피 혹은 ${userInput} 를 이용한 레시피를 알려주세요
+  `;
 
   const handleUserInput = async () => {
     setIsLoading(true);
@@ -22,14 +35,16 @@ export default function Chatgpt() {
     ]);
 
     const chatCompletion = await openai.chat.completions.create({
-      messages: [...chatHistory, { role: "assistant", content: userInput }],
+      // messages: [{ role: "assistant", content: userInput }],
+      messages: [{ role: "assistant", content: recipeText }],
       model: "gpt-3.5-turbo",
     });
 
     setChatHistory((prevChat: any) => [
-      ...prevChat,
       { role: "assistant", content: chatCompletion.choices[0].message.content },
     ]);
+
+    console.log(chatCompletion.choices[0].message.content);
 
     setUserInput("");
     setIsLoading(false);
@@ -47,11 +62,11 @@ export default function Chatgpt() {
             <div
               key={index}
               className={`${
-                message.role === "user" ? "text-left" : "text-right"
+                message.role === "user" ? "text-left" : "text-left"
               } mb-2`}
             >
               <div>{message.role === "user" ? "H" : "A"}</div>
-              <div>{message.content}</div>
+              <div className="whitespace-break-spaces">{message.content}</div>
             </div>
           ))}
         </div>
@@ -63,7 +78,11 @@ export default function Chatgpt() {
             onChange={(e) => setUserInput(e.target.value)}
           />
           {isLoading ? (
-            <div>loading</div>
+            <div className="whitespace-break-spaces">
+              loading 레시피를 작성중입니다.
+              <br />
+              잠시만 기다려주세요.
+            </div>
           ) : (
             <button onClick={handleUserInput}>ask</button>
           )}
