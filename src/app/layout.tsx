@@ -5,7 +5,7 @@ import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import Providers from "./utils/provider";
+import Providers from "./utils/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
