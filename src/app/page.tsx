@@ -3,15 +3,22 @@
 import Layout from "@/components/Layout";
 import Openai from "@/components/openai/Openai";
 import Link from "next/link";
-import { QueryClient } from "react-query";
+import { useEffect } from "react";
+// import { QueryClient } from "react-query";
 
-const queryClient = new QueryClient();
+
 export default function Home() {
+  // const queryClient = new QueryClient();
+  useEffect(() => {
+    console.log("start");
+  }, []);
+
   return (
-    <div className="w-[100%] h-[100%]">
+    <div className="w-[100%] h-[100%] ">
       <h1>Map Meal Page</h1>
-      <div className="h-[300px] bg-slate-500">오늘의 추천 요리</div>
-      <div className="flex w-[100%] h-[520px] bg-zinc-600">
+      <div className="h-[300px] bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover">오늘의 추천 요리</div>
+      <div className="flex w-full h-[520px] bg-opacity-10 bg-[url('/images/MYH20180715003800038.jpg')] bg-center bg-cover bg-no-repeat">
+        
         레시피 요청 input
         <Openai />
       </div>
