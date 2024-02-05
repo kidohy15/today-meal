@@ -15,7 +15,7 @@ const RecipeListPage = () => {
     <div className="px-4 md:max-w-4xl mx-auto py-8">
       <ul role="list" className="divide-y devide-gray-100">
         {recipes?.data?.map((recipe:any, index:any) => (
-          <li className="flex justify-between gap-x-6 py-5" key={index}>
+          <li className="flex justify-between gap-x-6 h-[160px] py-5" key={index}>
             <div className="flex gap-x-4">
               <div>이미지 자리</div>
               <div>
