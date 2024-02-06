@@ -5,58 +5,26 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // 레시피 목록 조회
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-  const fetchData = "test 중입니다.";
-  const fetchData2 = req;
+export async function GET(req: Request) {
+  // const data = await req.json()
 
-  console.log("fetchData", fetchData);
-  console.log("fetchData2", fetchData2);
+  const data = await prisma.recipe.findMany({
+    orderBy: { id: "desc" },
+  });
 
-  const recipeData = [
-    {
-      title: "title1",
-      content: "content1",
-      writer: "writer1",
-      createdAt: "createdAt1",
-    },
-    {
-      title: "title",
-      content: "content",
-      writer: "writer",
-      createdAt: "createdAt",
-    },
-    {
-      title: "title",
-      content: "content",
-      writer: "writer",
-      createdAt: "createdAt",
-    },
-    {
-      title: "title",
-      content: "content",
-      writer: "writer",
-      createdAt: "createdAt",
-    },
-    {
-      title: "title",
-      content: "content",
-      writer: "writer",
-      createdAt: "createdAt",
-    },
-  ];
+  console.log("server data:", data);
+
   // res.status(200).json(fetchData);
-
-  return NextResponse.json(recipeData);
+  return Response.json(data);
 }
 
 // 레시피 등록
 export async function POST(req: Request) {
   // 레시피 등록
   try {
-    // 레시피 등록
     // const data = req.body;
 
-    const data = await req.json()
+    const data = await req.json();
     console.log("res", data);
 
     const result = await prisma.recipe.create({
@@ -64,7 +32,7 @@ export async function POST(req: Request) {
     });
 
     // return res.status(200).json(result);
-    return Response.json({ result })
+    return Response.json({ result });
   } catch (error) {
     console.error("Error creating recipe:", error);
     // return data.status(500).json({ error: "Internal Server Error" });

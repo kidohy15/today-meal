@@ -36,7 +36,7 @@ const RecipeNewPage = () => {
           try {
             const result = await axios.post("/api/recipe", data);
             console.log("result", result);
-            
+
             if (result.status === 200) {
               // 레시피 등록 성공
               toast.success("레시피를 등록했습니다.");
@@ -46,7 +46,9 @@ const RecipeNewPage = () => {
             }
           } catch (error) {
             console.log(error);
-            toast.error("레시피 생성 중 문제가 발생했습니다. 다시 시도해주세요.")
+            toast.error(
+              "레시피 생성 중 문제가 발생했습니다. 다시 시도해주세요."
+            );
           }
         })}
       >
