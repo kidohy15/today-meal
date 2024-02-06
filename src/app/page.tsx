@@ -30,12 +30,6 @@ export default function Home() {
           <Link href={"/recipe/new"}>레시피 등록</Link>
         </li>
         <li>
-          <Link href={"/recipe/1"}>레시피 상세</Link>
-        </li>
-        <li>
-          <Link href={"/recipe/1/edit"}>레시피 수정</Link>
-        </li>
-        <li>
           <Link href={"/users/likes"}>레시피 찜 페이지</Link>
         </li>
         <li>
