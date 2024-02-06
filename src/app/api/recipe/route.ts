@@ -50,21 +50,23 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 }
 
 // 레시피 등록
-export async function POST(req: NextApiRequest, res: NextApiResponse<any>) {
+export async function POST(req: Request) {
   // 레시피 등록
   try {
     // 레시피 등록
-    const data = req.body;
+    // const data = req.body;
 
-    console.log("data", data);
+    const data = await req.json()
+    console.log("res", data);
 
     const result = await prisma.recipe.create({
       data: { ...data },
     });
 
-    return res.status(200).json(result);
+    // return res.status(200).json(result);
+    return Response.json({ result })
   } catch (error) {
     console.error("Error creating recipe:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    // return data.status(500).json({ error: "Internal Server Error" });
   }
 }
