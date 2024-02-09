@@ -16,7 +16,7 @@ const EditPage = ({ params }: EditPageProps) => {
   const id = params.id;
 
   const recipeData = async () => {
-    const { data: data } = await axios.put(`/api/recipe?id=${id}`);
+    const { data: data } = await axios.get(`/api/recipe?id=${id}`);
     return data;
   };
 
@@ -31,17 +31,32 @@ const EditPage = ({ params }: EditPageProps) => {
     enabled: !!id,
   });
 
-  console.log("edit recipe", recipe);
-
-  if (isSuccess) {
-    (recipe: any) => {
+  useEffect(() => {
+    if (isSuccess && recipe) {
+      setValue("id", recipe.id);
       setValue("writer", recipe.writer);
       setValue("title", recipe.title);
       setValue("createdAt", recipe.createdAt);
       setValue("ingredients", recipe.ingredients);
       setValue("contents", recipe.contents);
-    };
-  }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, recipe]);
+
+  console.log("edit recipe", recipe);
+  console.log("isSuccess", isSuccess);
+
+  // if (isSuccess) {
+  //   (recipe: any) => {
+  //     console.log("recipe", recipe);
+  //     setValue("writer", recipe.writer);
+  //     setValue("title", recipe.title);
+  //     setValue("createdAt", recipe.createdAt);
+  //     setValue("ingredients", recipe.ingredients);
+  //     setValue("contents", recipe.contents);
+  //   };
+  // }
 
   const {
     register,
@@ -59,7 +74,7 @@ const EditPage = ({ params }: EditPageProps) => {
           console.log(data);
 
           try {
-            const result = await axios.post("/api/recipe", data);
+            const result = await axios.put("/api/recipe", data);
             console.log("result", result);
 
             if (result.status === 200) {
@@ -152,7 +167,7 @@ const EditPage = ({ params }: EditPageProps) => {
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            등록
+            수정
           </button>
         </div>
       </form>

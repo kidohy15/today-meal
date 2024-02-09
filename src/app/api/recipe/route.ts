@@ -75,8 +75,9 @@ export async function PUT(req: Request) {
     const data = await req.json();
     // console.log("res", data);
 
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+    // const { searchParams } = new URL(req.url);
+    // const id = searchParams.get("id");
+    const id = data.id;
 
     if (id) {
       const result = await prisma.recipe.update({
