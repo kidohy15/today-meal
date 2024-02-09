@@ -1,27 +1,38 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 // import { Router, useRouter } from "next/router";
 import { useRouter } from "next/navigation";
+import SearchFilter from "@/components/SearchFilter";
 
 const RecipeListPage = () => {
   const router = useRouter();
+
+  // 검색어
+  const [searchKeyword, setSearchKeyword] = useState("");
   // useEffect(() => {
   // }, [])
 
   const recipesData = async () => {
-    return await axios.get("/api/recipe");
+    return await axios.get("/api/recipe", {
+      params: {
+        searchKeyword: searchKeyword,
+      },
+    });
   };
 
+  console.log("searchparams", searchKeyword);
+
   const { data: recipes, isLoading } = useQuery({
-    queryKey: ["recipes"],
+    queryKey: ["recipes", searchKeyword],
     queryFn: recipesData,
   }); // 데이터는 data 속성에 있다
   console.log("목록 페이지 recipes", recipes);
   return (
     <div className="px-4 md:max-w-4xl mx-auto py-8">
+      <SearchFilter setSearchKeyword={setSearchKeyword} />
       <ul role="list" className="py-2">
         {isLoading ? (
           <div>로딩중입니다.</div>
