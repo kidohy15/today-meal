@@ -19,7 +19,7 @@ const Navbar = () => {
           <Link href={"/users/mypage"} className="navbar__list__item">
             마이 페이지
           </Link>
-          <Link href={"/users/login"} className="navbar__list__item">
+          <Link href={"/api/auth/signin"} className="navbar__list__item">
             로그인 페이지
           </Link>
         </div>

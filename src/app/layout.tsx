@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import Providers from "./utils/Provider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NextProvider, { NextLayout } from "./provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,19 +19,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <Layout>
-            <Navbar />
-            {children}
-            <ToastContainer />
-          </Layout>
-        </Providers>
+        <NextProvider>
+          <NextLayout>{children}</NextLayout>
+        </NextProvider>
       </body>
     </html>
   );
