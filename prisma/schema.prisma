@@ -38,9 +38,9 @@ model Session {
 }
 
 model User {
-  id            Int    @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   email         String    @unique
-  name          String
+  name          String?
   emailVerified DateTime?
   image         String?
   accounts      Account[]

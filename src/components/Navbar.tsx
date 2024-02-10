@@ -1,11 +1,18 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
+  const { data, status } = useSession();
+  console.log("data", data);
+  console.log("status", status);
+
   return (
     <>
       <div className="navbar">
-        <Link href={"/"} className="navbar__logo">로고</Link>
+        <Link href={"/"} className="navbar__logo">
+          로고
+        </Link>
         <div className="navbar__list">
           <Link href={"/recipe"} className="navbar__list__item">
             레시피 목록
@@ -19,9 +26,15 @@ const Navbar = () => {
           <Link href={"/users/mypage"} className="navbar__list__item">
             마이 페이지
           </Link>
-          <Link href={"/api/auth/signin"} className="navbar__list__item">
-            로그인 페이지
-          </Link>
+          {status === "authenticated" ? (
+            <Link href={"/api/auth/signout"} className="navbar__list__item">
+              로그아웃
+            </Link>
+          ) : (
+            <Link href={"/api/auth/signin"} className="navbar__list__item">
+              로그인
+            </Link>
+          )}
         </div>
       </div>
     </>

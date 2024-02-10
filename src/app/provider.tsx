@@ -14,11 +14,15 @@ import { AppProps } from "next/app";
 
 interface Props {
   children?: React.ReactNode;
+  pageProps?: AppProps;
 }
 
+// const NextProvider = ({ children, pageProps }: Props) => {
 const NextProvider = ({ children }: Props) => {
+  // const { session }:any = pageProps
   return (
     <Providers>
+      {/* <SessionProvider session={session}> */}
       <SessionProvider>
         <Layout>
           {children}
