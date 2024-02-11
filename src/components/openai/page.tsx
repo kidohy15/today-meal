@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Chatgpt from "./Openai";
+import Chatgpt from "./OpenaiRecipe";
 
 const page = () => {
   return (

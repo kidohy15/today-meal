@@ -16,6 +16,12 @@ const Navbar = () => {
           로고
         </Link>
         <div className="navbar__list">
+          <Link href={"/"} className="navbar__list__item">
+            오늘의 추천 요리
+          </Link>
+          <Link href={"/"} className="navbar__list__item">
+            오늘 뭐먹지?
+          </Link>
           <Link href={"/recipe"} className="navbar__list__item">
             레시피 목록
           </Link>

@@ -3,7 +3,7 @@
 // index.js
 import { useState } from 'react';
 import { main } from '../../app/api/generate';
-import Chatgpt from './Openai';
+import Chatgpt from './OpenaiRecipe';
 
 export default function Chat() {
   const [question, setQuestion] = useState<any>('');

@@ -13,8 +13,8 @@ const MyPage = () => {
   console.log("session", session);
 
   useEffect(() => {
-    setUser(data?.user)
-  },[session])
+    setUser(data?.user);
+  }, [session]);
 
   return (
     <div>

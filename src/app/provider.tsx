@@ -24,10 +24,10 @@ const NextProvider = ({ children }: Props) => {
     <Providers>
       {/* <SessionProvider session={session}> */}
       <SessionProvider>
-        <Layout>
-          {children}
-          <ToastContainer />
-        </Layout>
+        {/* <Layout> */}
+        {children}
+        <ToastContainer />
+        {/* </Layout> */}
       </SessionProvider>
     </Providers>
   );
