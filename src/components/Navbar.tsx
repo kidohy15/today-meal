@@ -1,9 +1,11 @@
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Navbar = () => {
   const { data, status } = useSession();
+  const router = useRouter();
   console.log("data", data);
   console.log("status", status);
 
@@ -27,7 +29,13 @@ const Navbar = () => {
             마이 페이지
           </Link>
           {status === "authenticated" ? (
-            <Link href={"/api/auth/signout"} className="navbar__list__item">
+            <Link
+              href={""}
+              className="navbar__list__item"
+              onClick={() => {
+                signOut({ callbackUrl: "http://localhost:3000/" });
+              }}
+            >
               로그아웃
             </Link>
           ) : (
