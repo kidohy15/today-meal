@@ -22,6 +22,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
+  pages: {
+    // 외부 API 로그인 인증 페이지를 커스텀 페이지로 이동하게 함
+    signIn: "/users/login",
+  },
+
   callbacks: {
     session: ({ session, token }) => ({
       ...session,

@@ -6,21 +6,28 @@ import axios from "axios";
 // import { Router, useRouter } from "next/router";
 import { useRouter } from "next/navigation";
 import SearchFilter from "@/components/SearchFilter";
+import { useSession } from "next-auth/react";
 
 const RecipeListPage = () => {
   const router = useRouter();
+  // const { data, status } = useSession();
+  const [maskedUsername, setMaskedUsername] = useState("");
 
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
-  // useEffect(() => {
-  // }, [])
+
+  useEffect(() => {
+    writerId();
+  }, []);
 
   const recipesData = async () => {
-    return await axios.get("/api/recipe", {
+    const result = await axios.get("/api/recipe", {
       params: {
         searchKeyword: searchKeyword,
       },
     });
+    console.log("result", result);
+    return result;
   };
 
   console.log("searchparams", searchKeyword);
@@ -29,6 +36,29 @@ const RecipeListPage = () => {
     queryKey: ["recipes", searchKeyword],
     queryFn: recipesData,
   }); // 데이터는 data 속성에 있다
+
+  const writerId = () => {
+    const writer = recipes?.data?.writer;
+    console.log("writer", writer);
+    if (writer) {
+      const atIndex = writer.indexOf("@");
+      if (atIndex) {
+        const username = writer.slice(0, atIndex);
+        const maskedUsername =
+          username.slice(0, 3) + "*".repeat(username.length - 3);
+        console.log("maskedUsername", maskedUsername);
+        setMaskedUsername(maskedUsername);
+      } else {
+        const username = writer.slice(0, 3);
+        const maskedUsername =
+          username.slice(0, 3) + "*".repeat(username.length - 3);
+        console.log("maskedUsername", maskedUsername);
+        setMaskedUsername(maskedUsername);
+      }
+    }
+  };
+
+  console.log("목록 페이지 writerId", writerId());
   console.log("목록 페이지 recipes", recipes);
   return (
     <div className="px-4 md:max-w-4xl mx-auto py-8">
@@ -59,12 +89,13 @@ const RecipeListPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="hidden sm:flex sm:flex-col sm:items-end">
+              <div className="sm:flex sm:flex-col sm:items-end">
                 <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
                   {recipe.writer}
+                  {maskedUsername}
                 </div>
                 <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                  {recipe.createdAt}
+                  {new Date(recipe?.createdAt)?.toLocaleDateString()}
                 </div>
               </div>
             </li>

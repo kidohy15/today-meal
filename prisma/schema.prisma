@@ -56,10 +56,10 @@ model VerificationToken {
 }
 
 model Recipe {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String?
   ingredients String?
   contents    String?
   writer      String?
-  createdAt   String?
+  createdAt   DateTime @default(now())
 }

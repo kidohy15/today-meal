@@ -63,7 +63,7 @@ table {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.5);
   background-color: bisque; */
 
-  @apply flex justify-between items-center fixed w-full h-[60px] top-0 shadow-sm bg-slate-300
+  @apply flex justify-between items-center fixed w-full h-[72px] top-0 shadow-sm bg-slate-300 z-50
 }
 
 .navbar__logo {
