@@ -28,9 +28,9 @@ const Navbar = () => {
           <Link href={"/recipe/new"} className="navbar__list__item">
             레시피 등록
           </Link>
-          <Link href={"/users/likes"} className="navbar__list__item">
+          {/* <Link href={"/users/likes"} className="navbar__list__item">
             레시피 찜 페이지
-          </Link>
+          </Link> */}
           <Link href={"/users/mypage"} className="navbar__list__item">
             마이 페이지
           </Link>
