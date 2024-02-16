@@ -11,6 +11,9 @@ import Providers from "./utils/Provider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppProps } from "next/app";
+import Carousel from "@/components/Carousel";
+import SideNavbar from "@/components/SideNavbar";
+import MainSlidePage from "@/components/MainSlidePage";
 
 interface Props {
   children?: React.ReactNode;
@@ -35,9 +38,13 @@ const NextProvider = ({ children }: Props) => {
 
 export const NextLayout = ({ children }: Props) => {
   return (
+    // <div className="layout">
     <div className="layout">
       <Navbar />
-      {children}
+      <div className="inner">
+        {/* <Carousel /> */}
+        {children}
+      </div>
     </div>
   );
 };

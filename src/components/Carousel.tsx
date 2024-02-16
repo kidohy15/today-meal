@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 const IMAGE_1_URL =
-  "https://plus.unsplash.com/premium_photo-1700575181270-87f37b2ebb4f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  // "https://plus.unsplash.com/premium_photo-1700575181270-87f37b2ebb4f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  "https://mblogthumb-phinf.pstatic.net/MjAxNzAyMDlfMjMg/MDAxNDg2NjIxNjUxNTEw.zlDINyUybXuN6TMNmqPe9fSCqoJ7Zu2Lrj8hXVk1gc8g.sB7AK79hat1iG3LUztbCK-ZPPm2inTT0TPVA34ltydsg.JPEG.ottogitoday1/%EB%B0%B0%EB%84%88.jpg?type=w800";
 const IMAGE_2_URL =
-  "https://images.unsplash.com/photo-1700451761286-67c601f012d8?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  // "https://images.unsplash.com/photo-1700451761286-67c601f012d8?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  "https://s3.ap-northeast-2.amazonaws.com/event-localnaeil/FileData/Article/201711/59dcaa12-d7e0-4f2f-8b84-9290b3622978.png";
 const IMAGE_3_URL =
   "https://images.unsplash.com/photo-1577956239460-00b14ecd16d0?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
@@ -15,7 +17,7 @@ export default function Carousel() {
   console.log(activeImage);
 
   return (
-    <div>
+    <div className="bg-black">
       <div className="carousel">
         <ul className="carousel__slides">
           {/* {imageData.map((image: any, i: any) => (

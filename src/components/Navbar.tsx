@@ -13,15 +13,15 @@ const Navbar = () => {
     <>
       <div className="navbar">
         <Link href={"/"} className="navbar__logo">
-          로고
+          YummyRecipe
         </Link>
         <div className="navbar__list">
-          <Link href={"/"} className="navbar__list__item">
-            오늘 뭐먹지?
+          <Link href={"/recipe/todayMeal"} className="navbar__list__item">
+            <span className="text-pink-700">오늘 뭐먹지?</span>
           </Link>
-          <Link href={"/"} className="navbar__list__item">
+          {/* <Link href={"/"} className="navbar__list__item">
             오늘의 추천 요리
-          </Link>
+          </Link> */}
           <Link href={"/recipe"} className="navbar__list__item">
             레시피 목록
           </Link>

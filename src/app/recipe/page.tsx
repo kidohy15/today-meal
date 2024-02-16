@@ -61,47 +61,50 @@ const RecipeListPage = () => {
   console.log("목록 페이지 writerId", writerId());
   console.log("목록 페이지 recipes", recipes);
   return (
-    <div className="px-4 md:max-w-4xl mx-auto py-8">
-      <SearchFilter setSearchKeyword={setSearchKeyword} />
-      <ul role="list" className="py-2">
-        {isLoading ? (
-          <div>로딩중입니다.</div>
-        ) : (
-          recipes?.data?.map((recipe: any, index: any) => (
-            <li
-              className="flex justify-between gap-x-6 h-[160px] py-5 border border-solid border-gray-200 px-4 mb-2 cursor-pointer"
-              key={index}
-              onClick={() => router.push(`/recipe/${recipe.id}`)}
-            >
-              <div className="flex gap-x-4">
-                <div className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
-                  이미지
-                </div>
-                <div>
-                  <div className="text-3xl font-semibold leading-6 text-gray-900 py-2">
-                    {recipe.title}
+    // <div className="bg-[url('/images/19558288.jpg')]">
+    <div className="bg-[#FFFAFA]">
+      <div className="px-4 md:max-w-4xl mx-auto py-8 bg-white">
+        <SearchFilter setSearchKeyword={setSearchKeyword} />
+        <ul role="list" className="py-2">
+          {isLoading ? (
+            <div>로딩중입니다.</div>
+          ) : (
+            recipes?.data?.map((recipe: any, index: any) => (
+              <li
+                className="flex justify-between gap-x-6 h-[160px] py-5 border border-solid border-gray-200 px-4 mb-2 cursor-pointer"
+                key={index}
+                onClick={() => router.push(`/recipe/${recipe.id}`)}
+              >
+                <div className="flex gap-x-4">
+                  <div className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                    이미지
                   </div>
-                  <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
-                    {recipe.ingredients}
+                  <div>
+                    <div className="text-3xl font-semibold leading-6 text-gray-900 py-2">
+                      {recipe.title}
+                    </div>
+                    <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
+                      {recipe.ingredients}
+                    </div>
+                    <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
+                      {recipe.contents}
+                    </div>
                   </div>
-                  <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
-                    {recipe.contents}
+                </div>
+                <div className="sm:flex sm:flex-col sm:items-end">
+                  <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
+                    {recipe.writer}
+                    {maskedUsername}
+                  </div>
+                  <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
+                    {new Date(recipe?.createdAt)?.toLocaleDateString()}
                   </div>
                 </div>
-              </div>
-              <div className="sm:flex sm:flex-col sm:items-end">
-                <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                  {recipe.writer}
-                  {maskedUsername}
-                </div>
-                <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                  {new Date(recipe?.createdAt)?.toLocaleDateString()}
-                </div>
-              </div>
-            </li>
-          ))
-        )}
-      </ul>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
     </div>
   );
 };
