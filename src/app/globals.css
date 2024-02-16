@@ -104,14 +104,14 @@ table {
 .layout{
   /* padding-top: 72px; */
 
-  @apply pt-[96px] w-full h-full
+  @apply w-full h-full
 }
 
 .layout .inner {
   /* padding-top: 72px; */
   
   /* @apply w-full bg-[#e6e6e6] */
-  @apply w-full bg-[#FFF]
+  @apply w-full h-full bg-[#FFF] pt-[96px]
 } 
 
 
@@ -153,15 +153,15 @@ table {
 }
 
 #sideNavbar #nav1 {
-  top: 60px;
+  top: 100px;
 }
 
 #sideNavbar #nav2 {
-  top: 130px;
+  top: 170px;
 }
 
 #sideNavbar #nav3 {
-  top: 200px;
+  top: 240px;
 }
 
 
@@ -306,7 +306,7 @@ input:checked + .carousel__slide-container .nav label {
 
 .swiper {
   width: 100%;
-  height: 1000px;
+  height: 100%;
 }
 
 .swiper-slide {
@@ -325,4 +325,9 @@ input:checked + .carousel__slide-container .nav label {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Main page 첫번째 슬라이드 페이지의 초록색 덮개를 사다리꼴로 변경 */
+.clip-path-polygon {
+  clip-path: polygon(0% 0%, 0% 100%, 35% 100%, 25% 0%);
 }
