@@ -12,8 +12,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppProps } from "next/app";
 import Carousel from "@/components/Carousel";
-import SideNavbar from "@/components/SideNavbar";
-import MainSlidePage from "@/components/MainSlidePage";
+import SideNavbar from "@/components/mainPage/SideNavbar";
+import MainSlidePage from "@/components/mainPage/MainSlidePage";
 
 interface Props {
   children?: React.ReactNode;

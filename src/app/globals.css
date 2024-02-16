@@ -331,3 +331,7 @@ input:checked + .carousel__slide-container .nav label {
 .clip-path-polygon {
   clip-path: polygon(0% 0%, 0% 100%, 35% 100%, 25% 0%);
 }
+
+.clip-path-polygon3 {
+  clip-path: polygon(0% 20%, 0% 70%, 100% 70%, 100% 20%);
+}

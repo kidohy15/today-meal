@@ -17,6 +17,7 @@ import "swiper/css/scrollbar";
 
 // import required modules
 import { Mousewheel, Pagination } from "swiper/modules";
+import Link from "next/link";
 // import { Mousewheel, Pagination } from 'swiper';
 
 const MainSlidePage = () => {
@@ -42,9 +43,12 @@ const MainSlidePage = () => {
             <p className="inline-block w-[220px] text-center text-3xl text-white mb-10">
               오늘 뭐 먹을지 고민이신가요?
             </p>
-            <button className="bg-black p-4 h-[80px] text-xl text-white hover:bg-white hover:text-black ">
+            <Link
+              className="bg-black p-4 text-xl text-white hover:bg-white hover:text-black "
+              href={"/recipe/todayMeal"}
+            >
               레시피 추천받으러 가기!
-            </button>
+            </Link>
           </div>
         </SwiperSlide>
         <SwiperSlide>
@@ -53,18 +57,22 @@ const MainSlidePage = () => {
             {/* <div className="bg-red-100 h-full text-center leading-[350px] text-4xl"> */}
             <div className="bg-[url('/images/depositphotos_217128602-stock-photo-top-view-blue-tablecloth-left1.jpg')] h-full text-center leading-[350px] text-4xl">
               <p className="h-[240px]">더 많은 레시피를 확인하세요!</p>
-              <button className="block mt-1 w-[320px] mx-auto h-[72px] text-white bg-black text-xl hover:bg-white hover:text-black hover:text-xl">
-                레시피 등록
-              </button>
+              <Link
+                className="block mt-1 p-4 w-[320px] mx-auto text-white bg-black text-xl hover:bg-white hover:text-black hover:text-xl"
+                href={"/recipe"}
+              >
+                레시피 목록 확인
+              </Link>
             </div>
             <SecondSlidePage />
           </div>
           {/* <div className="h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1"></div> */}
         </SwiperSlide>
         <SwiperSlide>
-          <div className="h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1">
+          <div className="relative h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1">
             {/* <OpenaiCook /> */}
-            <div className="flex flex-wrap w-[1080px] w-max-[1280px] mx-auto justify-center gap-12 mt-12 p-16 bg-[#f4f4f4]">
+            <div className="absolute inset-0  w-full h-full justify-end bg-orange-500 brightness-50 opacity-75 clip-path-polygon3 z-0"></div>
+            <div className="relative flex flex-wrap w-[1080px] w-max-[1280px] mx-auto justify-center gap-12 mt-12 p-16 bg-[#f4f4f4] z-10">
               {/* <div className="bg-white w-[500px] h-[300px] rounded-md text-center	leading-[300px] "> */}
               <div className="bg-white w-[400px] h-[150px] rounded-lg text-center leading-[150px] text-2xl font-semibold">
                 <p className="whitespace-pre-wrap">
@@ -108,9 +116,12 @@ const MainSlidePage = () => {
               <p className="text-4xl font-semibold">
                 나만의 맛있는 레시피를 공유해주세요 !
               </p>
-              <button className="block mt-5 w-[320px] mx-auto h-[72px] bg-black text-xl hover:bg-white hover:text-black hover:text-xl">
+              <Link
+                className="block mt-5 p-4 w-[320px] mx-auto bg-black text-xl hover:bg-white hover:text-black hover:text-xl"
+                href={"/recipe/new"}
+              >
                 레시피 등록
-              </button>
+              </Link>
             </div>
           </div>
         </SwiperSlide>
