@@ -6,7 +6,7 @@ import OpenaiRecipe from "@/components/openai/OpenaiRecipe";
 const TodayMealPage = () => {
   return (
     <div>
-      <div className=" w-full h-full mt-10">
+      <div className=" w-full h-screen">
         <OpenaiRecipe />
       </div>
     </div>

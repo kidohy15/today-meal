@@ -3,6 +3,7 @@
 import axios from "axios";
 import OpenAI from "openai";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 // import Carousel from "../Carousel";
 
 const openai = new OpenAI({
@@ -28,9 +29,9 @@ export default function Openai() {
     주의사항:
 
     1. 답변할 때 상단의 형식으로 알려주세요.
-    2. ${ingredients} 의 레시피 혹은 ${ingredients} 를 이용한 레시피를 알려주세요.
-    3. 만약 ${ingredients} 에서 음식의 재료가 아닌 것이 하나라도 있다면 "잘못된 입력값입니다. 다시 시도해주세요!" 를 메시지로 보여주세요.
-  `;
+    2. ${ingredients} 를 이용한 요리 레시피를 알려주세요. 혹은 ${ingredients}이 이미 완성된 음식이라고 판단되면 그것을 만드는 법을 알려주세요.
+    `;
+  // 3. 만약 ${ingredients} 에서 음식이나 요리의 재료가 아닌 것이 있다면 "잘못된 입력값이거나 제공해드릴 레시피가 없습니다." 를 메시지로 보여주세요.
 
   // 입력한 재료를 배열에 추가
   const handleAddIngredient = () => {
@@ -40,6 +41,10 @@ export default function Openai() {
 
   // openai 로 재료 전송
   const handleRecipe = async () => {
+    if (ingredients.length < 2) {
+      console.log("길이: ", ingredients.length);
+      return toast.error("최소 2개 이상의 재료를 입력해주세요.");
+    }
     setIsLoading(true);
     setChatHistory((prevChat: any) => [
       ...prevChat,
@@ -72,10 +77,13 @@ export default function Openai() {
   // 360_F_461046251_3A1kgU8SSsJsuBz58nLmZUWezXjhuJJA
   // /images/19558288.jpg
   // note-4767083_1280
+  // 4fec8a1312fe2a4049f81335fabee3b8
+  // 360_F_461046251_3A1kgU8SSsJsuBz58nLmZUWezXjhuJJA
+  // depositphotos_156700964-stock-photo-light-wooden-table-top-view
   return (
-    <div className="relative flex justify-center w-full mx-auto h-full bg-[url('/images/360_F_461046251_3A1kgU8SSsJsuBz58nLmZUWezXjhuJJA.jpg')] bg-cover bg-center overflow-hidden mt-20 py-20">
+    <div className="relative flex justify-center w-full mx-auto h-full bg-[url('/images/depositphotos_156700964-stock-photo-light-wooden-table-top-view.jpg')] bg-cover bg-center overflow-hidden py-20">
       {isLoading ? (
-        <div className="whitespace-break-spaces">
+        <div className="whitespace-break-spaces h-full">
           loading 레시피를 작성중입니다.
           <br />
           잠시만 기다려주세요.
@@ -83,19 +91,14 @@ export default function Openai() {
       ) : (
         // note-4767083_1280.webp
         // urbanbrush-20190509114253808633
-        <div className="w-[1280px] relative">
+        <div className="w-[1480px] relative">
           <div className="w-[500px] absolute top-[20%] left-[32%] transform -translate-x-3/4 -translate-y-1/2 text-center">
             <p className="text-7xl font-semibold italic leading-snug text-black whitespace-pre-wrap">
               오늘의 식사가 고민이라면?
             </p>
           </div>
-          <div className=" h-[10%] my-auto absolute top-[280px]">
-            <img
-              className="w-[220px] rounded-3xl"
-              src="/images/vector-hand-drawn-rice-box-illustration_594654-485.avif"
-            />
-          </div>
-          <div className="w-[1280px] h-[920px] items-center justify-center px-10 flex">
+          <div className=" h-[10%] my-auto absolute top-[280px]"></div>
+          <div className="w-[1480px] h-[920px] items-center justify-center px-10 flex">
             {/* 슬라이더 자리 */}
 
             <div className="w-[50%] mt-[30%] mx-auto flex flex-col justify-center">
@@ -103,11 +106,11 @@ export default function Openai() {
                 <h1 className=" p-3">이곳에 재료를 입력해주세요</h1>
                 <div className="p-3">
                   <span className="">선택한 재료</span>
-                  <div className="flex ">
+                  <div className="flex flex-wrap bg-white w-[300px] mt-2">
                     {ingredients?.map((ingredients: any, index: any) => (
                       <div
                         key={index}
-                        className="p-1 m-1 bg-teal-500 rounded-md"
+                        className="p-1 m-1 bg-slate-50 rounded-md"
                       >
                         {ingredients}
                       </div>
@@ -123,7 +126,7 @@ export default function Openai() {
                     onChange={(e) => setUserInput(e.target.value)}
                   />
                   <button
-                    className="p-3 m-1"
+                    className="p-3 m-1 bg-amber-900"
                     onClick={() => handleAddIngredient()}
                   >
                     추가하기
@@ -135,15 +138,11 @@ export default function Openai() {
                   </div>
                 </div>
               </div>
-
-              <div className="flex justify-center right-0 w-[80%] h-[30%] mx-auto bg-slate-800 items-center text-slate-300">
-                {/* <Carousel /> */}
-                {/* <div className="bg-orange-500 h-[85%]">슬라이더 그림</div> */}
-                {/* <div>navigation</div> */}
+              {/* <div className="flex justify-center right-0 w-[80%] h-[30%] mx-auto bg-slate-800 items-center text-slate-300">
                 <div className="text-2xl p-4 border-white hover:bg-slate-50 hover:text-black rounded-md">
                   <button>더 많은 레시피 확인하기!</button>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* 레시피 결과가 들어 있는 div를 toggleSidebar 함수를 호출하여 열고 닫기
@@ -156,13 +155,13 @@ export default function Openai() {
             <button>레시피 결과 보기</button>
           </div> */}
 
-            {/* bg-orange-100 */}
+            {/* bg-orange-100 bg1 4fec8a1312fe2a4049f81335fabee3b8*/}
             <div className=" w-[680px] h-[920px] ml-[200px] ">
-              <div className="bg-[url('/images/bg1.jpg')] w-[680px] h-[920px] bg-center bg-contain bg-no-repeat">
+              <div className="bg-[url('/images/4fec8a1312fe2a4049f81335fabee3b82.jpg')] w-[680px] h-[920px] bg-center bg-contain bg-no-repeat">
                 {isOpen && (
                   // <div className="bg-orange-100 w-[30%] h-[80%] absolute top-[10%] right-0 z-10">
                   // bg-[url('/images/note.jpg')]
-                  <div className="m-1 px-14 py-16 h-full font-serif leading-6">
+                  <div className="m-1 px-20 py-20 h-full text-white font-serif text-2xl leading-7">
                     {chatHistory.map((message: any, index: any) => (
                       <div
                         key={index}

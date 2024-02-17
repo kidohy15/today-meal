@@ -22,7 +22,8 @@ import Link from "next/link";
 
 const MainSlidePage = () => {
   return (
-    <div className="h-[954px] relative">
+    // h-[954px]
+    <div className="h-full relative">
       <Swiper
         direction={"vertical"}
         slidesPerView={1}
@@ -34,44 +35,43 @@ const MainSlidePage = () => {
         className="mySwiper"
       >
         <SwiperSlide>
-          {/* <div className="flex items-center w-full h-full bg-[#fff]"> */}
-          <div className="h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1">
+          {/* <div className="flex items-center w-full h-full bg-[#fff]"> images2*/}
+          {/* peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif*/}
+          <div className="h-full bg-[url('/images/tapas-table.jpg')] bg-cover p-1">
             {/* <div className="flex items-center w-full h-full bg-opacity-10 bg-[url('/images/textile-2918844_1280.jpg')] bg-center bg-cover bg-no-repeat"> */}
+            <p className="mt-56 text-8xl font-bold text-lime-200">
+              Yummy Recipe
+            </p>
+            <p className="mt-10 text-4xl font-semibold text-lime-200">
+              Create an amazing dish
+              <br />
+              with the remaining ingredients in your refrigerator.
+              <br />
+              The best food, the best day, the best life.
+              <br />
+              Enjoy a fantastic mealtime.
+            </p>
           </div>
-          <div className="absolute inset-0 w-full h-full justify-end bg-green-300 brightness-50 opacity-75 z-10 clip-path-polygon"></div>
+          <div className="absolute inset-0 w-full h-full justify-end bg-gray-100 brightness-50 opacity-75 z-10 clip-path-polygon"></div>
           <div className="absolute flex flex-col items-center justify-center  bottom-[20%] left-[9%] z-20">
-            <p className="inline-block w-[220px] text-center text-3xl text-white mb-10">
-              오늘 뭐 먹을지 고민이신가요?
+            <p className="inline-block w-[300px] text-center text-3xl text-white mb-10">
+              오늘 무엇을 먹을지 고민이라면 ?!
             </p>
             <Link
-              className="bg-black p-4 text-xl text-white hover:bg-white hover:text-black "
+              className="bg-black p-4 text-xl text-white hover:bg-white hover:text-black hover:font-semibold"
               href={"/recipe/todayMeal"}
             >
               레시피 추천받으러 가기!
             </Link>
           </div>
         </SwiperSlide>
+
         <SwiperSlide>
-          <div className="h-full flex flex-col justify-between">
-            <SecondSlidePage />
-            {/* <div className="bg-red-100 h-full text-center leading-[350px] text-4xl"> */}
-            <div className="bg-[url('/images/depositphotos_217128602-stock-photo-top-view-blue-tablecloth-left1.jpg')] h-full text-center leading-[350px] text-4xl">
-              <p className="h-[240px]">더 많은 레시피를 확인하세요!</p>
-              <Link
-                className="block mt-1 p-4 w-[320px] mx-auto text-white bg-black text-xl hover:bg-white hover:text-black hover:text-xl"
-                href={"/recipe"}
-              >
-                레시피 목록 확인
-              </Link>
-            </div>
-            <SecondSlidePage />
-          </div>
-          {/* <div className="h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1"></div> */}
-        </SwiperSlide>
-        <SwiperSlide>
+          {/* peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif */}
+          {/* zrownowazone-jedzenie-dieta-tlo-700-130630474 */}
           <div className="relative h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1">
             {/* <OpenaiCook /> */}
-            <div className="absolute inset-0  w-full h-full justify-end bg-orange-500 brightness-50 opacity-75 clip-path-polygon3 z-0"></div>
+            <div className="absolute inset-0  w-full h-full justify-end bg-amber-500 brightness-50 opacity-75 clip-path-polygon3 z-0"></div>
             <div className="relative flex flex-wrap w-[1080px] w-max-[1280px] mx-auto justify-center gap-12 mt-12 p-16 bg-[#f4f4f4] z-10">
               {/* <div className="bg-white w-[500px] h-[300px] rounded-md text-center	leading-[300px] "> */}
               <div className="bg-white w-[400px] h-[150px] rounded-lg text-center leading-[150px] text-2xl font-semibold">
@@ -105,7 +105,7 @@ const MainSlidePage = () => {
                   확인해보세요!
                 </p>
               </div>
-              <div className="bg-white w-[400px] h-[150px] rounded-lg text-center leading-[150px] text-2xl font-semibold">
+              <div className="bg-white w-[400px] h-[150px] rounded-lg text-center leading-[150px] text-2xl font-semibold ">
                 <p className="whitespace-pre-wrap">
                   <span className="text-green-500">다른 사용자</span>의 레시피
                   노하우를 확인해보세요 !
@@ -117,7 +117,7 @@ const MainSlidePage = () => {
                 나만의 맛있는 레시피를 공유해주세요 !
               </p>
               <Link
-                className="block mt-5 p-4 w-[320px] mx-auto bg-black text-xl hover:bg-white hover:text-black hover:text-xl"
+                className="block mt-5 p-4 w-[320px] mx-auto bg-black text-xl hover:bg-white hover:text-black hover:text-xl hover:font-semibold"
                 href={"/recipe/new"}
               >
                 레시피 등록
@@ -125,9 +125,28 @@ const MainSlidePage = () => {
             </div>
           </div>
         </SwiperSlide>
-        <div className="w-[1320px] mx-auto">
-          <div className="w-full h-[100px] bg-slate-500">Footer 영역입니다</div>
-        </div>
+        <SwiperSlide>
+          <div className="h-full flex flex-col justify-between">
+            <SecondSlidePage />
+            {/* <div className="bg-red-100 h-full text-center leading-[350px] text-4xl"> */}
+            {/* zrownowazone-jedzenie-dieta-tlo-700-130630474.jpg */}
+            {/* 130543440-design-wooden-fork-and-spoon-on-wood-texture-background.jpg */}
+            <div className="relative bg-[url('/images/wood-texture-background-rough-vintage-wooden-table-brown-timber-for-backdrop-top-view_230497-3208.avif')] h-full text-center leading-[350px] text-4xl bg-cover bg-center z-0">
+              <div className="absolute inset-0 left-[-10%] justify-end top-0 bg-green-200 brightness-50 opacity-75 z-10 clip-path-polygon2"></div>
+              <p className="mt-40 text-6xl font-bold">
+                더 많은 레시피를 확인하세요!
+              </p>
+              <Link
+                className="block m-10 p-4 w-[320px] mx-auto text-white bg-black text-xl hover:bg-white hover:text-black hover:text-xl hover:font-semibold"
+                href={"/recipe"}
+              >
+                레시피 목록 확인
+              </Link>
+            </div>
+            <SecondSlidePage />
+          </div>
+          {/* <div className="h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1"></div> */}
+        </SwiperSlide>
       </Swiper>
     </div>
   );

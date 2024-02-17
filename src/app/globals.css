@@ -78,7 +78,7 @@ table {
   cursor: pointer;
   padding: 0px 22px */
 
-  @apply text-blue-800 text-3xl font-semibold cursor-pointer px-[22px] py-0
+  @apply text-orange-400 text-3xl font-semibold cursor-pointer px-[22px] py-0
 }
 
 .navbar__list {
@@ -110,7 +110,7 @@ table {
 .layout .inner {
   /* padding-top: 72px; */
   
-  /* @apply w-full bg-[#e6e6e6] */
+  /* @apply w-full bg-[#e6e6e6] pt-[96px] */
   @apply w-full h-full bg-[#FFF] pt-[96px]
 } 
 
@@ -126,7 +126,7 @@ table {
   margin-top: -189px;
   /* background: url() 0 0 no-repeat; */
   /* background: gray; */
-  font-size: 20px;
+  font-size: 25px;
   z-index: 50;
 }
 
@@ -139,7 +139,7 @@ table {
   line-height: 20px;
   left: 10px;
   color: antiquewhite;
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
+  /* text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff; */
   cursor: pointer;
   overflow: hidden;
 }
@@ -149,7 +149,9 @@ table {
   /* left: 10px; */
   /* overflow: hidden; */
   color:white;
-  text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
+  /* text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff; */
+  /* text-shadow: 0 0 10px #FAFABA, 0 0 20px #FAFABA, 0 0 40px #FAFABA; */
 }
 
 #sideNavbar #nav1 {
@@ -329,7 +331,11 @@ input:checked + .carousel__slide-container .nav label {
 
 /* Main page 첫번째 슬라이드 페이지의 초록색 덮개를 사다리꼴로 변경 */
 .clip-path-polygon {
-  clip-path: polygon(0% 0%, 0% 100%, 35% 100%, 25% 0%);
+  clip-path: polygon(0% 0%, 0% 100%, 33% 100%, 23% 0%);
+}
+
+.clip-path-polygon2 {
+  clip-path: polygon(250px -150px, 650px 250px, 350px 650px, 250px 650px, -150px 250px);
 }
 
 .clip-path-polygon3 {
