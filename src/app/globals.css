@@ -98,7 +98,12 @@ table {
 .navbar__list__item:hover {
   /* color: aqua; */
 
-  @apply text-teal-200
+  /* @apply text-teal-200 */
+  @apply text-pink-700
+}
+
+.navbar__list__item.on {
+  @apply cursor-pointer text-pink-700
 }
 
 .layout{
@@ -335,9 +340,15 @@ input:checked + .carousel__slide-container .nav label {
 }
 
 .clip-path-polygon2 {
-  clip-path: polygon(250px -150px, 650px 250px, 350px 650px, 250px 650px, -150px 250px);
+  /* clip-path: polygon(250px -250px, 850px 270px, 450px 1950px, 250px 650px, -150px 250px); */
+  clip-path: circle(15%);
 }
 
 .clip-path-polygon3 {
   clip-path: polygon(0% 20%, 0% 70%, 100% 70%, 100% 20%);
+}
+
+/* 텍스트 효과 */
+.text-shadow {
+  text-shadow: 7px 7px 10px #000;
 }

@@ -41,11 +41,9 @@ export const NextLayout = ({ children }: Props) => {
     // <div className="layout">
     <div className="layout">
       <Navbar />
-      <div className="h-screen">
-        <div className="inner">
-          {/* <Carousel /> */}
-          {children}
-        </div>
+      <div className="inner">
+        {/* <Carousel /> */}
+        {children}
       </div>
     </div>
   );

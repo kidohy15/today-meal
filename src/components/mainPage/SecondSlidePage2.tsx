@@ -61,13 +61,14 @@ const images = [
   img15,
 ];
 
-const SecondSlidePage = () => {
+const SecondSlidePage2 = () => {
   // const slideNums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [slideImages, setSlideImages] = useState(images);
   console.log("slideImages", slideImages);
   return (
     <div className="p-1 h-[220px]">
       <Swiper
+        dir="rtl"
         slidesPerView={8}
         spaceBetween={1}
         autoplay={{
@@ -92,4 +93,4 @@ const SecondSlidePage = () => {
   );
 };
 
-export default SecondSlidePage;
+export default SecondSlidePage2;

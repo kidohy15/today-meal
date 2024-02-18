@@ -17,8 +17,10 @@ export default function Home() {
 
   return (
     <>
-      <SideNavbar />
-      <MainSlidePage />
+      <div className="h-screen">
+        <SideNavbar />
+        <MainSlidePage />
+      </div>
     </>
   );
 }

@@ -65,11 +65,11 @@ const RecipeListPage = () => {
   return (
     // <div className="bg-[url('/images/19558288.jpg')]">
     // <div className="bg-[#FFFAFA]">
-    <div className="relative w-full h-screen bg-[url('/images/menu_beaver_resize.jpg')] bg-cover overflow-hidden">
+    <div className="fixed w-full h-full bg-[url('/images/menu_beaver_resize.jpg')] bg-cover">
       <div className="absolute inset-0 bg-black brightness-50 w-full h-full w-min-[860px] opacity-25"></div>
       <div className="px-4 md:max-w-4xl mx-auto py-12 h-full bg-white relative z-10">
         <SearchFilter setSearchKeyword={setSearchKeyword} />
-        <ul role="list" className="py-2">
+        <ul role="list" className="pt-2">
           {isLoading ? (
             <div>로딩중입니다.</div>
           ) : (
