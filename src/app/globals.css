@@ -68,7 +68,7 @@ table {
   */
 
 
-  @apply flex justify-between items-center fixed shadow-md shadow-slate-900/40 w-full min-w-[1200px] h-[96px] top-0 bg-white font-['Noto_Sans_KR'] font-[600] text-base z-50
+  @apply flex justify-between items-center fixed shadow-md shadow-slate-900/40 w-full min-w-[1200px] h-[96px] top-0 bg-white font-['Noto_Sans_KR'] font-[600] text-base z-50 
 }
 
 .navbar__logo {
@@ -116,7 +116,7 @@ table {
   /* padding-top: 72px; */
   
   /* @apply w-full bg-[#e6e6e6] pt-[96px] */
-  @apply w-full h-full bg-[#FFF] pt-[96px]
+  @apply w-full h-screen bg-[#FFF] pt-[96px]
 } 
 
 

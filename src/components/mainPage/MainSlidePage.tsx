@@ -24,7 +24,7 @@ import SecondSlidePage2 from "./SecondSlidePage2";
 const MainSlidePage = () => {
   return (
     // h-[954px]
-    <div className="relative h-full pt-[96px]">
+    <div className="relative h-full ">
       <Swiper
         direction={"vertical"}
         slidesPerView={1}
@@ -53,12 +53,12 @@ const MainSlidePage = () => {
             </div>
           </div>
           <div className="absolute inset-0 w-full h-full justify-end bg-gray-100 brightness-50 opacity-75 z-10 clip-path-polygon"></div>
-          <div className="absolute flex flex-col items-center justify-center bottom-[20%] left-[9%] z-20">
+          <div className="absolute flex flex-col items-center justify-center bottom-[20%] left-[5%] z-20 ">
             <p className="inline-block w-[320px] text-center text-xl text-white mb-5">
               오늘 무엇을 먹을지 고민이라면 ?!
             </p>
             <Link
-              className="bg-black p-4 text-xl text-white hover:bg-white hover:text-black hover:font-semibold"
+              className="absolute top-[50%] bg-black p-4 mt-10 text-xl text-white hover:bg-white hover:text-black hover:font-semibold"
               href={"/recipe/todayMeal"}
             >
               레시피 추천받으러 가기!
@@ -69,10 +69,10 @@ const MainSlidePage = () => {
         <SwiperSlide>
           {/* peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif */}
           {/* zrownowazone-jedzenie-dieta-tlo-700-130630474 */}
-          <div className="relative flex flex-col justify-center h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1">
+          <div className="relative flex flex-col justify-center h-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1 overflow-hidden">
             {/* <OpenaiCook /> */}
-            <div className="absolute inset-0  w-full h-full justify-end bg-amber-500 brightness-50 opacity-75 clip-path-polygon3 z-0"></div>
-            <div className="relative flex flex-wrap w-[1080px] w-max-[1280px] mx-auto justify-center gap-12 mt-12 p-12 bg-[#f4f4f4] z-10">
+            <div className="absolute inset-0 w-full h-full justify-end bg-amber-500 brightness-50 opacity-75 clip-path-polygon3 z-0"></div>
+            <div className="relative flex flex-wrap w-[1080px] w-max-[1180px] mx-auto justify-center gap-12 mt-12 p-12 bg-[#f4f4f4] z-10">
               {/* <div className="bg-white w-[500px] h-[300px] rounded-md text-center	leading-[300px] "> */}
               <div className="bg-white w-[450px] h-[120px] rounded-lg text-center leading-[150px] text-2xl font-semibold">
                 <p className="whitespace-pre-wrap">
