@@ -24,7 +24,7 @@ import SecondSlidePage2 from "./SecondSlidePage2";
 const MainSlidePage = () => {
   return (
     // h-[954px]
-    <div className="relative h-full ">
+    <div className="relative h-full">
       <Swiper
         direction={"vertical"}
         slidesPerView={1}

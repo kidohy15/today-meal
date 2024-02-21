@@ -11,16 +11,17 @@ import { useSession } from "next-auth/react";
 const RecipeListPage = () => {
   const router = useRouter();
   // const { data, status } = useSession();
+  const [writer, setWriter] = useState<any>("");
   const [maskedUsername, setMaskedUsername] = useState("");
 
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
-    writerId();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log("searchparams 입력값", searchKeyword);
 
   const recipesData = async () => {
     const result = await axios.get("/api/recipe", {
@@ -28,48 +29,77 @@ const RecipeListPage = () => {
         searchKeyword: searchKeyword,
       },
     });
-    console.log("result", result);
+    // const data = result?.data;
     return result;
   };
-
-  console.log("searchparams", searchKeyword);
 
   const { data: recipes, isLoading } = useQuery({
     queryKey: ["recipes", searchKeyword],
     queryFn: recipesData,
   }); // 데이터는 data 속성에 있다
 
-  const writerId = () => {
-    const writer = recipes?.data?.writer;
-    console.log("writer", writer);
-    if (writer) {
-      const atIndex = writer.indexOf("@");
-      if (atIndex) {
-        const username = writer.slice(0, atIndex);
-        const maskedUsername =
-          username.slice(0, 3) + "*".repeat(username.length - 3);
-        console.log("maskedUsername", maskedUsername);
-        setMaskedUsername(maskedUsername);
-      } else {
-        const username = writer.slice(0, 3);
-        const maskedUsername =
-          username.slice(0, 3) + "*".repeat(username.length - 3);
-        console.log("maskedUsername", maskedUsername);
-        setMaskedUsername(maskedUsername);
-      }
-    }
+  // const writerId = (datas: any) => {
+  //   const writers = datas?.map((item: any) => item.writer); // 작성자 정보 추출
+  //   // const email = data?.user?.email;
+  //   console.log("writers !!!! !!!!!!!!==================", writers);
+
+  //   if (writers) {
+  //     const masked = writers.map((writer: string) => {
+  //       const atIndex = writer.indexOf("@");
+  //       const username = writer.slice(0, atIndex);
+  //       return atIndex !== -1
+  //         ? username.slice(0, 3) + "*".repeat(username.length - 3)
+  //         : writer;
+  //     });
+  //     console.log("masked 입니다 ==================", masked);
+  //     setWriter(masked); // 마스킹된 작성자 정보를 setWriter에 저장
+  //   }
+  // };
+
+  // const atIndex = maskId.indexOf("@");
+  // const username = maskId.slice(0, atIndex);
+  // const maskedUsername =
+  //   username.slice(0, 3) + "*".repeat(username.length - 3);
+  // console.log("maskedUsername", maskedUsername);
+  // setMaskId(maskedUsername);
+
+  // const writerId = () => {
+  //   const writer = recipes?.data?.writer;
+  //   console.log("writer", writer);
+  //   if (writer) {
+  //     const atIndex = writer.indexOf("@");
+  //     if (atIndex) {
+  //       const username = writer.slice(0, atIndex);
+  //       const maskedUsername =
+  //         username.slice(0, 3) + "*".repeat(username.length - 3);
+  //       console.log("maskedUsername", maskedUsername);
+  //       setMaskedUsername(maskedUsername);
+  //     } else {
+  //       const username = writer.slice(0, 3);
+  //       const maskedUsername =
+  //         username.slice(0, 3) + "*".repeat(username.length - 3);
+  //       console.log("maskedUsername", maskedUsername);
+  //       setMaskedUsername(maskedUsername);
+  //     }
+  //   }
+  // };
+
+  // 함수 추가: 작성자 정보를 마스킹 처리
+  const maskWriter = (writer: any) => {
+    if (!writer) return ""; // writer가 없을 경우 빈 문자열 반환
+
+    const atIndex = writer.indexOf("@");
+    const username = writer.slice(0, atIndex);
+    return atIndex !== -1
+      ? username.slice(0, 3) + "*".repeat(username.length - 3)
+      : writer;
   };
 
-  console.log("목록 페이지 writerId", writerId());
-  console.log("목록 페이지 recipes", recipes);
   return (
-    // <div className="bg-[url('/images/19558288.jpg')]">
-    // <div className="bg-[#FFFAFA]">
-    <div className="fixed w-full h-full bg-[url('/images/menu_beaver_resize.jpg')] bg-cover">
-      <div className="absolute inset-0 bg-black brightness-50 w-full h-full w-min-[860px] opacity-25"></div>
-      <div className="px-4 md:max-w-4xl mx-auto py-12 bg-white relative z-10">
+    <div className="w-full h-full pt-[96px] bg-[url('/images/menu_beaver_resize.jpg')]">
+      <div className="shadow-2xl px-4 md:max-w-4xl mx-auto py-12 bg-white z-10">
         <SearchFilter setSearchKeyword={setSearchKeyword} />
-        <ul role="list" className="pt-2">
+        <ul role="list" className="pt-2 divide-y devide-gray-100">
           {isLoading ? (
             <div>로딩중입니다.</div>
           ) : (
@@ -97,8 +127,9 @@ const RecipeListPage = () => {
                 </div>
                 <div className="sm:flex sm:flex-col sm:items-end">
                   <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                    {recipe.writer}
-                    {maskedUsername}
+                    {maskWriter(recipe?.writer)}
+                    {/* {recipe.writer} */}
+                    {/* {maskedUsername} */}
                   </div>
                   <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
                     {new Date(recipe?.createdAt)?.toLocaleDateString()}

@@ -17,9 +17,11 @@ export default function Home() {
 
   return (
     <>
-      <div className="h-full">
-        <SideNavbar />
-        <MainSlidePage />
+      <div className="h-screen ">
+        <div className="h-full pt-[96px]">
+          <SideNavbar />
+          <MainSlidePage />
+        </div>
       </div>
     </>
   );
