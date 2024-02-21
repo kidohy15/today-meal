@@ -156,12 +156,12 @@ export default function Openai() {
           </div> */}
 
             {/* bg-orange-100 bg1 4fec8a1312fe2a4049f81335fabee3b8*/}
-            <div className=" w-[680px] h-[920px] ml-[200px] ">
-              <div className="bg-[url('/images/4fec8a1312fe2a4049f81335fabee3b82.jpg')] w-[680px] h-[920px] bg-center bg-contain bg-no-repeat">
+            <div className=" w-[1000px] h-[980px] ml-[160px] mx-[40px] mt-[10%]">
+              <div className="bg-[url('/images/4fec8a1312fe2a4049f81335fabee3b82.jpg')] w-full h-full bg-cover bg-center bg-no-repeat">
                 {isOpen && (
                   // <div className="bg-orange-100 w-[30%] h-[80%] absolute top-[10%] right-0 z-10">
                   // bg-[url('/images/note.jpg')]
-                  <div className="m-1 px-20 py-20 h-full text-white font-serif text-2xl leading-7">
+                  <div className="m-1 py-20 px-16 h-full text-white font-serif text-lg leading-7">
                     {chatHistory.map((message: any, index: any) => (
                       <div
                         key={index}

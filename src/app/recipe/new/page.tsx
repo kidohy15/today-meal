@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 
 const RecipeNewPage = () => {
-  const [writer, setWriter] = useState("");
+  const [writer, setWriter] = useState<any>("");
   const [recipeName, setRecipeName] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
@@ -21,6 +21,7 @@ const RecipeNewPage = () => {
 
   const writerId = () => {
     const email = data?.user?.email;
+    setWriter(email);
     if (email) {
       const atIndex = email.indexOf("@");
       const username = email.slice(0, atIndex);
@@ -84,7 +85,7 @@ const RecipeNewPage = () => {
           <input
             id="writer"
             type="text"
-            {...register("writer", { required: true })}
+            value={writer}
             className="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
 
