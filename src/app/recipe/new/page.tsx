@@ -48,11 +48,17 @@ const RecipeNewPage = () => {
   } = useForm();
 
   return (
-    <div className="h-screen">
-      <div className="pt-[96px] bg-gray-50 h-full flex items-center justify-center bg-[url('/images/istockphoto-1402841412-612x612.jpg')] bg-cover bg-center">
+    <div className="w-full h-screen pt-[96px]">
+      <div className="md:max-w-6xl mx-auto px-8 py-12 h-full shadow-md bg-white items-center">
+        <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+          레시피 등록
+        </h2>
+        <p>
+          111111
+        </p>
         {/* <div className=" w-[1250px] h-[1250px] bg-[url('/images/301029217_PJ72317.jpg')] bg-cover bg-center"> */}
         <form
-          className="bg-[#FFFAF0] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-2xl bottom-0"
+          className="bg-white rounded px-0 pt-10 pb-8 my-4 w-full mx-auto bottom-0"
           onSubmit={handleSubmit(async (data) => {
             try {
               const result = await axios.post("/api/recipe", data);

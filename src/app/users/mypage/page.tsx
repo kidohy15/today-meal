@@ -17,14 +17,14 @@ const MyPage = () => {
   }, [session]);
 
   return (
-    <div className="pt-[96px] h-screen bg-[#FFD27F]/20">
+    <div className="pt-[96px] h-screen">
       {!session && <p>로그인해주세요</p>}
       {session && (
-        <div className="shadow-lg md:max-w-5xl mx-auto px-8 py-12 mt-12 bg-white">
+        <div className="shadow-lg md:max-w-6xl mx-auto h-full px-8 py-12 bg-white border-gray-400 border-2">
           <div className="px-4 sm:px-0">
-            <h3 className="text-base font-semibold leading-7 text-gray-900">
-              마이페이지
-            </h3>
+            <h2 className="block text-2xl py-3 px-1 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+              마이 페이지
+            </h2>
             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
               사용자 기본정보
             </p>

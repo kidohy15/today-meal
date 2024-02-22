@@ -67,40 +67,45 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="min-w-[412px] bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-semibold mb-4">{recipe?.title}</h1>
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold">재료</h2>
-          <p>{recipe?.ingredients}</p>
-        </div>
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold">과정</h2>
-          <p>{recipe?.contents}</p>
-        </div>
-        <div className="flex flex-col md:flex-row justify-between mb-10">
-          <div className="mb-4 md:mb-0">
-            <h2 className="text-lg font-semibold">작성자</h2>
-            <p>{recipe?.writer}</p>
-          </div>
-          <div>
+    <div className="w-full h-screen pt-[96px]">
+      <div className="shadow-lg md:max-w-6xl mx-auto h-full px-8 py-12 bg-white border-gray-400 border-2">
+        <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+          {recipe?.title}
+        </h2>
+        <div className="flex flex-col p-10">
+          <div className="">
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold">작성자</h2>
+              <p>{recipe?.writer}</p>
+            </div>
+            {/* <div>
             <h2 className="text-lg font-semibold">등록 날짜</h2>
             <p>{recipe?.createdAt}</p>
+          </div> */}
           </div>
-        </div>
-        <div className="flex justify-end my-2 gap-2">
-          <button
-            className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
-            onClick={handleEdit}
-          >
-            수정
-          </button>
-          <button
-            className="block bottom-2 right-2 px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
-            onClick={handleDelete}
-          >
-            삭제
-          </button>
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold">재료</h2>
+            <p>{recipe?.ingredients}</p>
+          </div>
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold">과정</h2>
+            <p>{recipe?.contents}</p>
+          </div>
+
+          <div className="flex justify-end my-2 gap-2">
+            <button
+              className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+              onClick={handleEdit}
+            >
+              수정
+            </button>
+            <button
+              className="block bottom-2 right-2 px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none"
+              onClick={handleDelete}
+            >
+              삭제
+            </button>
+          </div>
         </div>
       </div>
     </div>

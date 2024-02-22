@@ -96,8 +96,12 @@ const RecipeListPage = () => {
   };
 
   return (
-    <div className="w-full h-full pt-[96px] bg-[url('/images/menu_beaver_resize.jpg')]">
-      <div className="shadow-2xl px-4 md:max-w-4xl mx-auto py-12 bg-white z-10">
+    //
+    <div className="w-full h-screen pt-[96px]">
+      <div className="px-8 py-12 md:max-w-6xl mx-auto h-full bg-white">
+        <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+          레시피 목록
+        </h2>
         <SearchFilter setSearchKeyword={setSearchKeyword} />
         <ul role="list" className="pt-2 divide-y devide-gray-100">
           {isLoading ? (

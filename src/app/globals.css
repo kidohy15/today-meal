@@ -117,7 +117,7 @@ table {
   /* padding-top: 72px; */
   
   /* @apply w-full bg-[#e6e6e6] pt-[96px] */
-  @apply w-full h-full bg-[#FFF]
+  @apply w-full h-full bg-[#FFD27F]/5
 } 
 
 
