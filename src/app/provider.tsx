@@ -14,6 +14,7 @@ import { AppProps } from "next/app";
 import Carousel from "@/components/Carousel";
 import SideNavbar from "@/components/mainPage/SideNavbar";
 import MainSlidePage from "@/components/mainPage/MainSlidePage";
+import Footer from "@/components/Footer";
 
 interface Props {
   children?: React.ReactNode;
@@ -45,6 +46,7 @@ export const NextLayout = ({ children }: Props) => {
         {/* <Carousel /> */}
         {children}
       </div>
+      <Footer />
     </div>
   );
 };

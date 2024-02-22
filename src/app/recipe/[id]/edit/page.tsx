@@ -101,7 +101,8 @@ const EditPage = ({ params }: EditPageProps) => {
               htmlFor="writer"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              작성자 : <span className="text-sm font-medium">{recipe?.writer}</span>
+              작성자 :{" "}
+              <span className="text-sm font-medium">{recipe?.writer}</span>
             </label>
             <input
               id="writer"
