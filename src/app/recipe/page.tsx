@@ -123,6 +123,13 @@ const RecipeListPage = () => {
                     </div>
                     <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
                       {recipe.ingredients}
+                      <div className="flex flex-wrap bg-white mt-2">
+                        {/* {ingredients?.map((ingredients: any, index: any) => (
+                <div key={index} className="p-1 m-1 bg-slate-50 rounded-md">
+                  {ingredients}
+                </div>
+              ))} */}
+                      </div>
                     </div>
                     <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
                       {recipe.contents}

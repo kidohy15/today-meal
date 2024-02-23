@@ -54,8 +54,10 @@ export async function POST(req: Request) {
   try {
     // const data = req.body;
 
+    // const { data: recipe } = await req.json();
     const data = await req.json();
-    // console.log("res", data);
+    // console.log("=======서버 data=======", recipe);
+    console.log("=======서버 data=======", data);
 
     const result = await prisma.recipe.create({
       data: { ...data },

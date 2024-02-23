@@ -5,15 +5,20 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const RecipeNewPage = () => {
   const [writer, setWriter] = useState<any>("");
   const [maskId, setMaskId] = useState("");
   const [recipeName, setRecipeName] = useState("");
-  const [ingredients, setIngredients] = useState("");
+  const [ingredients, setIngredients] = useState<any>([]);
+  const [userInput, setUserInput] = useState<any>("");
   const [instructions, setInstructions] = useState("");
+  const [errIngredients, setErrIngredients] = useState(false);
 
   const { data, status } = useSession();
+
+  const router = useRouter();
 
   useEffect(() => {
     writerId();
@@ -47,6 +52,12 @@ const RecipeNewPage = () => {
     formState: { errors },
   } = useForm();
 
+  // 입력한 재료를 배열에 추가
+  const handleAddIngredient = () => {
+    setIngredients((prevInputs: any) => [...prevInputs, userInput]);
+    setUserInput("");
+  };
+
   return (
     <div className="w-full h-screen pt-[96px]">
       <div className="md:max-w-6xl mx-auto px-8 py-12 h-full shadow-md bg-white items-center">
@@ -58,12 +69,26 @@ const RecipeNewPage = () => {
         <form
           className="bg-white rounded px-0 pt-10 pb-8 my-4 w-full mx-auto bottom-0"
           onSubmit={handleSubmit(async (data) => {
+            console.log("레시피 등록 data", data);
+            let dataIngre = data.ingredients;
+            console.log("레시피 등록 dataIngre", dataIngre);
+            console.log("레시피 등록 ingredients", ingredients);
             try {
-              const result = await axios.post("/api/recipe", data);
+              if (ingredients.length < 1) {
+                setErrIngredients(true);
+                toast.error("하나 이상의 재료를 입력해주세요.");
+                return;
+              }
+              const result = await axios.post("/api/recipe", {
+                ...data,
+                writer: writer,
+              });
 
+              console.log("result!!!!!!!!", result);
               if (result.status === 200) {
                 // 레시피 등록 성공
                 toast.success("레시피를 등록했습니다.");
+                router.replace(`/recipe/${result?.data?.result?.id}`);
               } else {
                 // 레시피 등록 실패
                 toast.error("다시 시도해주세요.");
@@ -76,19 +101,19 @@ const RecipeNewPage = () => {
             }
           })}
         >
-          <div className="mb-4">
+          <div className="mb-14">
             <label
               htmlFor="writer"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
               {/* 작성자 {data?.user?.email} */}
-              작성자 {maskId}
+              작성자 : {maskId}
             </label>
             <input
               id="writer"
               type="text"
               value={writer}
-              className="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="hidden appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
 
             {errors?.writer?.type === "required" && (
@@ -96,7 +121,7 @@ const RecipeNewPage = () => {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-14">
             <label
               htmlFor="title"
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -115,22 +140,47 @@ const RecipeNewPage = () => {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-14">
             <label
               htmlFor="ingredients"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
               재료
             </label>
-            <textarea
-              id="ingredients"
-              {...register("ingredients", { required: true })}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => setIngredients(e.target.value)}
-            />
-            {errors?.ingredients?.type === "required" && (
-              <p className="text-xs text-red-500 pt-2">필수 입력사항입니다.</p>
-            )}
+            <div className="flex flex-wrap bg-white mt-2">
+              {/* {ingredients?.map((ingredients: any, index: any) => (
+                <div key={index} className="p-1 m-1 bg-slate-50 rounded-md">
+                  {ingredients}
+                </div>
+              ))} */}
+              <input
+                id="ingredients"
+                {...register("ingredients", { required: true })}
+                value={ingredients}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+
+            <div>
+              <input
+                type="text"
+                className=" p-1 m-2 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-blue-500"
+                placeholder="재료를 입력해주세요"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+              />
+              <button
+                className="p-3 m-1 bg-slate-100"
+                onClick={() => handleAddIngredient()}
+              >
+                추가하기
+              </button>
+              {errors?.ingredients?.type === "required" && (
+                <p className="text-xs text-red-500 pt-2">
+                  필수 입력사항입니다.
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="mb-4">
@@ -143,7 +193,7 @@ const RecipeNewPage = () => {
             <textarea
               id="contents"
               {...register("contents", { required: true })}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full min-h-[300px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               onChange={(e) => setInstructions(e.target.value)}
             />
             {errors?.contents?.type === "required" && (
@@ -151,7 +201,7 @@ const RecipeNewPage = () => {
             )}
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-end">
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer>
-      <div className="flex flex-col bg-slate-800/90 h-[300px] text-white p-20 text-center gap-2">
+      <div className="flex flex-col bg-slate-800/90 w-full h-[300px] text-white p-20 text-center gap-2">
         <ul className="flex justify-center gap-2">
           <li>
             <p>개인정보처리방침</p>

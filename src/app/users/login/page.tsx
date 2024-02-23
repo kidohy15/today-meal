@@ -16,7 +16,7 @@ export default function LoginPage() {
   }, [router, status]);
 
   return (
-    <div className="flex flex-col justify-center px-6 lg:px-8 h-[60vh]">
+    <div className="flex flex-col justify-center px-6 lg:px-8 h-[100vh]">
       <div className="mx-auto w-full max-w-sm">
         <h1 className="text-orange-400 text-center text-3xl font-semibold">
           YummyRecipe
