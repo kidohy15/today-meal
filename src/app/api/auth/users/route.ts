@@ -1,28 +1,15 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// 레시피 목록 조회
+// 유저 목록 조회
 export async function GET(req: Request, context: any) {
-  // const data = await req.json()
   const { searchParams } = new URL(req.url);
-  // const id = params.id
-
-  // const searchParams = req.nextUrl.searchParams;
-  // const query = searchParams.get("id");
 
   const body = req;
   const { params } = context; // '1'
-  console.log("서버 params", params);
-  console.log("서버 context", context);
-  console.log("서버 searchParams", searchParams);
-  // console.log("서버 req", req.url);
-
   const id = searchParams.get("id");
   const search = searchParams.get("searchKeyword");
-  console.log("서버 search", search);
 
   if (id) {
     const data = await prisma.recipe.findFirst({
@@ -30,9 +17,7 @@ export async function GET(req: Request, context: any) {
         id: parseInt(id),
       },
     });
-    console.log("server data:", data);
 
-    // res.status(200).json(fetchData);
     return Response.json(data);
   } else {
     const data = await prisma.recipe.findMany({
@@ -42,41 +27,29 @@ export async function GET(req: Request, context: any) {
       },
     });
 
-    // res.status(200).json(fetchData);
     return Response.json(data);
   }
 }
 
-// 레시피 등록
+// 회원가입
 export async function POST(req: Request) {
-  // 레시피 등록
+  // 회원가입 유저 등록
   try {
-    // const data = req.body;
-
-    // const { data: recipe } = await req.json();
     const data = await req.json();
-    // console.log("=======서버 data=======", recipe);
-    console.log("=======서버 data=======", data);
-
     const result = await prisma.recipe.create({
       data: { ...data },
     });
 
-    // return res.status(200).json(result);
     return Response.json({ result });
   } catch (error) {
     console.error("Error creating recipe:", error);
-    // return data.status(500).json({ error: "Internal Server Error" });
   }
 }
 
-// 레시피 수정
+// 회원 정보 수정
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
-
-    // const { searchParams } = new URL(req.url);
-    // const id = searchParams.get("id");
     const id = data.id;
 
     if (id) {
@@ -91,14 +64,13 @@ export async function PUT(req: Request) {
   }
 }
 
-// 레시피 삭제
+// 회원탈퇴
 export async function DELETE(req: Request) {
+  // 회원정보 삭제
   try {
-    // const data = await req.json();
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
-    console.log("=========== 삭제 req ================", req);
 
     if (id) {
       const result = await prisma.recipe.delete({

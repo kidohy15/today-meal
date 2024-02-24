@@ -5,12 +5,9 @@ import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 
 const MyPage = () => {
-  // const [session, loading] = useSession();
   const { data, status } = useSession();
   const session = useSession();
   const [user, setUser] = useState(data?.user);
-
-  console.log("session", session);
 
   useEffect(() => {
     setUser(data?.user);

@@ -1,0 +1,122 @@
+import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { AiOutlineGoogle } from "react-icons/ai";
+import { BsFillSignIntersectionYFill } from "react-icons/bs";
+import { toast } from "react-toastify";
+
+export default function LoginForm() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  return (
+    <div className=" p-10">
+      <form
+        className=" rounded px-0 py-2 my-4 w-full mx-auto bottom-0"
+        onSubmit={handleSubmit(async (data) => {
+          console.log("로그인 data", data);
+          try {
+            const result = await axios.post("/api/users", data);
+
+            console.log("result!!!!!!!!", result);
+            if (result.status === 200) {
+              // 로그인 성공
+              toast.success("로그인 성공했습니다.");
+              router.replace(`/recipe/${result?.data?.result?.id}`);
+            } else {
+              // 로그인 실패
+              toast.error("다시 시도해주세요.");
+            }
+          } catch (error) {
+            console.log(error);
+            toast.error("로그인 중 문제가 발생했습니다. 다시 시도해주세요.");
+          }
+        })}
+      >
+        <div className="mb-10">
+          <label
+            htmlFor="writer"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            이메일
+          </label>
+          <input
+            id="writer"
+            type="text"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          {errors?.writer?.type === "required" && (
+            <p className="text-xs text-red-500 pt-2">필수 입력사항입니다.</p>
+          )}
+        </div>
+
+        <div className="mb-10">
+          <label
+            htmlFor="title"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            패스워드
+          </label>
+          <input
+            id="title"
+            type="text"
+            {...register("title", { required: true })}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {errors?.title?.type === "required" && (
+            <p className="text-xs text-red-500 pt-2">필수 입력사항입니다.</p>
+          )}
+        </div>
+        <div className="flex items-center justify-center">
+          <p className="mr-2 text-center text-sm text-gray-600">
+            계정이 없다면 회원가입해주세요
+          </p>
+          <button
+            type="button"
+            className="text-blue-500 underline font-bold"
+          >
+            회원가입
+          </button>
+        </div>
+
+        <div className="mt-5 mx-auto w-full max-w-lg">
+          <div className="flex flex-col gap-3">
+            <button
+              type="submit"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+              className="text-white flex gap-2 bg-[#e4a668] hover:bg-[#bc854a]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center"
+            >
+              <BsFillSignIntersectionYFill className="w-6 h-6" />
+              YummyRecipe 로그인
+            </button>
+          </div>
+        </div>
+      </form>
+      <div className="mt-1 mx-auto w-full max-w-lg">
+        <div className="flex flex-col gap-3">
+          <button
+            type="button"
+            onClick={() => signIn("google", { callbackUrl: "/" })}
+            className="text-white flex gap-2 bg-[#4285F4] hover:bg-[#4d79c0] font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center"
+          >
+            <AiOutlineGoogle className="w-6 h-6" />
+            Sign in with Google
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

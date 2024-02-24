@@ -33,15 +33,6 @@ export default function Chat() {
       // const data = await response.json();
       const data = await response;
 
-      // if (response.status !== 200) {
-      // if (!response) {
-      //   throw (
-      //     // data.error ||
-      //     // new Error(`request failed with status ${response.status}`)
-      //     console.log("에러")
-      //   );
-      // }
-
       // setAnswer(data.result);
       setAnswer(data);
       setQuestion('');

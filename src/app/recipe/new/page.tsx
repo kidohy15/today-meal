@@ -37,15 +37,6 @@ const RecipeNewPage = () => {
     }
   };
 
-  // const handleSubmit = (e: any) => {
-  //   e.preventDefault();
-
-  //   console.log("작성자:", writer);
-  //   console.log("요리 이름:", recipeName);
-  //   console.log("재료:", ingredients);
-  //   console.log("과정:", instructions);
-  // };
-
   const {
     register,
     handleSubmit,
@@ -64,7 +55,7 @@ const RecipeNewPage = () => {
         <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           레시피 등록
         </h2>
-        <p>111111</p>
+        <p>test</p>
         {/* <div className=" w-[1250px] h-[1250px] bg-[url('/images/301029217_PJ72317.jpg')] bg-cover bg-center"> */}
         <form
           className="bg-white rounded px-0 pt-10 pb-8 my-4 w-full mx-auto bottom-0"

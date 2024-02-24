@@ -3,28 +3,21 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-// import { useRouter } from "next/router";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   const id = params.id;
   const router = useRouter();
   // const { id } = router.query;
-
-  // const [recipeId, setRecipeId] = useState<any>(searchParams.id)
-  // const router = useRouter();
-  // const { id } = router.query;
-
   console.log("params", params);
-  console.log("id", id);
-  // console.log("recipeId", recipeId);
+
+  const [maskId, setMaskId] = useState("");
 
   const recipeData = async () => {
-    // console.log("recipe.id", recipe.id);
-
     const { data: data }: any = await axios.get(`/api/recipe?id=${id}`);
+    writerId(data);
     // return await axios.get(`/api/recipe?id=${recipe.id}`);
     return data;
   };
@@ -35,9 +28,10 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
     queryFn: recipeData,
     enabled: !!id,
   });
-  // console.log("recipe.id", recipe?.id);
 
-  console.log("상세 페이지 recipe", recipe);
+  useEffect(() => {
+
+  }, []);
 
   // 수정
   const handleEdit = () => {
@@ -66,6 +60,18 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  const writerId = (data: any) => {
+    const writer = data?.writer;
+    if (writer) {
+      const atIndex = writer.indexOf("@");
+      const username = writer.slice(0, atIndex);
+      const maskedUsername =
+        username.slice(0, 3) + "*".repeat(username.length - 3);
+      console.log("maskedUsername", maskedUsername);
+      setMaskId(maskedUsername);
+    }
+  };
+
   return (
     <div className="w-full h-screen pt-[96px]">
       <div className="shadow-lg md:max-w-6xl mx-auto h-full px-8 py-12 bg-white border-gray-400 border-2">
@@ -73,10 +79,15 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           {recipe?.title}
         </h2>
         <div className="flex flex-col p-10">
-          <div className="">
+          <div className="flex justify-between">
             <div className="mb-8">
-              <h2 className="text-lg font-semibold">작성자</h2>
-              <p>{recipe?.writer}</p>
+              <span className="text-lg font-semibold">작성자</span>
+              {/* <p>{recipe?.writer}</p> */}
+              <div>{maskId}</div>
+            </div>
+            <div className="mt-1 text-xm font-semibold leading-5 text-gray-500">
+              <span className="">생성일</span>
+              {new Date(recipe?.createdAt)?.toLocaleDateString()}
             </div>
             {/* <div>
             <h2 className="text-lg font-semibold">등록 날짜</h2>
@@ -84,12 +95,12 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           </div> */}
           </div>
           <div className="mb-8">
-            <h2 className="text-lg font-semibold">재료</h2>
-            <p>{recipe?.ingredients}</p>
+            <span className="text-lg font-semibold">재료</span>
+            <div>{recipe?.ingredients}</div>
           </div>
           <div className="mb-8">
-            <h2 className="text-lg font-semibold">과정</h2>
-            <p>{recipe?.contents}</p>
+            <span className="text-lg font-semibold">과정</span>
+            <div>{recipe?.contents}</div>
           </div>
 
           <div className="flex justify-end my-2 gap-2">

@@ -12,7 +12,7 @@ import SideNavbar from "@/components/mainPage/SideNavbar";
 export default function Home() {
   // const queryClient = new QueryClient();
   useEffect(() => {
-    console.log("start");
+    
   }, []);
 
   return (

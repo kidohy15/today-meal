@@ -3,7 +3,7 @@
 import React from "react";
 import "./globals.css";
 import Layout from "@/components/Layout";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { SessionProvider } from "next-auth/react";
@@ -41,7 +41,7 @@ export const NextLayout = ({ children }: Props) => {
   return (
     // <div className="layout">
     <div className="layout">
-      <Navbar />
+      <Header />
       <div className="inner">
         {/* <Carousel /> */}
         {children}

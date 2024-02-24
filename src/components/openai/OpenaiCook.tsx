@@ -51,10 +51,7 @@ export default function Openai() {
     // new Date().getTime() - new Date(lastCallTime).getTime() > 10 * 1000
     if (time > 10 * 1000) {
       setContentArray(cachedRecipes);
-      console.log(1);
-      // handleRecipe();
     } else {
-      console.log(2);
       handleRecipe();
       console.log(
         "new Date(lastCallTime).getTime()",
