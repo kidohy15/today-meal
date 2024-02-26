@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
@@ -15,8 +15,10 @@ const RecipeNewPage = () => {
   const [userInput, setUserInput] = useState<any>("");
   const [instructions, setInstructions] = useState("");
   const [errIngredients, setErrIngredients] = useState(false);
+  const [imageFile, setImageFile] = useState<any>();
 
   const { data, status } = useSession();
+  const inputRef = useRef(null);
 
   const router = useRouter();
 
@@ -49,20 +51,47 @@ const RecipeNewPage = () => {
     setUserInput("");
   };
 
+  const handleImageClick = () => {
+    inputRef.current;
+    console.log("inputRef.current", inputRef.current);
+  };
+
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    setImageFile(file);
+    console.log("file", file.name);
+    console.log("ImageFile", imageFile);
+  };
+
   return (
-    <div className="w-full h-screen pt-[96px]">
+    <div className="w-full h-full pt-[96px]">
       <div className="md:max-w-6xl mx-auto px-8 py-12 h-full shadow-md bg-white items-center">
         <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           레시피 등록
         </h2>
-        <p>test</p>
         {/* <div className=" w-[1250px] h-[1250px] bg-[url('/images/301029217_PJ72317.jpg')] bg-cover bg-center"> */}
         <form
           className="bg-white rounded px-0 pt-10 pb-8 my-4 w-full mx-auto bottom-0"
-          onSubmit={handleSubmit(async (data) => {
-            console.log("레시피 등록 data", data);
-            let dataIngre = data.ingredients;
-            console.log("레시피 등록 dataIngre", dataIngre);
+          onSubmit={handleSubmit(async (formData) => {
+            // 이미지 파일을 formData에 추가
+            const formDataWithImage = new FormData();
+            formDataWithImage.append("imageFile", imageFile);
+            console.log("레시피 등록 formDataWithImage1", formDataWithImage);
+
+            // 기존의 form 데이터를 formData에 추가
+            Object.entries(formData).forEach(([key, value]) => {
+              formDataWithImage.append(key, value);
+            });
+
+            console.log("레시피============1");
+            formDataWithImage.forEach((value, key) => {
+              console.log(key, value);
+            });
+            console.log("레시피============2");
+
+            console.log("레시피 등록 data", formData);
+            let dataIngre = formData.ingredients;
+            console.log("레시피 등록 formDataWithImage2", formDataWithImage);
             console.log("레시피 등록 ingredients", ingredients);
             try {
               if (ingredients.length < 1) {
@@ -70,10 +99,18 @@ const RecipeNewPage = () => {
                 toast.error("하나 이상의 재료를 입력해주세요.");
                 return;
               }
-              const result = await axios.post("/api/recipe", {
-                ...data,
-                writer: writer,
-              });
+              const result = await axios.post(
+                "/api/recipe",
+                {
+                  ...formDataWithImage,
+                  writer: writer,
+                },
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                }
+              );
 
               console.log("result!!!!!!!!", result);
               if (result.status === 200) {
@@ -92,6 +129,40 @@ const RecipeNewPage = () => {
             }
           })}
         >
+          <div className="mb-14">
+            <label
+              htmlFor="writer"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              {/* 작성자 {data?.user?.email} */}
+              이미지
+            </label>
+            <div onClick={handleImageClick}>
+              <img src="" alt="" width={"20px"} height={"20px"} />
+              {imageFile ? (
+                <img
+                  src={URL.createObjectURL(imageFile)}
+                  alt=""
+                  width={"200px"}
+                  height={"200px"}
+                />
+              ) : (
+                <div className="w-32 h-32 bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                  이미지
+                </div>
+              )}
+              <input
+                type="file"
+                ref={inputRef}
+                onChange={handleImageChange}
+                className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+
+            {errors?.writer?.type === "required" && (
+              <p className="text-xs text-red-500 pt-2">필수 입력사항입니다.</p>
+            )}
+          </div>
           <div className="mb-14">
             <label
               htmlFor="writer"

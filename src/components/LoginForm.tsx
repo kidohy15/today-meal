@@ -26,7 +26,7 @@ export default function LoginForm() {
       onSubmit={handleSubmit(async (data) => {
         console.log("로그인 data", data);
         try {
-          const result = await axios.post("/api/users", data);
+          const result = await axios.get("/api/auth/users", data);
 
           console.log("result!!!!!!!!", result);
           if (result.status === 200) {
@@ -54,14 +54,15 @@ export default function LoginForm() {
           <div className=" p-10">
             <div className="mb-5">
               <label
-                htmlFor="writer"
+                htmlFor="email"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
                 이메일
               </label>
               <input
-                id="writer"
-                type="text"
+                id="email"
+                type="email"
+                {...register("email", { required: true })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -75,15 +76,15 @@ export default function LoginForm() {
 
             <div className="mb-5">
               <label
-                htmlFor="title"
+                htmlFor="password"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
                 비밀번호
               </label>
               <input
-                id="title"
-                type="text"
-                {...register("title", { required: true })}
+                id="password"
+                type="password"
+                {...register("password", { required: true })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -109,7 +110,6 @@ export default function LoginForm() {
               <div className="flex flex-col gap-3">
                 <button
                   type="submit"
-                  onClick={() => signIn("google", { callbackUrl: "/" })}
                   className="text-white flex gap-2 bg-[#e4a668] hover:bg-[#bc854a]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center"
                 >
                   <BsFillSignIntersectionYFill className="w-6 h-6" />

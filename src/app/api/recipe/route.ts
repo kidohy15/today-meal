@@ -1,8 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import fs from "fs";
+import { pipeline } from "stream";
+import { promisify } from "util";
 
 const prisma = new PrismaClient();
+const pump = promisify(pipeline);
+
+export const config = {
+  api: {
+    //next에서는 기본으로 bodyParser가 작동되므로 false로 해준다.
+    bodyParser: false,
+  },
+};
 
 // 레시피 목록 조회
 export async function GET(req: Request, context: any) {
@@ -48,18 +59,35 @@ export async function GET(req: Request, context: any) {
 }
 
 // 레시피 등록
-export async function POST(req: Request) {
+export async function POST(req: any) {
+  // try {
+  //   const formData = await req.formData();
+  //   const file = formData.getAll("files")[0];
+  //   const filePath = `./public/file/${file.name}`;
+  //   await pump(file.stream(), fs.createWriteStream(filePath));
+  //   return NextResponse.json({ status: "success", data: file.size });
+  // } catch (e) {
+  //   return NextResponse.json({ status: "fail", data: e });
+  // }
+
   // 레시피 등록
   try {
     // const data = req.body;
 
+    const formData = await req.formData();
+    const file = formData.getAll("files")[0];
+    const filePath = `./public/file/${file.name}`;
+    await pump(file.stream(), fs.createWriteStream(filePath));
+    // return NextResponse.json({ status: "success", data: file.size });
+
     // const { data: recipe } = await req.json();
     const data = await req.json();
     // console.log("=======서버 data=======", recipe);
-    console.log("=======서버 data=======", data);
+    console.log("=======서버 formData=======", formData);
+    console.log("=======서버 file=======", file);
 
     const result = await prisma.recipe.create({
-      data: { ...data },
+      data: { ...data, file: file },
     });
 
     // return res.status(200).json(result);

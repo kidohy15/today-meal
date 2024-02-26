@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,9 +15,19 @@ export default function Signupform() {
     e.preventDefault();
     try {
       // 서버 회원가입 api
-
-      toast.success("회원가입에 성공했습니다.");
-      router.replace("/");
+      const result = await axios.post("/api/auth/users", {
+        email: email,
+        password: password,
+      });
+      console.log("result!!!!!!!!", result);
+      if (result.status === 200) {
+        // 회원가입 성공
+        toast.success("회원가입에 성공했습니다.");
+        router.replace("/");
+      } else {
+        // 회원가입 실패
+        toast.error("다시 시도해주세요.");
+      }
     } catch (error: any) {
       console.log(error);
       toast.error(error?.code);
