@@ -9,12 +9,15 @@ export default function Signupform() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       // 서버 회원가입 api
+      setIsLoading(true);
       const result = await axios.post("/api/auth/users", {
         email: email,
         password: password,
@@ -23,10 +26,12 @@ export default function Signupform() {
 
       if (result.status === 200) {
         // 회원가입 성공
+        setIsLoading(false);
         toast.success("회원가입에 성공했습니다.");
-        router.replace("/");
+        router.replace("/login");
       } else {
         // 회원가입 실패
+        setIsLoading(false);
         toast.error("다시 시도해주세요.");
       }
     } catch (error: any) {

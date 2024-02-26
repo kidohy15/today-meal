@@ -1,10 +1,51 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, RequestInternal } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 // import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
+
+interface User {
+  id: number;
+  email: string;
+  password?: string;
+  name?: string;
+  emailVerified?: Date;
+  image?: string;
+}
+
+async function login(credentials: User) {
+  const email = credentials.email;
+  const password = credentials.password;
+  console.log("login email", email);
+  console.log("login password", password);
+  try {
+    const res = await prisma.user.findFirst({
+      where: {
+        email: email,
+        // 암호화된 비번과 where 절 비교를 하기 때문에 여기서 password 비교하면 계속 null 나오기 때문에 밑에서 비교
+        // password: password,
+      },
+    });
+    console.log("login res", res);
+
+    if (!res) throw new Error("Wrong Credentials");
+    const correct = await bcrypt.compare(
+      credentials?.password as string,
+      res?.password as string
+    );
+    console.log("login correct", correct);
+
+    if (!correct) throw new Error("Wrong Credentials");
+    return res;
+  } catch (error) {
+    console.log("login error");
+    throw new Error("error");
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -19,6 +60,26 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
+
+    // 서비스 자체 회원 로그인
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: { label: "email", type: "email" },
+        password: { label: "password", type: "password" },
+      },
+      // @ts-ignore
+      async authorize(credentials: any) {
+        try {
+          const user = await login(credentials);
+          console.log("user", user);
+          return user;
+        } catch (error) {
+          console.log("Error: ", error);
+          return null;
+        }
+      },
     }),
   ],
 

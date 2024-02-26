@@ -26,17 +26,28 @@ export default function LoginForm() {
       onSubmit={handleSubmit(async (data) => {
         console.log("로그인 data", data);
         try {
-          const result = await axios.get("/api/auth/users", data);
+          // const result = await axios.get("/api/auth/users", data);
+
+          const result = await signIn("credentials", {
+            email: email,
+            password: password,
+            // redirect: false
+          });
+          if (result?.error) {
+            return;
+          }
+          router.replace("/");
 
           console.log("result!!!!!!!!", result);
-          if (result.status === 200) {
-            // 로그인 성공
-            toast.success("로그인 성공했습니다.");
-            router.replace(`/recipe/${result?.data?.result?.id}`);
-          } else {
-            // 로그인 실패
-            toast.error("다시 시도해주세요.");
-          }
+
+          // if (result.status === 200) {
+          //   // 로그인 성공
+          //   toast.success("로그인 성공했습니다.");
+          //   router.replace(`/recipe/${result?.data?.result?.id}`);
+          // } else {
+          //   // 로그인 실패
+          //   toast.error("다시 시도해주세요.");
+          // }
         } catch (error) {
           console.log(error);
           toast.error("로그인 중 문제가 발생했습니다. 다시 시도해주세요.");
