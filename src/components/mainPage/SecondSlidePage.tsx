@@ -64,7 +64,6 @@ const images = [
 const SecondSlidePage = () => {
   // const slideNums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [slideImages, setSlideImages] = useState(images);
-  console.log("slideImages", slideImages);
   return (
     <div className="p-1 h-[220px]">
       <Swiper

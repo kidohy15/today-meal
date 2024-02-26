@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
@@ -26,16 +28,35 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   // 회원가입 유저 등록
   try {
-    const data = await req.json();
-    console.log("========================");
-    console.log("회원가입 data", data);
-    const result = await prisma.user.create({
-      data: { ...data },
+    const userData = await req.json();
+    console.log("=========== 회원가입 =============", userData);
+    const email = userData.email;
+    const password = userData.password;
+
+    const exists = await prisma.user.findFirst({
+      where: {
+        email: email,
+      },
     });
 
-    return Response.json({ result });
+    if (exists) {
+      return NextResponse.json(
+        { message: "이미 존재하는 이메일입니다." },
+        { status: 500 }
+      );
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await prisma.user.create({
+      data: { ...userData, password: hashedPassword },
+    });
+
+    return NextResponse.json({ message: "회원가입 성공" }, { status: 200 });
   } catch (error) {
-    console.error("Error creating recipe:", error);
+    console.error("signup error", error);
+    return NextResponse.json(
+      { message: "회원가입 도중 에러가 발생했습니다. 다시 시도해주세요." },
+      { status: 500 }
+    );
   }
 }
 

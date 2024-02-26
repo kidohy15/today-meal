@@ -20,6 +20,7 @@ export default function Signupform() {
         password: password,
       });
       console.log("result!!!!!!!!", result);
+
       if (result.status === 200) {
         // 회원가입 성공
         toast.success("회원가입에 성공했습니다.");
@@ -29,8 +30,10 @@ export default function Signupform() {
         toast.error("다시 시도해주세요.");
       }
     } catch (error: any) {
-      console.log(error);
-      toast.error(error?.code);
+      console.log("error", error);
+      console.log("error", error.response.data.message);
+      // toast.error(error?.code);
+      toast.error(error?.response.data.message);
     }
   };
 
