@@ -79,14 +79,14 @@ const RecipeNewPage = () => {
             console.log("레시피 등록 formDataWithImage1", formDataWithImage);
 
             // 기존의 form 데이터를 formData에 추가
-            Object.entries(formData).forEach(([key, value]) => {
-              formDataWithImage.append(key, value);
-            });
+            // Object.entries(formData).forEach(([key, value]) => {
+            //   formDataWithImage.append(key, value);
+            // });
 
             console.log("레시피============1");
-            formDataWithImage.forEach((value, key) => {
-              console.log(key, value);
-            });
+            // formDataWithImage.forEach((value, key) => {
+            //   console.log(key, value);
+            // });
             console.log("레시피============2");
 
             console.log("레시피 등록 data", formData);
@@ -102,8 +102,9 @@ const RecipeNewPage = () => {
               const result = await axios.post(
                 "/api/recipe",
                 {
-                  ...formDataWithImage,
+                  ...formData,
                   writer: writer,
+                  imageFile:formDataWithImage
                 },
                 {
                   headers: {

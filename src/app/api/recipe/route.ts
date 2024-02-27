@@ -4,6 +4,8 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import { pipeline } from "stream";
 import { promisify } from "util";
+import { writeFile } from "fs/promises";
+import { join } from "path";
 
 const prisma = new PrismaClient();
 const pump = promisify(pipeline);
@@ -59,7 +61,7 @@ export async function GET(req: Request, context: any) {
 }
 
 // 레시피 등록
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   // try {
   //   const formData = await req.formData();
   //   const file = formData.getAll("files")[0];
@@ -75,23 +77,34 @@ export async function POST(req: any) {
     // const data = req.body;
 
     const formData = await req.formData();
-    const file = formData.getAll("files")[0];
-    const filePath = `./public/file/${file.name}`;
-    await pump(file.stream(), fs.createWriteStream(filePath));
+    const imageFile: File | null = formData.get("imageFile") as unknown as File;
+
+    const bytes = await imageFile.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const path = join("/", "tmp", imageFile.name);
+    await writeFile(path, buffer);
+    console.log(`${path}`);
+
+    return NextResponse.json({ success: true})
+
+    // const file = formData.getAll("files")[0];
+    // const filePath = `./public/file/${file.name}`;
+    // await pump(file.stream(), fs.createWriteStream(filePath));
     // return NextResponse.json({ status: "success", data: file.size });
 
     // const { data: recipe } = await req.json();
-    const data = await req.json();
-    // console.log("=======서버 data=======", recipe);
-    console.log("=======서버 formData=======", formData);
-    console.log("=======서버 file=======", file);
+    // const data = await req.json();
+    // // console.log("=======서버 data=======", recipe);
+    // console.log("=======서버 formData=======", formData);
+    // console.log("=======서버 file=======", file);
 
-    const result = await prisma.recipe.create({
-      data: { ...data, file: file },
-    });
+    // const result = await prisma.recipe.create({
+    //   data: { ...data, file: file },
+    // });
 
     // return res.status(200).json(result);
-    return Response.json({ result });
+    // return Response.json({ result });
   } catch (error) {
     console.error("Error creating recipe:", error);
     // return data.status(500).json({ error: "Internal Server Error" });

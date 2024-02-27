@@ -1,5 +1,6 @@
 "use client";
 
+import Comments from "@/components/comments";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -29,9 +30,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
     enabled: !!id,
   });
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   // 수정
   const handleEdit = () => {
@@ -117,6 +116,11 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
               삭제
             </button>
           </div>
+        </div>
+        
+        {/* 댓글 */}
+        <div>
+          <Comments recipeId={recipe?.id} />
         </div>
       </div>
     </div>

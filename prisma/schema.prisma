@@ -46,6 +46,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Comment       Comment[]
 }
 
 model VerificationToken {
@@ -57,10 +58,22 @@ model VerificationToken {
 }
 
 model Recipe {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String?
   ingredients String?
   contents    String?
   writer      String?
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
+  Comment     Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  recipeId  Int
+  userId    Int
+  contents  String
+  createdAt DateTime @default(now())
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([recipeId, userId])
 }
