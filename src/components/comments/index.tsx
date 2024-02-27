@@ -1,4 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface CommentProps {
   recipeId: number;
@@ -12,6 +15,20 @@ export default function Comments({ recipeId }: CommentProps) {
     formState: { errors },
   } = useForm();
 
+  // 레시피 댓글 리스트 가져오기
+  // const fetchComments = async () => {
+  //   const res = await axios.post(`/api/comments?recipeId=${recipeId}`);
+
+  //   return res;
+  // };
+
+  const { data: comments, refetch } = useQuery({
+    queryKey: [`conments-${recipeId}`],
+    // queryFn: fetchComments,
+  });
+
+  // console.log("comments", comments);
+
   return (
     <div className="py-8 px-2 mb-20 mx-auto">
       {/* 댓글 입력 폼 */}
@@ -19,6 +36,21 @@ export default function Comments({ recipeId }: CommentProps) {
         <form
           onSubmit={handleSubmit(async (data) => {
             console.log(data);
+            // 레시피 댓글 등록
+            const res = await axios.post(`/api/comments`, {
+              recipeId,
+              ...data,
+            });
+            console.log("=======================");
+            console.log("res", res);
+
+            if (res.status === 200) {
+              toast.success("댓글을 등록했습니다.");
+              resetField("contents");
+              refetch?.();
+            } else {
+              toast.error("다시 시도해주세요.");
+            }
           })}
         >
           {/* 에러 */}

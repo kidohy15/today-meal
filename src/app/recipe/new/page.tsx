@@ -104,7 +104,7 @@ const RecipeNewPage = () => {
                 {
                   ...formData,
                   writer: writer,
-                  imageFile:formDataWithImage
+                  imageFile: formDataWithImage,
                 },
                 {
                   headers: {

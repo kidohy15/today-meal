@@ -117,7 +117,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             </button>
           </div>
         </div>
-        
+
         {/* 댓글 */}
         <div>
           <Comments recipeId={recipe?.id} />

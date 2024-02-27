@@ -46,7 +46,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Comment       Comment[]
+  Comments      Comment[]
 }
 
 model VerificationToken {
@@ -64,16 +64,18 @@ model Recipe {
   contents    String?
   writer      String?
   createdAt   DateTime  @default(now())
-  Comment     Comment[]
+  Comments    Comment[]
 }
 
+// tobe: 유저 id 가져올 수 있도록 추가하고 나서 user 컬럼 옵셔널 제거하고 필수값으로 변경
 model Comment {
   id        Int      @id @default(autoincrement())
   recipeId  Int
-  userId    Int
+  userId    Int?
   contents  String
   createdAt DateTime @default(now())
   recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([recipeId, userId])
 }
