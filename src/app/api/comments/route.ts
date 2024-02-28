@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
       data: {
         recipeId,
         contents,
+        userId: session?.user.id,
       },
     });
     return Response.json(result);

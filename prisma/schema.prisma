@@ -71,11 +71,11 @@ model Recipe {
 model Comment {
   id        Int      @id @default(autoincrement())
   recipeId  Int
-  userId    Int?
+  userId    Int
   contents  String
   createdAt DateTime @default(now())
   recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([recipeId, userId])
 }

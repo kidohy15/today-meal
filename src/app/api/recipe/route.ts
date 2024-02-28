@@ -6,6 +6,8 @@ import { pipeline } from "stream";
 import { promisify } from "util";
 import { writeFile } from "fs/promises";
 import { join } from "path";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 const pump = promisify(pipeline);

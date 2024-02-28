@@ -10,6 +10,8 @@ interface CommentListProps {
 
 export default function CommentList({ comments, refetch }: CommentListProps) {
   const { data: session } = useSession();
+  console.log("=====session======, ",session);
+  console.log("=====comments======, ",comments);
 
   const handleDeleteComment = async (commentId: number) => {
     const confirm = window.confirm("해당 댓글을 삭제하겠습니까?");
@@ -69,15 +71,16 @@ export default function CommentList({ comments, refetch }: CommentListProps) {
             </div>
             <div>
               {/* 삭제는 본인꺼만 가능 */}
-              {/* {comment.userId === session?.user?.id && <button>삭제</button>} */}
-              <button
-                onClick={() => {
-                  handleDeleteComment(comment.id);
-                }}
-                className="text-gray-700 hover:text-gray-500"
-              >
-                삭제
-              </button>
+              {comment.userId === session?.user?.id && (
+                <button
+                  onClick={() => {
+                    handleDeleteComment(comment.id);
+                  }}
+                  className="text-gray-700 hover:text-gray-500"
+                >
+                  삭제
+                </button>
+              )}
             </div>
           </div>
         ))
