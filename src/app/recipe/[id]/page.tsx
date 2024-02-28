@@ -72,7 +72,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="w-full h-screen pt-[96px]">
+    <div className="w-full h-full min-h-[100vh] pt-[96px]">
       <div className="shadow-lg md:max-w-6xl mx-auto h-full px-8 py-12 bg-white border-gray-400 border-2">
         <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           {recipe?.title}

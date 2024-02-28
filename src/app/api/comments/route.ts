@@ -22,6 +22,9 @@ export async function GET(req: Request, context: any) {
     where: {
       recipeId: recipeId ? parseInt(recipeId) : {},
     },
+    include: {
+      user: true,
+    }
   });
   return Response.json(comments);
 }
