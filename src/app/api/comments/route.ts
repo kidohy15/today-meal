@@ -5,7 +5,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
-// 레시피 목록 조회
+// comments 목록 조회
 export async function GET(req: Request, context: any) {
   const { searchParams } = new URL(req.url);
   const { params } = context; // '1'
@@ -24,7 +24,7 @@ export async function GET(req: Request, context: any) {
     },
     include: {
       user: true,
-    }
+    },
   });
   return Response.json(comments);
 }
@@ -63,32 +63,31 @@ export async function POST(req: NextRequest) {
 }
 
 // comment 삭제
-// export async function DELETE(req: Request) {
-//   try {
-//     // const data = await req.json();
+export async function DELETE(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("commentId");
+  console.log("=========== 삭제 searchParams ================", searchParams);
+  try {
+    // const data = await req.json();
 
-//     const { searchParams } = new URL(req.url);
-//     const id = searchParams.get("id");
-//     console.log("=========== 삭제 req ================", req);
-
-//     if (id) {
-//       const result = await prisma.comment.delete({
-//         where: { id: parseInt(id) },
-//       });
-//       return Response.json({
-//         status: 200,
-//         message: "comment deleted successfully",
-//       });
-//     }
-//     return Response.json({
-//       status: 500,
-//       message: "failed",
-//     });
-//   } catch (error) {
-//     console.error("Error deleting comment:", error);
-//     return Response.json({
-//       status: 500,
-//       message: "failed",
-//     });
-//   }
-// }
+    if (id) {
+      const res = await prisma.comment.delete({
+        where: { id: parseInt(id) },
+      });
+      return Response.json({
+        status: 200,
+        message: "comment deleted successfully",
+      });
+    }
+    return Response.json({
+      status: 500,
+      message: "failed",
+    });
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    return Response.json({
+      status: 500,
+      message: "failed",
+    });
+  }
+}

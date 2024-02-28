@@ -14,8 +14,11 @@ export default function Comments({ recipeId }: CommentProps) {
 
   // 레시피 댓글 리스트 가져오기
   const fetchComments = async () => {
+    console.log("=====================");
+    console.log("recipeId", recipeId);
     const res = await axios.get(`/api/comments?recipeId=${recipeId}`);
 
+    console.log("res", res);
     return res;
   };
 
@@ -27,10 +30,12 @@ export default function Comments({ recipeId }: CommentProps) {
   return (
     <div className="py-8 px-2 mb-20 mx-auto">
       {/* 댓글 입력 폼 */}
-      {status === "authenticated" && <CommentForm recipeId={recipeId} />}
+      {status === "authenticated" && (
+        <CommentForm recipeId={recipeId} refetch={refetch} />
+      )}
 
       {/* 댓글 리스트 */}
-      <CommentList comments={comments} />
+      <CommentList comments={comments} refetch={refetch} />
     </div>
   );
 }

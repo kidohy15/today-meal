@@ -119,9 +119,11 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
         </div>
 
         {/* 댓글 */}
-        <div>
-          <Comments recipeId={recipe?.id} />
-        </div>
+        {recipe?.id && (
+          <div>
+            <Comments recipeId={recipe?.id} />
+          </div>
+        )}
       </div>
     </div>
   );

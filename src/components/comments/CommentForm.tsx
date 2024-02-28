@@ -4,9 +4,10 @@ import { toast } from "react-toastify";
 
 interface CommentFormProps {
   recipeId: any;
+  refetch: () => void;
 }
 
-export default function CommentForm({ recipeId }: CommentFormProps) {
+export default function CommentForm({ recipeId, refetch }: CommentFormProps) {
   const {
     register,
     handleSubmit,
@@ -30,6 +31,7 @@ export default function CommentForm({ recipeId }: CommentFormProps) {
           if (res.status === 200) {
             toast.success("댓글을 등록했습니다.");
             resetField("contents");
+            refetch?.();
           } else {
             toast.error("다시 시도해주세요.");
           }
