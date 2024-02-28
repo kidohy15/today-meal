@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import CommentForm from "./CommentForm";
 
 interface CommentProps {
   recipeId: number;
 }
 
 export default function Comments({ recipeId }: CommentProps) {
+  const { status } = useSession();
   const {
     register,
     handleSubmit,
@@ -16,15 +19,15 @@ export default function Comments({ recipeId }: CommentProps) {
   } = useForm();
 
   // 레시피 댓글 리스트 가져오기
-  // const fetchComments = async () => {
-  //   const res = await axios.post(`/api/comments?recipeId=${recipeId}`);
+  const fetchComments = async () => {
+    const res = await axios.get(`/api/comments?recipeId=${recipeId}`);
 
-  //   return res;
-  // };
+    return res;
+  };
 
   const { data: comments, refetch } = useQuery({
     queryKey: [`conments-${recipeId}`],
-    // queryFn: fetchComments,
+    queryFn: fetchComments,
   });
 
   // console.log("comments", comments);
@@ -32,42 +35,9 @@ export default function Comments({ recipeId }: CommentProps) {
   return (
     <div className="py-8 px-2 mb-20 mx-auto">
       {/* 댓글 입력 폼 */}
-      <div className="flex flex-col space-y-4">
-        <form
-          onSubmit={handleSubmit(async (data) => {
-            console.log(data);
-            // 레시피 댓글 등록
-            const res = await axios.post(`/api/comments`, {
-              recipeId,
-              ...data,
-            });
-            console.log("=======================");
-            console.log("res", res);
-
-            if (res.status === 200) {
-              toast.success("댓글을 등록했습니다.");
-              resetField("contents");
-              refetch?.();
-            } else {
-              toast.error("다시 시도해주세요.");
-            }
-          })}
-        >
-          {/* 에러 */}
-          {errors?.body?.type === "required" && (
-            <div className="text-xs text-red-600">필수 입력사항입니다.</div>
-          )}
-          <textarea
-            rows={3}
-            placeholder="댓글을 작성해주세요."
-            {...register("contents", { required: true })}
-            className="block w-full min-h-[120px] resize-none border rounded-md bg-transparent py-2.5 px-4 text-black placeholder:text-gray-400 text-sm leading-6"
-          ></textarea>
-          <button className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 text-sm font-semibold shadow-sm float-right mt-2 rounded-md">
-            작성하기
-          </button>
-        </form>
-      </div>
+      {status === "authenticated" && (
+        <CommentForm recipeId={recipeId} />
+      )}
 
       {/* 댓글 리스트 */}
     </div>

@@ -5,6 +5,27 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
+// 레시피 목록 조회
+export async function GET(req: Request, context: any) {
+  const { searchParams } = new URL(req.url);
+  const { params } = context; // '1'
+  console.log("서버 params", params);
+  console.log("서버 context", context);
+  console.log("서버 searchParams", searchParams);
+
+  const recipeId = searchParams.get("recipeId");
+  // const search = searchParams.get("");
+  console.log("서버 recipeId", recipeId);
+
+  const comments = await prisma.comment.findMany({
+    orderBy: { createdAt: "desc" },
+    where: {
+      recipeId: recipeId ? parseInt(recipeId) : {},
+    },
+  });
+  return Response.json(comments);
+}
+
 // comments 등록
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -22,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     const result = await prisma.comment.create({
       // tobe : 댓글 기능 확인 먼저하려고 임시임 추후 타입 지정해야함
-      // @ts-ignore 
+      // @ts-ignore
       data: {
         recipeId,
         contents,
