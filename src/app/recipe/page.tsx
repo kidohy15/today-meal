@@ -7,10 +7,34 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import SearchFilter from "@/components/SearchFilter";
 import { useSession } from "next-auth/react";
+import { useParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
+interface RecipeListProps {
+  params: { id: string; page: string };
+}
+
+// const RecipeListPage = ({ params }: RecipeListProps) => {
 const RecipeListPage = () => {
   const router = useRouter();
-  // const { data, status } = useSession();
+  // const id = params.id;
+  // const { page="1" }: { page?: string } = params;
+  // const page = params?.page || "1";
+  // const params = useParams()
+  // const { page = "1" }: { page?: string } = params;
+  const searchParams = useSearchParams()
+  const page = searchParams.get('page') ?? "1"
+ 
+  // Route -> /shop/[tag]/[item]
+  // URL -> /shop/shoes/nike-air-max-97
+  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
+  console.log(searchParams)
+
+  console.log("========= params", searchParams);
+  console.log("========= router", router);
+  console.log("========= page", page);
+
+  // const { page = "0 " } = router.query;
   const [writer, setWriter] = useState<any>("");
   const [maskedUsername, setMaskedUsername] = useState("");
 
@@ -22,19 +46,21 @@ const RecipeListPage = () => {
   }, []);
 
   console.log("searchparams 입력값", searchKeyword);
-
+  
   const recipesData = async () => {
-    const result = await axios.get("/api/recipe", {
+    const res = await axios.get(`/api/recipe?page=${page}`, {
       params: {
         searchKeyword: searchKeyword,
       },
     });
-    // const data = result?.data;
+    const result = res?.data;
+    console.log("================= result", result);
+
     return result;
   };
 
   const { data: recipes, isLoading } = useQuery({
-    queryKey: ["recipes", searchKeyword],
+    queryKey: [`recipes-${page}`, searchKeyword],
     queryFn: recipesData,
   }); // 데이터는 data 속성에 있다
 
@@ -77,9 +103,7 @@ const RecipeListPage = () => {
                     </div>
                     <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
                       {recipe.ingredients}
-                      <div className="flex flex-wrap bg-white mt-2">
-
-                      </div>
+                      <div className="flex flex-wrap bg-white mt-2"></div>
                     </div>
                     <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
                       {recipe.contents}

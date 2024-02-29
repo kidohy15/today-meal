@@ -20,25 +20,32 @@ export const config = {
 };
 
 // 레시피 목록 조회
-export async function GET(req: Request, context: any) {
+export async function GET(req: Request, res: Request) {
   // const data = await req.json()
   const { searchParams } = new URL(req.url);
   // const id = params.id
+  console.log("서버=====================");
+  console.log("서버 searchParams", searchParams);
 
   // const searchParams = req.nextUrl.searchParams;
   // const query = searchParams.get("id");
 
   const body = req;
-  const { params } = context; // '1'
-  console.log("서버 params", params);
-  console.log("서버 context", context);
+  // const { params } = context; // '1'
+  // console.log("서버 params", params);
+  // console.log("서버 context", context);
   console.log("서버 searchParams", searchParams);
   // console.log("서버 req", req.url);
 
   const id = searchParams.get("id");
   const search = searchParams.get("searchKeyword");
+  const page = searchParams.get("page") ?? "1";
+  const skipPage = parseInt(page) - 1;
+  const count = await prisma.recipe.count();
   console.log("서버 search", search);
+  console.log("서버 page", page);
 
+  // id 가 있는 경우 상세페이지
   if (id) {
     const data = await prisma.recipe.findFirst({
       where: {
@@ -50,15 +57,25 @@ export async function GET(req: Request, context: any) {
     // res.status(200).json(fetchData);
     return Response.json(data);
   } else {
-    const data = await prisma.recipe.findMany({
+    // 전체 목록 가져오기
+    const recipeData = await prisma.recipe.findMany({
       orderBy: { id: "desc" },
       where: {
         title: search ? { contains: search } : {},
       },
+      take: 10,
+      skip: skipPage * 10,
     });
+    console.log("server res:", res);
 
     // res.status(200).json(fetchData);
-    return Response.json(data);
+    // return Response.json({ })
+    return Response.json({
+      page: parseInt(page),
+      data: recipeData,
+      totalCount: count,
+      totalPage: Math.ceil(count / 10),
+    });
   }
 }
 
@@ -88,7 +105,7 @@ export async function POST(req: NextRequest) {
     await writeFile(path, buffer);
     console.log(`${path}`);
 
-    return NextResponse.json({ success: true})
+    return NextResponse.json({ success: true });
 
     // const file = formData.getAll("files")[0];
     // const filePath = `./public/file/${file.name}`;
