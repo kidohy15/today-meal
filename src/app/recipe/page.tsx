@@ -7,8 +7,10 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import SearchFilter from "@/components/SearchFilter";
 import { useSession } from "next-auth/react";
-import { useParams } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
+import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Pagination from "@/components/Pagination";
 
 interface RecipeListProps {
   params: { id: string; page: string };
@@ -22,13 +24,13 @@ const RecipeListPage = () => {
   // const page = params?.page || "1";
   // const params = useParams()
   // const { page = "1" }: { page?: string } = params;
-  const searchParams = useSearchParams()
-  const page = searchParams.get('page') ?? "1"
- 
+  const searchParams = useSearchParams();
+  const page: any = searchParams.get("page") ?? "1";
+
   // Route -> /shop/[tag]/[item]
   // URL -> /shop/shoes/nike-air-max-97
   // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-  console.log(searchParams)
+  console.log(searchParams);
 
   console.log("========= params", searchParams);
   console.log("========= router", router);
@@ -46,7 +48,7 @@ const RecipeListPage = () => {
   }, []);
 
   console.log("searchparams 입력값", searchKeyword);
-  
+
   const recipesData = async () => {
     const res = await axios.get(`/api/recipe?page=${page}`, {
       params: {
@@ -63,6 +65,8 @@ const RecipeListPage = () => {
     queryKey: [`recipes-${page}`, searchKeyword],
     queryFn: recipesData,
   }); // 데이터는 data 속성에 있다
+
+  const totalPage: any = parseInt(recipes?.totalPage, 10);
 
   // 함수 추가: 작성자 정보를 마스킹 처리
   const maskWriter = (writer: any) => {
@@ -83,13 +87,13 @@ const RecipeListPage = () => {
           레시피 목록
         </h2>
         <SearchFilter setSearchKeyword={setSearchKeyword} />
-        <ul role="list" className="pt-2 divide-y devide-gray-100">
+        <ul role="list" className="pt-2 flex flex-col">
           {isLoading ? (
             <div>로딩중입니다.</div>
           ) : (
             recipes?.data?.map((recipe: any, index: any) => (
               <li
-                className="flex justify-between gap-x-6 h-[160px] py-5 border border-solid border-gray-200 px-4 mb-2 cursor-pointer z-10"
+                className="flex justify-between gap-x-6 h-[160px] py-6 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
                 key={index}
                 onClick={() => router.push(`/recipe/${recipe.id}`)}
               >
@@ -103,18 +107,15 @@ const RecipeListPage = () => {
                     </div>
                     <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
                       {recipe.ingredients}
-                      <div className="flex flex-wrap bg-white mt-2"></div>
                     </div>
                     <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
                       {recipe.contents}
                     </div>
                   </div>
                 </div>
-                <div className="sm:flex sm:flex-col sm:items-end">
+                <div className="flex flex-col items-end">
                   <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
                     {maskWriter(recipe?.writer)}
-                    {/* {recipe.writer} */}
-                    {/* {maskedUsername} */}
                   </div>
                   <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
                     {new Date(recipe?.createdAt)?.toLocaleDateString()}
@@ -124,6 +125,9 @@ const RecipeListPage = () => {
             ))
           )}
         </ul>
+        <div className="py-10">
+          <Pagination page={page} totalPage={totalPage} />
+        </div>
       </div>
     </div>
   );
