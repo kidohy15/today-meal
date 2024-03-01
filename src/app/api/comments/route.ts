@@ -10,22 +10,33 @@ export async function GET(req: Request, context: any) {
   const { searchParams } = new URL(req.url);
   const page = searchParams.get("page") ?? "1";
   const skipPage = parseInt(page) - 1;
-  const count = await prisma.comment.count();
+
   console.log("서버 searchParams", searchParams);
 
   const recipeId = searchParams.get("recipeId");
-  // const search = searchParams.get("");
+  const user = searchParams.get("user");
   console.log("서버 recipeId", recipeId);
-
+  
+  const session = await getServerSession(authOptions);
+  
+  const count = await prisma.comment.count({
+    where: {
+      recipeId: recipeId ? parseInt(recipeId) : {},
+      userId: user ? session?.user.id : {},
+    }
+  });
+  
   const comments = await prisma.comment.findMany({
     orderBy: { createdAt: "desc" },
     where: {
       recipeId: recipeId ? parseInt(recipeId) : {},
+      userId: user ? session?.user.id : {},
     },
     take: 10,
     skip: skipPage * 10,
     include: {
       user: true,
+      recipe: true,
     },
   });
   return Response.json({

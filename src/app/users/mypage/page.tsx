@@ -3,6 +3,11 @@
 import React, { useEffect, useState } from "react";
 // import { useSession } from "next-auth/client";
 import { signOut, useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import CommentList from "@/components/comments/CommentList";
+import Pagination from "@/components/Pagination";
 
 const MyPage = () => {
   const { data, status } = useSession();
@@ -13,8 +18,34 @@ const MyPage = () => {
     setUser(data?.user);
   }, [session]);
 
+  const searchParams = useSearchParams();
+  const page: any = searchParams.get("page") ?? "1";
+
+  // 레시피 댓글 리스트 가져오기
+  const fetchComments = async () => {
+    console.log("=====================");
+    const res = await axios.get(`/api/comments?page=${page}&user=${true}`);
+    console.log("res", res);
+
+    const result = res?.data;
+    console.log("================= result", result);
+
+    return result;
+  };
+
+  const {
+    data: comments,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: [`conments-${page}`],
+    queryFn: fetchComments,
+  });
+
+  const totalPage: any = parseInt(comments?.totalPage, 10);
+
   return (
-    <div className="pt-[96px] h-screen">
+    <div className="pt-[96px] h-full min-h-[100vh]">
       {!session && <p>로그인해주세요</p>}
       {session && (
         <div className="shadow-lg md:max-w-6xl mx-auto h-full px-8 py-12 bg-white border-gray-400 border-2">
@@ -97,6 +128,15 @@ const MyPage = () => {
               댓글 리스트
             </p>
           </div>
+          <CommentList comments={comments} refetch={refetch} checkRecipe={true} />
+          {/* pagination */}
+          {comments?.totalPage && (
+            <Pagination
+              totalPage={totalPage}
+              page={page}
+              pathname={`/users/mypage`}
+            />
+          )}
         </div>
       )}
     </div>

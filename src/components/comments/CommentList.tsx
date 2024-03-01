@@ -1,17 +1,23 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { toast } from "react-toastify";
 
 /* eslint-disable @next/next/no-img-element */
 interface CommentListProps {
   comments: any;
   refetch: () => void;
+  checkRecipe: boolean;
 }
 
-export default function CommentList({ comments, refetch }: CommentListProps) {
+export default function CommentList({
+  comments,
+  refetch,
+  checkRecipe,
+}: CommentListProps) {
   const { data: session } = useSession();
-  console.log("=====session======, ",session);
-  console.log("=====comments======, ",comments);
+  console.log("=====session======, ", session);
+  console.log("=====comments======, ", comments);
 
   const handleDeleteComment = async (commentId: number) => {
     const confirm = window.confirm("해당 댓글을 삭제하겠습니까?");
@@ -68,6 +74,17 @@ export default function CommentList({ comments, refetch }: CommentListProps) {
                 </div>
               </div>
               <div className="mt-1 text-base">{comment.contents}</div>
+              {checkRecipe && comment?.recipe && (
+                <div>
+                  <Link
+                    href={`/recipe/${comment?.recipe.id}`}
+                    className="text-green-700 font-bold"
+                  >
+                    {comment.recipe.title}
+                    <span className="text-black font-thin">로 이동하기</span>
+                  </Link>
+                </div>
+              )}
             </div>
             <div>
               {/* 삭제는 본인꺼만 가능 */}
