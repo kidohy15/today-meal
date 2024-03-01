@@ -126,7 +126,7 @@ const RecipeListPage = () => {
           )}
         </ul>
         <div className="py-10">
-          <Pagination page={page} totalPage={totalPage} />
+          <Pagination page={page} totalPage={totalPage} pathname={`/recipe`} />
         </div>
       </div>
     </div>

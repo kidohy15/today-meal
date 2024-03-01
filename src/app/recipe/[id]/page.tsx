@@ -1,5 +1,6 @@
 "use client";
 
+import Pagination from "@/components/Pagination";
 import Comments from "@/components/comments";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";

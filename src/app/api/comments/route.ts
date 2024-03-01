@@ -8,9 +8,9 @@ const prisma = new PrismaClient();
 // comments 목록 조회
 export async function GET(req: Request, context: any) {
   const { searchParams } = new URL(req.url);
-  const { params } = context; // '1'
-  console.log("서버 params", params);
-  console.log("서버 context", context);
+  const page = searchParams.get("page") ?? "1";
+  const skipPage = parseInt(page) - 1;
+  const count = await prisma.comment.count();
   console.log("서버 searchParams", searchParams);
 
   const recipeId = searchParams.get("recipeId");
@@ -22,11 +22,18 @@ export async function GET(req: Request, context: any) {
     where: {
       recipeId: recipeId ? parseInt(recipeId) : {},
     },
+    take: 10,
+    skip: skipPage * 10,
     include: {
       user: true,
     },
   });
-  return Response.json(comments);
+  return Response.json({
+    data: comments,
+    page: parseInt(page),
+    totalCount: count,
+    totalPage: Math.ceil(count / 10),
+  });
 }
 
 // comments 등록

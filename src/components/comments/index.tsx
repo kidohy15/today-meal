@@ -3,6 +3,8 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
+import Pagination from "../Pagination";
+import { useSearchParams } from "next/navigation";
 
 interface CommentProps {
   recipeId: number;
@@ -12,20 +14,34 @@ export default function Comments({ recipeId }: CommentProps) {
   // 로그인 유무 확인
   const { status } = useSession();
 
+  const searchParams = useSearchParams();
+  const page: any = searchParams.get("page") ?? "1";
+
   // 레시피 댓글 리스트 가져오기
   const fetchComments = async () => {
     console.log("=====================");
     console.log("recipeId", recipeId);
-    const res = await axios.get(`/api/comments?recipeId=${recipeId}`);
-
+    const res = await axios.get(
+      `/api/comments?recipeId=${recipeId}&page=${page}`
+    );
     console.log("res", res);
-    return res;
+
+    const result = res?.data;
+    console.log("================= result", result);
+
+    return result;
   };
 
-  const { data: comments, refetch } = useQuery({
-    queryKey: [`conments-${recipeId}`],
+  const {
+    data: comments,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: [`conments-${recipeId}-${page}`],
     queryFn: fetchComments,
   });
+
+  const totalPage: any = parseInt(comments?.totalPage, 10);
 
   return (
     <div className="py-8 px-2 mb-20 mx-auto">
@@ -36,6 +52,15 @@ export default function Comments({ recipeId }: CommentProps) {
 
       {/* 댓글 리스트 */}
       <CommentList comments={comments} refetch={refetch} />
+
+      {/* pagination */}
+      {comments?.totalPage && (
+        <Pagination
+          totalPage={totalPage}
+          page={page}
+          pathname={`/recipe/${recipeId}`}
+        />
+      )}
     </div>
   );
 }
