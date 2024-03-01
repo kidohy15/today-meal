@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import SecondSlidePage from "./SecondSlidePage";
@@ -19,18 +19,27 @@ import "swiper/css/scrollbar";
 import { Mousewheel, Pagination } from "swiper/modules";
 import Link from "next/link";
 import SecondSlidePage2 from "./SecondSlidePage2";
+import SideNavbar from "./SideNavbar";
 // import { Mousewheel, Pagination } from 'swiper';
 
 const MainSlidePage = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const handleSlideChange = (swiper: any) => {
+    setActiveSlide(swiper.activeIndex);
+  };
+
   return (
     // h-[954px]
     <div className="relative h-full">
+      <SideNavbar activeSlide={activeSlide} />
       <Swiper
         direction={"vertical"}
         slidesPerView={1}
         mousewheel={true}
         modules={[Mousewheel]}
         className="mySwiper"
+        onSlideChange={handleSlideChange}
       >
         <SwiperSlide>
           {/* <div className="flex items-center w-full h-full bg-[#fff]"> images2*/}

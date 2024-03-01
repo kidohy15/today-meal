@@ -172,6 +172,11 @@ table {
   top: 240px;
 }
 
+#sideNavbar .on {
+  color:white;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
+}
+
 
 
 
