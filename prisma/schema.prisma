@@ -47,6 +47,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Comments      Comment[]
+  Recipes       Recipe[]
 }
 
 model VerificationToken {
@@ -64,6 +65,8 @@ model Recipe {
   contents    String?
   writer      String?
   createdAt   DateTime  @default(now())
+  userId      Int?
+  user        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   Comments    Comment[]
 }
 
@@ -75,7 +78,7 @@ model Comment {
   contents  String
   createdAt DateTime @default(now())
   recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([recipeId, userId])
 }

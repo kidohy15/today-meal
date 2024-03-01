@@ -8,6 +8,7 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import CommentList from "@/components/comments/CommentList";
 import Pagination from "@/components/Pagination";
+import RecipeList from "@/components/RecipeList";
 
 const MyPage = () => {
   const { data, status } = useSession();
@@ -24,7 +25,7 @@ const MyPage = () => {
   // 레시피 댓글 리스트 가져오기
   const fetchComments = async () => {
     console.log("=====================");
-    const res = await axios.get(`/api/comments?page=${page}&user=${true}`);
+    const res = await axios.get(`/api/comments?page=${page}&user=true`);
     console.log("res", res);
 
     const result = res?.data;
@@ -85,10 +86,7 @@ const MyPage = () => {
                     width={48}
                     height={48}
                     className="rounded-full w-12 h-12"
-                    src={
-                      session?.data?.user?.image ||
-                      "/images/markers/default.png"
-                    }
+                    src={session?.data?.user?.image || "/images/default.jpg"}
                   />
                 </dd>
               </div>
@@ -117,26 +115,31 @@ const MyPage = () => {
             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
               레시피 리스트
             </p>
+            <RecipeList searchKeyword="" userCheck={true} />
           </div>
 
           {/* 내가 쓴 댓글 */}
-          <div className="mt-8 px-4 sm:px-0">
-            <h3 className="text-base font-semibold leading-7 text-gray-900">
+          {/* <div className="mt-8 px-4 sm:px-0"> */}
+          {/* <h3 className="text-base font-semibold leading-7 text-gray-900">
               내가 쓴 댓글
             </h3>
             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
               댓글 리스트
             </p>
-          </div>
-          <CommentList comments={comments} refetch={refetch} checkRecipe={true} />
+            <CommentList
+              comments={comments}
+              refetch={refetch}
+              checkRecipe={true}
+            /> */}
           {/* pagination */}
-          {comments?.totalPage && (
-            <Pagination
-              totalPage={totalPage}
-              page={page}
-              pathname={`/users/mypage`}
-            />
-          )}
+          {/* {comments?.totalPage && (
+              <Pagination
+                totalPage={totalPage}
+                page={page}
+                pathname={`/users/mypage`}
+              />
+            )} */}
+          {/* </div> */}
         </div>
       )}
     </div>

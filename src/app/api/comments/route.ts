@@ -15,7 +15,7 @@ export async function GET(req: Request, context: any) {
 
   const recipeId = searchParams.get("recipeId");
   const user = searchParams.get("user");
-  console.log("서버 recipeId", recipeId);
+  console.log("서버 comments recipeId", recipeId);
   
   const session = await getServerSession(authOptions);
   

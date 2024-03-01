@@ -102,7 +102,7 @@ export default function CommentList({
           </div>
         ))
       ) : (
-        <div className="p-4 border border-e-gray-200 rounded-md text-sm text-gray-400">
+        <div className="p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
           댓글이 없습니다.
         </div>
       )}

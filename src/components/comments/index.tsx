@@ -50,16 +50,21 @@ export default function Comments({ recipeId }: CommentProps) {
         <CommentForm recipeId={recipeId} refetch={refetch} />
       )}
 
-      {/* 댓글 리스트 */}
-      <CommentList comments={comments} refetch={refetch} />
-
-      {/* pagination */}
-      {comments?.totalPage && (
-        <Pagination
-          totalPage={totalPage}
-          page={page}
-          pathname={`/recipe/${recipeId}`}
-        />
+      {comments && (
+        <div>
+          {/* 댓글 리스트 */}
+          <CommentList
+            comments={comments}
+            refetch={refetch}
+            checkRecipe={false}
+          />
+          {/* pagination */}
+          <Pagination
+            totalPage={totalPage}
+            page={page}
+            pathname={`/recipe/${recipeId}`}
+          />
+        </div>
       )}
     </div>
   );

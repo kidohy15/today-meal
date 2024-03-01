@@ -37,6 +37,9 @@ export async function GET(req: Request, res: Request) {
   console.log("서버 searchParams", searchParams);
   // console.log("서버 req", req.url);
 
+  const session = await getServerSession(authOptions);
+  const user = searchParams.get("user");
+
   const id = searchParams.get("id");
   const search = searchParams.get("searchKeyword");
   const page = searchParams.get("page") ?? "1";
@@ -53,20 +56,35 @@ export async function GET(req: Request, res: Request) {
       },
     });
     console.log("server data:", data);
-
     // res.status(200).json(fetchData);
     return Response.json(data);
   } else {
     // 전체 목록 가져오기
+    
+    const userCheck = searchParams.get("userCheck") ?? null;
+    const session = await getServerSession(authOptions);
+    console.log("server user:", user);
+    console.log("server session:", session);
+
+    const count = await prisma.recipe.count({
+      where: {
+        userId: userCheck ? session?.user.id : {},
+      }
+    });
+
     const recipeData = await prisma.recipe.findMany({
       orderBy: { id: "desc" },
       where: {
         title: search ? { contains: search } : {},
+        userId: userCheck ? session?.user.id : {},
       },
       take: 10,
       skip: skipPage * 10,
+      include: {
+        user: true,
+      },
     });
-    console.log("server res:", res);
+    console.log("server res:", recipeData);
 
     // res.status(200).json(fetchData);
     // return Response.json({ })
@@ -81,6 +99,12 @@ export async function GET(req: Request, res: Request) {
 
 // 레시피 등록
 export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+
+  // 현재 로그인 상태인지 확인
+  if (!session?.user) {
+    return Response.json("======= 유저 없음!!!! =========");
+  }
   // try {
   //   const formData = await req.formData();
   //   const file = formData.getAll("files")[0];
@@ -93,19 +117,19 @@ export async function POST(req: NextRequest) {
 
   // 레시피 등록
   try {
-    // const data = req.body;
+    const data = req.body;
 
-    const formData = await req.formData();
-    const imageFile: File | null = formData.get("imageFile") as unknown as File;
+    // const formData = await req.formData();
+    // const imageFile: File | null = formData.get("imageFile") as unknown as File;
 
-    const bytes = await imageFile.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // const bytes = await imageFile.arrayBuffer();
+    // const buffer = Buffer.from(bytes);
 
-    const path = join("/", "tmp", imageFile.name);
-    await writeFile(path, buffer);
-    console.log(`${path}`);
+    // const path = join("/", "tmp", imageFile.name);
+    // await writeFile(path, buffer);
+    // console.log(`${path}`);
 
-    return NextResponse.json({ success: true });
+    // return NextResponse.json({ success: true });
 
     // const file = formData.getAll("files")[0];
     // const filePath = `./public/file/${file.name}`;
@@ -118,15 +142,15 @@ export async function POST(req: NextRequest) {
     // console.log("=======서버 formData=======", formData);
     // console.log("=======서버 file=======", file);
 
-    // const result = await prisma.recipe.create({
-    //   data: { ...data, file: file },
-    // });
+    const result = await prisma.recipe.create({
+      data: { ...data, userId: session?.user.id },
+    });
 
     // return res.status(200).json(result);
-    // return Response.json({ result });
+    return Response.json(result);
   } catch (error) {
     console.error("Error creating recipe:", error);
-    // return data.status(500).json({ error: "Internal Server Error" });
+    return Response.json(error);
   }
 }
 
