@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/Layout";
-import Navbar from "@/components/Header";
+import Navbar from "@/components/header/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Providers from "./utils/Provider";

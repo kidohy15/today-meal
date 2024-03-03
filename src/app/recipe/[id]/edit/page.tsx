@@ -66,7 +66,7 @@ const EditPage = ({ params }: EditPageProps) => {
   } = useForm<any>();
 
   return (
-    <div className="h-screen pt-[96px]">
+    <div className="h-screen pt-[112px]">
       <div className="flex flex-col h-full items-center justify-center md:max-w-6xl mx-auto bg-white px-8 py-12 shadow-md">
         {/* <div className=" w-[1250px] h-[1250px] bg-[url('/images/301029217_PJ72317.jpg')] bg-cover bg-center"> */}
         <h2 className="block w-full text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">

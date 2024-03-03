@@ -64,7 +64,7 @@ const RecipeNewPage = () => {
   };
 
   return (
-    <div className="w-full h-full pt-[96px]">
+    <div className="w-full h-full pt-[112px]">
       <div className="md:max-w-6xl mx-auto px-8 py-12 h-full shadow-md bg-white items-center">
         <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           레시피 등록

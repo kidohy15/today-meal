@@ -88,7 +88,7 @@ table {
   gap: 12px;
   align-items: center; */
 
-  @apply flex cursor-pointer py-0 px-[22px] gap-x-[12px] items-center text-xl
+  @apply flex cursor-pointer py-0 px-[22px] gap-x-16 items-center text-xl
 }
 
 .navbar__list__item {

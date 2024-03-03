@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <>
       <div className="h-screen ">
-        <div className="h-full pt-[96px]">
+        <div className="h-full pt-[112px]">
           <MainSlidePage />
         </div>
       </div>

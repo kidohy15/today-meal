@@ -61,7 +61,7 @@ const MyPage = () => {
   }
 
   return (
-    <div className="pt-[96px] h-full min-h-[100vh]">
+    <div className="pt-[112px] h-full min-h-[100vh]">
       {!session && <p>로그인해주세요</p>}
       {session && (
         <div className="shadow-lg md:max-w-6xl mx-auto h-full min-h-[100vh] px-8 py-12 bg-white border-gray-400 border-2">

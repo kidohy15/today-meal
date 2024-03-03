@@ -3,7 +3,7 @@
 import React from "react";
 import "./globals.css";
 import Layout from "@/components/Layout";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { SessionProvider } from "next-auth/react";
