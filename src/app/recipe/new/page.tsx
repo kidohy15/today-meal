@@ -130,58 +130,64 @@ const RecipeNewPage = () => {
             }
           })}
         >
-          <div className="mb-14">
-            <label
-              htmlFor="writer"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              {/* 작성자 {data?.user?.email} */}
-              이미지
-            </label>
-            <div onClick={handleImageClick}>
-              <img src="" alt="" width={"20px"} height={"20px"} />
-              {imageFile ? (
-                <img
-                  src={URL.createObjectURL(imageFile)}
-                  alt=""
-                  width={"200px"}
-                  height={"200px"}
+          <div className="flex justify-between pr-16">
+            <div className="mb-14">
+              <label
+                htmlFor="writer"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                {/* 작성자 {data?.user?.email} */}
+                이미지
+              </label>
+              <div onClick={handleImageClick}>
+                <img src="" alt="" width={"20px"} height={"20px"} />
+                {imageFile ? (
+                  <img
+                    src={URL.createObjectURL(imageFile)}
+                    alt=""
+                    width={"200px"}
+                    height={"200px"}
+                  />
+                ) : (
+                  <div className="w-32 h-32 bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                    이미지
+                  </div>
+                )}
+                <input
+                  type="file"
+                  ref={inputRef}
+                  onChange={handleImageChange}
+                  className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-              ) : (
-                <div className="w-32 h-32 bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
-                  이미지
-                </div>
+              </div>
+
+              {errors?.writer?.type === "required" && (
+                <p className="text-xs text-red-500 pt-2">
+                  필수 입력사항입니다.
+                </p>
               )}
-              <input
-                type="file"
-                ref={inputRef}
-                onChange={handleImageChange}
-                className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
             </div>
+            <div className="mb-14">
+              <label
+                htmlFor="writer"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                {/* 작성자 {data?.user?.email} */}
+                작성자 : {maskId}
+              </label>
+              <input
+                id="writer"
+                type="text"
+                value={writer}
+                className="hidden appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
 
-            {errors?.writer?.type === "required" && (
-              <p className="text-xs text-red-500 pt-2">필수 입력사항입니다.</p>
-            )}
-          </div>
-          <div className="mb-14">
-            <label
-              htmlFor="writer"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              {/* 작성자 {data?.user?.email} */}
-              작성자 : {maskId}
-            </label>
-            <input
-              id="writer"
-              type="text"
-              value={writer}
-              className="hidden appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-
-            {errors?.writer?.type === "required" && (
-              <p className="text-xs text-red-500 pt-2">필수 입력사항입니다.</p>
-            )}
+              {errors?.writer?.type === "required" && (
+                <p className="text-xs text-red-500 pt-2">
+                  필수 입력사항입니다.
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="mb-14">

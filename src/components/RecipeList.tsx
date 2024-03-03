@@ -5,13 +5,17 @@ import axios from "axios";
 import Pagination from "./Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import Loader from "./loader";
 
 interface RecipeListProps {
   searchKeyword: string;
   userCheck: boolean | null;
 }
 
-export default function RecipeList({ searchKeyword, userCheck }: RecipeListProps) {
+export default function RecipeList({
+  searchKeyword,
+  userCheck,
+}: RecipeListProps) {
   const router = useRouter();
 
   // const { data } = useSession();
@@ -32,11 +36,14 @@ export default function RecipeList({ searchKeyword, userCheck }: RecipeListProps
 
   const recipesData = async () => {
     if (userCheck) {
-      const res = await axios.get(`/api/recipe?page=${page}&userCheck=${userCheck}`, {
-        params: {
-          searchKeyword: searchKeyword,
-        },
-      });
+      const res = await axios.get(
+        `/api/recipe?page=${page}&userCheck=${userCheck}`,
+        {
+          params: {
+            searchKeyword: searchKeyword,
+          },
+        }
+      );
       const result = res?.data;
       console.log("================= result", result);
 
@@ -54,14 +61,19 @@ export default function RecipeList({ searchKeyword, userCheck }: RecipeListProps
     }
   };
 
-  const { data: recipes, isLoading } = useQuery({
+  const {
+    data: recipes,
+    isLoading,
+    isFetching,
+    isError,
+  } = useQuery({
     queryKey: [`recipes-${pathname}-${page}`, searchKeyword],
     queryFn: recipesData,
   }); // 데이터는 data 속성에 있다
 
   const totalPage: any = parseInt(recipes?.totalPage, 10);
 
-  // 함수 추가: 작성자 정보를 마스킹 처리
+  // 작성자 정보를 마스킹 처리
   const maskWriter = (writer: any) => {
     if (!writer) return ""; // writer가 없을 경우 빈 문자열 반환
 
@@ -74,9 +86,21 @@ export default function RecipeList({ searchKeyword, userCheck }: RecipeListProps
 
   console.log("===========", recipes);
 
+  if (isError) {
+    return (
+      <div className="w-full h-screen mx-auto pt-[10%] text-red-500 text-center font-semibold">
+        다시 시도해주세요
+      </div>
+    );
+  }
+
+  if (isFetching) {
+    return <Loader className="my-[20%]" />;
+  }
+
   if (recipes?.data.length === 0)
     return (
-      <div className="p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
+      <div className="my-[20%] p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
         등록된 레시피가 없습니다.
       </div>
     );
@@ -101,10 +125,10 @@ export default function RecipeList({ searchKeyword, userCheck }: RecipeListProps
                   <div className="text-3xl font-semibold leading-6 text-gray-900 py-2">
                     {recipe.title}
                   </div>
-                  <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
+                  <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
                     {recipe.ingredients}
                   </div>
-                  <div className="mt-1 text-xl truncate font-semibold leading-5 text-gray-500 py-2">
+                  <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
                     {recipe.contents}
                   </div>
                 </div>

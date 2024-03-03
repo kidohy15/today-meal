@@ -41,6 +41,17 @@ export default function CommentList({
     }
   };
 
+  // 작성자 정보를 마스킹 처리
+  const maskWriter = (writer: any) => {
+    if (!writer) return ""; // writer가 없을 경우 빈 문자열 반환
+
+    const atIndex = writer.indexOf("@");
+    const username = writer.slice(0, atIndex);
+    return atIndex !== -1
+      ? username.slice(0, 3) + "*".repeat(username.length - 3)
+      : writer;
+  };
+
   return (
     <div className="my-10">
       {comments?.data && comments?.data?.length > 0 ? (
@@ -67,7 +78,7 @@ export default function CommentList({
             <div className="flex flex-col space-y-1 flex-1">
               <div className="flex gap-2">
                 <div className="font-semibold text-black">
-                  {comment.user?.email ?? "사용자"}
+                  {maskWriter(comment.user?.email) ?? "사용자"}
                 </div>
                 <div className="text-xs">
                   {new Date(comment?.createdAt)?.toLocaleDateString()}

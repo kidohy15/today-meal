@@ -68,8 +68,7 @@ table {
   box-shadow: 0 1px 6px 0 rgba(32,33,36,.28);
   */
 
-
-  @apply flex justify-between items-center fixed shadow-md shadow-slate-900/40 w-full min-w-[1200px] h-[96px] top-0 bg-white font-['Noto_Sans_KR'] font-[600] text-base z-50
+  @apply flex justify-center items-center shadow-md shadow-slate-900/40  h-12  bg-white font-['Noto_Sans_KR'] font-[600] text-base
 }
 
 .navbar__logo {

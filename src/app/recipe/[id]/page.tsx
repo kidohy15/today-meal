@@ -2,6 +2,7 @@
 
 import Pagination from "@/components/Pagination";
 import Comments from "@/components/comments";
+import Loader from "@/components/loader";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -25,7 +26,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   };
   console.log("data 리턴 확인", recipeData);
 
-  const { data: recipe, isLoading } = useQuery({
+  const { data: recipe, isLoading, isFetching } = useQuery({
     queryKey: [`recipe-${id}`],
     queryFn: recipeData,
     enabled: !!id,
@@ -71,6 +72,10 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
       setMaskId(maskedUsername);
     }
   };
+
+  if (isFetching) {
+    return <Loader className="my-[20%]" />;
+  }
 
   return (
     <div className="w-full h-full min-h-[100vh] pt-[96px]">
@@ -118,13 +123,17 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             </button>
           </div>
         </div>
-
-        {/* 댓글 */}
-        {recipe?.id && (
-          <div>
-            <Comments recipeId={recipe?.id} />
-          </div>
-        )}
+        <div className="my-10">
+          <h3 className="px-3 py-2 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
+            댓글
+          </h3>
+          {/* 댓글 */}
+          {recipe?.id && (
+            <div>
+              <Comments recipeId={recipe?.id} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

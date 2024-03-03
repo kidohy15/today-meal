@@ -9,6 +9,7 @@ import { useSearchParams } from "next/navigation";
 import CommentList from "@/components/comments/CommentList";
 import Pagination from "@/components/Pagination";
 import RecipeList from "@/components/RecipeList";
+import Loader from "@/components/loader";
 
 const MyPage = () => {
   const { data, status } = useSession();
@@ -38,6 +39,8 @@ const MyPage = () => {
     data: comments,
     isLoading,
     refetch,
+    isError,
+    isFetching,
   } = useQuery({
     queryKey: [`conments-${page}`],
     queryFn: fetchComments,
@@ -45,16 +48,28 @@ const MyPage = () => {
 
   const totalPage: any = parseInt(comments?.totalPage, 10);
 
+  if (isError) {
+    return (
+      <div className="w-full h-screen mx-auto pt-[10%] text-red-500 text-center font-semibold">
+        다시 시도해주세요
+      </div>
+    );
+  }
+
+  if (isFetching) {
+    return <Loader className="my-[20%]" />;
+  }
+
   return (
     <div className="pt-[96px] h-full min-h-[100vh]">
       {!session && <p>로그인해주세요</p>}
       {session && (
-        <div className="shadow-lg md:max-w-6xl mx-auto h-full px-8 py-12 bg-white border-gray-400 border-2">
+        <div className="shadow-lg md:max-w-6xl mx-auto h-full min-h-[100vh] px-8 py-12 bg-white border-gray-400 border-2">
           <div className="px-4 sm:px-0">
             <h2 className="block text-2xl py-3 px-1 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
               마이 페이지
             </h2>
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+            <p className="mt-5 max-w-2xl text-sm leading-6 text-gray-500">
               사용자 기본정보
             </p>
           </div>
@@ -90,7 +105,7 @@ const MyPage = () => {
                   />
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   설정
                 </dt>
@@ -103,19 +118,16 @@ const MyPage = () => {
                     로그아웃
                   </button>
                 </dd>
-              </div>
+              </div> */}
             </dl>
           </div>
 
           {/* 내가 등록한 레시피 */}
-          <div className="mt-8 px-4 sm:px-0">
-            <h3 className="text-base font-semibold leading-7 text-gray-900">
+          <div className="mt-40 px-4 sm:px-0 ">
+            <h3 className="block py-2 px-3 mb-10 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
               내가 등록한 레시피
             </h3>
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-              레시피 리스트
-            </p>
-            <RecipeList searchKeyword="" userCheck={true} />
+              <RecipeList searchKeyword="" userCheck={true} />
           </div>
 
           {/* 내가 쓴 댓글 */}
