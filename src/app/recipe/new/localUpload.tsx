@@ -6,13 +6,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-// @ts-ignore
-import { v4 as uuidv4 } from "uuid";
-import { getImageProps } from "next/image";
+import e from "express";
 
 const RecipeNewPage = () => {
-  const supabase = useSupabaseClient();
   const [writer, setWriter] = useState<any>("");
   const [maskId, setMaskId] = useState("");
   const [recipeName, setRecipeName] = useState("");
@@ -21,12 +17,10 @@ const RecipeNewPage = () => {
   const [contents, setContents] = useState("");
   const [errIngredients, setErrIngredients] = useState(false);
   const [imageFile, setImageFile] = useState<File>();
-  const [image, setImage] = useState<any>();
 
   const { data: session, status } = useSession();
 
   const router = useRouter();
-  const user = useUser();
 
   useEffect(() => {
     writerId();
@@ -101,36 +95,6 @@ const RecipeNewPage = () => {
     }
   };
 
-  const getImages = async () => {
-    const { data, error } = await supabase.storage
-      .from("images")
-      .list(user?.id + "/", {
-        limit: 100,
-        offset: 0,
-        sortBy: {column:"name", order: "asc"}
-      });
-    
-    if (data !== null) {
-      setImage(data)
-    }
-  };
-
-  const uploadImage = async (e: any) => {
-    let file = e.target.files?.[0];
-
-    console.log("file", file);
-
-    const { data, error } = await supabase.storage
-      .from("images")
-      .upload(user?.id + "/" + uuidv4(), file);
-
-    if (data) {
-      getImages();
-    } else {
-      console.log(error);
-    }
-  };
-
   return (
     <>
       {session ? (
@@ -155,8 +119,7 @@ const RecipeNewPage = () => {
                     id="image"
                     type="file"
                     name="file"
-                    accept="image/png, image/jpg, image/jpeg"
-                    onChange={(e) => uploadImage(e)}
+                    onChange={(e) => setImageFile(e.target.files?.[0])}
                     className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>

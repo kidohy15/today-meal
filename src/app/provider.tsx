@@ -6,7 +6,7 @@ import Layout from "@/components/Layout";
 import Header from "@/components/header/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { SessionProvider } from "next-auth/react";
+import { SessionContext, SessionProvider } from "next-auth/react";
 import Providers from "./utils/Provider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,11 +15,18 @@ import Carousel from "@/components/Carousel";
 import SideNavbar from "@/components/mainPage/SideNavbar";
 import MainSlidePage from "@/components/mainPage/MainSlidePage";
 import Footer from "@/components/Footer";
+import { SessionContextProvider, useUser } from "@supabase/auth-helpers-react";
+import { createClient } from "@supabase/supabase-js"; 
+
 
 interface Props {
   children?: React.ReactNode;
   pageProps?: AppProps;
 }
+
+// @ts-ignore
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+
 
 // const NextProvider = ({ children, pageProps }: Props) => {
 const NextProvider = ({ children }: Props) => {
@@ -28,10 +35,12 @@ const NextProvider = ({ children }: Props) => {
     <Providers>
       {/* <SessionProvider session={session}> */}
       <SessionProvider>
-        {/* <Layout> */}
-        {children}
-        <ToastContainer />
-        {/* </Layout> */}
+        <SessionContextProvider supabaseClient={supabase}>
+          {/* <Layout> */}
+          {children}
+          <ToastContainer />
+          {/* </Layout> */}
+        </SessionContextProvider>
       </SessionProvider>
     </Providers>
   );
