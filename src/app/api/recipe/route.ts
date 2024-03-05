@@ -29,7 +29,6 @@ export async function GET(req: Request, res: Request) {
   // const searchParams = req.nextUrl.searchParams;
   // const query = searchParams.get("id");
 
-  const body = req;
   // const { params } = context; // '1'
   // console.log("서버 params", params);
   // console.log("서버 context", context);
@@ -43,7 +42,7 @@ export async function GET(req: Request, res: Request) {
   const search = searchParams.get("searchKeyword");
   const page = searchParams.get("page") ?? "1";
   const skipPage = parseInt(page) - 1;
-  const count = await prisma.recipe.count();
+  // const count = await prisma.recipe.count();
   console.log("서버 search", search);
   console.log("서버 page", page);
 
@@ -65,9 +64,10 @@ export async function GET(req: Request, res: Request) {
     console.log("server user:", user);
     console.log("server session:", session);
 
+    // const count = await prisma.recipe.count()
     const count = await prisma.recipe.count({
       where: {
-        userId: userCheck ? session?.user.id : {},
+        userId: userCheck ? session?.user?.id : {},
       },
     });
 
@@ -106,20 +106,13 @@ export async function POST(req: NextRequest) {
   }
 
   const formData = await req.formData();
-  const file: File | null = formData.get("file") as unknown as File;
+  const file: any = formData.get("file");
   const title: any = formData.get("title");
-  const ingredients: any = formData.get("contents");
+  const ingredients: any = formData.get("ingredients");
   const contents: any = formData.get("contents");
   console.log("=======등록 서버 files =======", file);
   console.log("=======등록 서버 files =======", title);
   console.log("=======등록 서버 files =======", contents);
-
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-
-  const path = join("./", "public/images", file.name);
-  await writeFile(path, buffer);
-  console.log(`path : ${path}`);
 
   // 레시피 등록
   try {
@@ -128,7 +121,7 @@ export async function POST(req: NextRequest) {
         title,
         ingredients,
         contents,
-        image: file?.name,
+        image: file,
         userId: session?.user.id,
       },
     });

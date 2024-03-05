@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Loader from "./loader";
+import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 interface RecipeListProps {
   searchKeyword: string;
@@ -16,10 +17,8 @@ export default function RecipeList({
   searchKeyword,
   userCheck,
 }: RecipeListProps) {
+  const supabase = useSupabaseClient();
   const router = useRouter();
-
-  // const { data } = useSession();
-  // const [user, setUser] = useState(data?.user);
 
   const searchParams = useSearchParams();
   const page: any = searchParams.get("page") ?? "1";
@@ -27,11 +26,10 @@ export default function RecipeList({
   const [writer, setWriter] = useState<any>("");
   const [maskedUsername, setMaskedUsername] = useState("");
   const [pathname, setPathname] = useState("");
+  const [imagePath, setImagePath] = useState<any>();
 
-  console.log("================= userCheck", userCheck);
   useEffect(() => {
     setPathname(window.location.pathname);
-    console.log("================= pathname", pathname);
   }, []);
 
   const recipesData = async () => {
@@ -45,17 +43,23 @@ export default function RecipeList({
         }
       );
       const result = res?.data;
-      console.log("================= result", result);
+      console.log("======== result =========", result);
+      // setImagePath(getImages(result?.image))
 
       return result;
     } else {
       const res = await axios.get(`/api/recipe?page=${page}`, {
         params: {
           searchKeyword: searchKeyword,
+          userCheck: false,
         },
       });
       const result = res?.data;
-      console.log("================= result", result);
+      console.log("================= result?????", result);
+      console.log("================= result?????", result.data[0].image);
+      const image = "90900995-8eb3-4af5-94fc-4a351e6e1852"
+      // getImages(result.data.image);
+      getImages(image);
 
       return result;
     }
@@ -84,7 +88,38 @@ export default function RecipeList({
       : writer;
   };
 
+  const getImages = async (image: string) => {
+
+    const { data, error } = await supabase.storage
+      .from("images")
+      .download(image);
+      
+    
+    console.log("===== data ======", image);
+    console.log("===== data ======", data);
+
+    if (data) {
+      const blobData = new Blob([data]);
+      // 이제 blobData를 사용할 수 있습니다.
+      // const imageUrl = URL.createObjectURL(blobData);
+      // setImagePath(imageUrl);
+      setImagePath(blobData);
+      const text = URL.createObjectURL(imagePath)
+      console.log("text", text)
+    } else {
+      console.error("Blob data is null.");
+    }
+    // const downloadUrl = URL.createObjectURL(data);
+
+    if (error) {
+      console.error("Error downloading image:", error.message);
+    } else {
+      return data;
+    }
+  };
+
   console.log("===========", recipes);
+  console.log("=====process======", process.env.NEXT_PUBLIC_SUPABASE_URL);
 
   if (isError) {
     return (
@@ -104,7 +139,6 @@ export default function RecipeList({
         등록된 레시피가 없습니다.
       </div>
     );
-
   return (
     <>
       <ul role="list" className="pt-2 flex flex-col">
@@ -118,9 +152,19 @@ export default function RecipeList({
               onClick={() => router.push(`/recipe/${recipe.id}`)}
             >
               <div className="flex gap-x-4">
-                <div className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
-                  이미지
-                </div>
+                {recipe.image ? (
+                  <div>
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/90900995-8eb3-4af5-94fc-4a351e6e1852`}
+                      className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400"
+                      alt="레시피 이미지"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                    이미지
+                  </div>
+                )}
                 <div>
                   <div className="text-3xl font-semibold leading-6 text-gray-900 py-2">
                     {recipe.title}
