@@ -26,7 +26,11 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   };
   console.log("data 리턴 확인", recipeData);
 
-  const { data: recipe, isLoading, isFetching } = useQuery({
+  const {
+    data: recipe,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: [`recipe-${id}`],
     queryFn: recipeData,
     enabled: !!id,
@@ -84,6 +88,10 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           {recipe?.title}
         </h2>
         <div className="flex flex-col p-10">
+          <div>
+            이미지
+            <img src={`${recipe?.imagePath}`} />
+          </div>
           <div className="flex justify-between">
             <div className="mb-8">
               <span className="text-lg font-semibold">작성자</span>

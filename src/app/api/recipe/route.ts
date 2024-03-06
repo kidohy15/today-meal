@@ -22,27 +22,15 @@ const prisma = new PrismaClient();
 export async function GET(req: Request, res: Request) {
   // const data = await req.json()
   const { searchParams } = new URL(req.url);
-  // const id = params.id
-  console.log("서버=====================");
   console.log("서버 searchParams", searchParams);
-
-  // const searchParams = req.nextUrl.searchParams;
-  // const query = searchParams.get("id");
-
-  // const { params } = context; // '1'
-  // console.log("서버 params", params);
-  // console.log("서버 context", context);
-  console.log("서버 searchParams", searchParams);
-  // console.log("서버 req", req.url);
 
   const session = await getServerSession(authOptions);
   const user = searchParams.get("user");
-
   const id = searchParams.get("id");
   const search = searchParams.get("searchKeyword");
   const page = searchParams.get("page") ?? "1";
   const skipPage = parseInt(page) - 1;
-  // const count = await prisma.recipe.count();
+  const userCheck = searchParams.get("userCheck") ?? null;
   console.log("서버 search", search);
   console.log("서버 page", page);
 
@@ -59,18 +47,44 @@ export async function GET(req: Request, res: Request) {
   } else {
     // 전체 목록 가져오기
 
-    const userCheck = searchParams.get("userCheck") ?? null;
-    const session = await getServerSession(authOptions);
     console.log("server user:", user);
+    console.log("server userCheck:", userCheck);
     console.log("server session:", session);
 
-    // const count = await prisma.recipe.count()
-    const count = await prisma.recipe.count({
-      where: {
-        userId: userCheck ? session?.user?.id : {},
-      },
-    });
+    // 내가 등록한 레시피만 가져오기
+    if (session && userCheck) {
+      console.log("server 내가 등록한 목록 가져오기");
+      const count = await prisma.recipe.count({
+        where: {
+          userId: userCheck ? session?.user?.id : {},
+        },
+      });
 
+      const recipeData = await prisma.recipe.findMany({
+        orderBy: { id: "desc" },
+        where: {
+          title: search ? { contains: search } : {},
+          userId: userCheck ? session?.user.id : {},
+        },
+        take: 10,
+        skip: skipPage * 10,
+        include: {
+          user: true,
+        },
+      });
+      console.log("server recipeData:", recipeData);
+
+      return Response.json({
+        page: parseInt(page),
+        data: recipeData,
+        totalCount: count,
+        totalPage: Math.ceil(count / 10),
+      });
+    }
+
+    console.log("server 전체 목록 가져오기");
+
+    const count = await prisma.recipe.count();
     const recipeData = await prisma.recipe.findMany({
       orderBy: { id: "desc" },
       where: {

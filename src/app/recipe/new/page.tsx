@@ -29,7 +29,6 @@ const RecipeNewPage = () => {
   const router = useRouter();
   const user = useUser();
 
-
   useEffect(() => {
     writerId();
   }, [imageName]);
@@ -65,14 +64,11 @@ const RecipeNewPage = () => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
 
-    const uuid = uuidv4()
-    setImageName(uuid)
+    console.log("imageName!!!!!!!!", imageName);
     if (!imageFile) return;
 
     try {
-
-      console.log("uuid!!!!!!!!", uuid);
-      console.log("uuid!!!!!!!!", imageName);
+      console.log("확인!!!!!!!!", imageName);
 
       const data = new FormData();
       data.set("file", imageName);
@@ -99,9 +95,9 @@ const RecipeNewPage = () => {
       console.log("result!!!!!!!!", res);
       if (res.status === 200) {
         // 레시피 등록 성공
-        await storageUpload(imageFile, uuid);
+        await storageUpload(imageFile, imageName);
         toast.success("레시피를 등록했습니다.");
-        router.replace(`/recipe/${res?.data?.result?.id}`);
+        router.replace(`/recipe/${res?.data?.data?.id}`);
       } else {
         // 레시피 등록 실패
         toast.error("다시 시도해주세요.");
@@ -112,12 +108,10 @@ const RecipeNewPage = () => {
     }
   };
 
-
-  const storageUpload = async (file: File, uuid: string) => {
-
+  const storageUpload = async (file: File, imageName: string) => {
     const { data, error } = await supabase.storage
       .from("images")
-      .upload(`${uuid}`, file);
+      .upload(`${imageName}`, file);
 
     console.log("data?????", data);
 
@@ -142,6 +136,13 @@ const RecipeNewPage = () => {
     let file = e.target.files?.[0];
     setImageFile(file);
     console.log("file", file);
+
+    const uuid = uuidv4();
+    typeof uuid;
+    setImageName(uuid);
+    console.log("imageName!!!!!!!!", uuid);
+    console.log("imageName!!!!!!!!", typeof uuid);
+    console.log("imageName!!!!!!!!", imageName);
   };
 
   return (

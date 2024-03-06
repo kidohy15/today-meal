@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import SearchFilter from "./SearchFilter";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -27,10 +28,12 @@ export default function RecipeList({
   const [maskedUsername, setMaskedUsername] = useState("");
   const [pathname, setPathname] = useState("");
   const [imagePath, setImagePath] = useState<any>();
+  const imgUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/images/";
 
   useEffect(() => {
     setPathname(window.location.pathname);
-  }, []);
+  }, [imagePath]);
 
   const recipesData = async () => {
     if (userCheck) {
@@ -44,24 +47,55 @@ export default function RecipeList({
       );
       const result = res?.data;
       console.log("======== result =========", result);
-      // setImagePath(getImages(result?.image))
 
       return result;
     } else {
       const res = await axios.get(`/api/recipe?page=${page}`, {
         params: {
           searchKeyword: searchKeyword,
-          userCheck: false,
+          // userCheck: false,
         },
       });
-      const result = res?.data;
-      console.log("================= result?????", result);
-      console.log("================= result?????", result.data[0].image);
-      const image = "90900995-8eb3-4af5-94fc-4a351e6e1852"
-      // getImages(result.data.image);
-      getImages(image);
+      const results = res?.data;
+      console.log("================= result?????1", results);
+      console.log("================= result?????2", results.data[0].image);
 
-      return result;
+      // const result = [...results].map((res) => {
+      //   console.log("================= res.data.image?????1", res.data.image);
+      //   const imageName = getImages(res.data.image);
+      //   console.log("================= imageName?????1", imageName);
+      //   return imageName;
+      // });
+      // console.log("================= result?????1", result);
+
+      // 이미지 경로를 가져오고 결과에 추가
+      const resultsWithImagePath = await Promise.all(
+        results.data.map(async (result: any) => {
+          const imageName = (await getImages(result.image)) ?? null;
+          return { ...result, imagePath: imageName };
+        })
+      );
+
+      console.log(
+        "================= resultsWithImagePath?????1",
+        resultsWithImagePath
+      );
+
+      return resultsWithImagePath;
+
+      // const result = await makeData(results)
+
+      // const result = [...results].map((res) => {
+      //   console.log("================= res.data.image?????1", res.data.image);
+      //   const imageName = getImages(res.data.image);
+      //   console.log("================= imageName?????1", imageName);
+      //   return imageName
+      // })
+      // console.log("================= result?????1", result);
+      // getImages(result.data[0].image);
+      // getImages(image);
+
+      // return result;
     }
   };
 
@@ -89,37 +123,46 @@ export default function RecipeList({
   };
 
   const getImages = async (image: string) => {
-
-    const { data, error } = await supabase.storage
+    const { data } = await supabase.storage
       .from("images")
-      .download(image);
-      
-    
-    console.log("===== data ======", image);
-    console.log("===== data ======", data);
+      // .getPublicUrl(imgUrl + image)
+      .getPublicUrl(image);
+    // .download(image);
 
-    if (data) {
-      const blobData = new Blob([data]);
-      // 이제 blobData를 사용할 수 있습니다.
-      // const imageUrl = URL.createObjectURL(blobData);
-      // setImagePath(imageUrl);
-      setImagePath(blobData);
-      const text = URL.createObjectURL(imagePath)
-      console.log("text", text)
-    } else {
-      console.error("Blob data is null.");
-    }
+    console.log("===== data ======", image);
+    console.log("===== data ======", data.publicUrl);
+
+    // setImagePath(data.publicUrl);
+    return data.publicUrl;
+    // if (data) {
+    //   // const imageUrl = URL.createObjectURL(blobData);
+    //   // setImagePath(imageUrl);
+    //   // const blobData = new Blob([data]);
+    //   // setImagePath(blobData);
+    //   const text = URL.createObjectURL(imagePath);
+    //   console.log("text", text);
+    // } else {
+    //   console.error("Blob data is null.");
+    // }
     // const downloadUrl = URL.createObjectURL(data);
 
-    if (error) {
-      console.error("Error downloading image:", error.message);
-    } else {
-      return data;
-    }
+    // if (error) {
+    //   console.error("Error downloading image:", error.message);
+    // } else {
+    //   return data;
+    // }
   };
 
-  console.log("===========", recipes);
-  console.log("=====process======", process.env.NEXT_PUBLIC_SUPABASE_URL);
+  // const makeData = async (results:any) => {
+  //   console.log("================= res.data.image?????1", results.data.image);
+  //   const result = [...results].map((res) => {
+  //     console.log("================= res.data.image?????1", res.data.image);
+  //     const imageName = getImages(res.data.image);
+  //     console.log("================= imageName?????1", imageName);
+  //     return imageName
+  //   })
+  //   console.log("================= result?????1", result);
+  // }
 
   if (isError) {
     return (
@@ -133,7 +176,7 @@ export default function RecipeList({
     return <Loader className="my-[20%]" />;
   }
 
-  if (recipes?.data.length === 0)
+  if (recipes?.length === 0)
     return (
       <div className="my-[20%] p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
         등록된 레시피가 없습니다.
@@ -145,17 +188,17 @@ export default function RecipeList({
         {isLoading ? (
           <div>로딩중입니다.</div>
         ) : (
-          recipes?.data?.map((recipe: any, index: any) => (
+          recipes?.map((recipe: any, index: any) => (
             <li
               className="flex justify-between gap-x-6 h-[160px] py-6 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
               key={index}
               onClick={() => router.push(`/recipe/${recipe.id}`)}
             >
               <div className="flex gap-x-4">
-                {recipe.image ? (
+                {recipe?.image ? (
                   <div>
                     <img
-                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/90900995-8eb3-4af5-94fc-4a351e6e1852`}
+                      src={`${recipe.imagePath}`}
                       className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400"
                       alt="레시피 이미지"
                     />
