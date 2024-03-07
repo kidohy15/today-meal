@@ -69,13 +69,14 @@ export default function Openai() {
     setIngredients([]);
   };
 
-  // isOpen 상태를 토글하여 사이드바를 열고 닫는다
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+  const handleOnKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      handleAddIngredient(); // Enter 입력이 되면 재료 추가 실행
+    }
   };
 
   return (
-    <div className="relative flex justify-center items-center w-full h-full min-h-[100vh] pt-[112px]">
+    <div className="relative flex justify-center items-center w-full h-full min-h-[100vh] pt-[112px] ">
       {/* {true ? ( */}
       {isLoading ? (
         <div className="h-[100vh] w-[100vw] bg-white text-center">
@@ -94,7 +95,7 @@ export default function Openai() {
           </div>
         </div>
       ) : (
-        <div className="w-full md:max-w-6xl h-full  bg-white">
+        <div className="w-full md:max-w-6xl h-full min-h-[100vh] bg-white shadow-md">
           <div className="px-8 py-12">
             <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
               레시피 추천받기
@@ -102,18 +103,10 @@ export default function Openai() {
           </div>
           <div className="w-full min-h-[920px] items-center justify-center px-10">
             <div className="mx-auto flex flex-col justify-center">
-              <div className="p-3">
-                <span className="">선택한 재료</span>
-                <div className="flex flex-wrap bg-white w-[300px] mt-2">
-                  {ingredients?.map((ingredients: any, index: any) => (
-                    <div key={index} className="p-1 m-1 bg-slate-50 rounded-md">
-                      {ingredients}
-                    </div>
-                  ))}
-                </div>
-              </div>
               <div className="text-center w-full mx-auto h-[30%]">
-                <h1 className="p-3">이곳에 재료를 입력해주세요</h1>
+                <span className="p-3 text-2xl font-semibold text-stone-500">
+                  이곳에 재료를 입력해주세요
+                </span>
                 <div className="m-7 bg-orange-100 flex">
                   <input
                     type="text"
@@ -121,6 +114,7 @@ export default function Openai() {
                     placeholder="재료를 입력해주세요"
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
+                    onKeyDown={handleOnKeyPress}
                   />
                   <button
                     className="w-[120px] p-2 m-1 "
@@ -129,21 +123,39 @@ export default function Openai() {
                     추가하기
                   </button>
                 </div>
-                <div className="flex justify-center">
-                  <button
-                    className="p-3 m-1 bg-pink-200"
-                    onClick={handleRecipe}
-                  >
-                    오늘의 레시피 제작 GO!
-                  </button>
+              </div>
+              <div className="p-5">
+                <span className="text-md font-semibold text-stone-500 ">
+                  선택한 재료
+                </span>
+                <div className="flex flex-wrap min-h-[50px] w-full mt-2 items-center shadow-sm border-solid border-2 border-zinc-200">
+                  {ingredients?.map((ingredients: any, index: any) => (
+                    <div
+                      key={index}
+                      className="p-2 m-2 bg-gray-100 rounded-md border-solid border-2 border-amber-900"
+                    >
+                      {ingredients}
+                    </div>
+                  ))}
                 </div>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  className="w-76 h-12 text-lg font-medium p-3 m-1 shadow-md rounded-md bg-rose-200 hover:bg-rose-300 transition duration-300 ease-in-out"
+                  onClick={handleRecipe}
+                >
+                  오늘의 레시피 제작 <span>GO!</span>
+                </button>
               </div>
             </div>
 
-            <div className="w-full h-[980px] mt-[5%] mb-5">
-              <div className="bg-black w-full h-full bg-no-repeat">
-                {isOpen && (
-                  <div className="m-1 py-20 px-16 h-full text-white font-serif text-lg leading-7">
+            <div className="w-full min-h-[300px] mt-[5%] mb-20 p-5">
+              <span className="inline-block m-2 text-stone-500 font-semibold">
+                레시피
+              </span>
+              <div className="w-full h-full shadow-sm border-solid border-2 border-zinc-200">
+                {isOpen ? (
+                  <div className="m-3 py-20 px-16 h-full text-stone-900 font-sans text-lg leading-7">
                     {chatHistory.map((message: any, index: any) => (
                       <div
                         key={index}
@@ -156,6 +168,10 @@ export default function Openai() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                ) : (
+                  <div className="h-[200px] text-center flex items-center justify-center text-zinc-500">
+                    현재 작성된 레시피가 없습니다.
                   </div>
                 )}
               </div>
