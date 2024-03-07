@@ -19,14 +19,11 @@ export default function CommentForm({ recipeId, refetch }: CommentFormProps) {
     <div className="flex flex-col space-y-4">
       <form
         onSubmit={handleSubmit(async (data) => {
-          console.log(data);
           // 레시피 댓글 등록
           const res = await axios.post(`/api/comments`, {
             recipeId,
             ...data,
           });
-          console.log("=======================");
-          console.log("res", res);
 
           if (res.status === 200) {
             toast.success("댓글을 등록했습니다.");

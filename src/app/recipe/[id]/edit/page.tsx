@@ -44,12 +44,8 @@ const EditPage = ({ params }: EditPageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, recipe]);
 
-  console.log("edit recipe", recipe);
-  console.log("isSuccess", isSuccess);
-
   // if (isSuccess) {
   //   (recipe: any) => {
-  //     console.log("recipe", recipe);
   //     setValue("writer", recipe.writer);
   //     setValue("title", recipe.title);
   //     setValue("createdAt", recipe.createdAt);
@@ -75,11 +71,8 @@ const EditPage = ({ params }: EditPageProps) => {
         <form
           className="bg-white h-full rounded px-8 pt-6 pb-8 mb-4 w-full bottom-0"
           onSubmit={handleSubmit(async (data) => {
-            console.log(data);
-
             try {
               const result = await axios.put("/api/recipe", data);
-              console.log("result~~~~", result);
 
               if (result.status === 200) {
                 // 레시피 등록 성공

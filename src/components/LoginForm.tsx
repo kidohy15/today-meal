@@ -24,7 +24,6 @@ export default function LoginForm() {
     <form
       className=" rounded px-0 py-2 my-4 w-full h-[680px] mx-auto bottom-0"
       onSubmit={handleSubmit(async (data) => {
-        console.log("로그인 data", data);
         try {
           // const result = await axios.get("/api/auth/users", data);
 
@@ -37,8 +36,6 @@ export default function LoginForm() {
             return;
           }
           router.replace("/");
-
-          console.log("result!!!!!!!!", result);
 
           // if (result.status === 200) {
           //   // 로그인 성공

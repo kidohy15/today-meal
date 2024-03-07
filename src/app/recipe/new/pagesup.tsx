@@ -34,7 +34,6 @@ const RecipeNewPage = () => {
       const username = email.slice(0, atIndex);
       const maskedUsername =
         username.slice(0, 3) + "*".repeat(username.length - 3);
-      console.log("maskedUsername", maskedUsername);
       setMaskId(maskedUsername);
     }
   };
@@ -53,38 +52,28 @@ const RecipeNewPage = () => {
 
   const handleImageClick = () => {
     inputRef.current;
-    console.log("inputRef.current", inputRef.current);
   };
 
   const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     setImageFile(file);
-    console.log("file", file.name);
-    console.log("ImageFile", imageFile);
   };
 
   const handleSubmitAction = async (formData: any) => {
     // 이미지 파일을 formData에 추가
     const formDataWithImage = new FormData();
     formDataWithImage.append("imageFile", imageFile);
-    console.log("레시피 등록 formDataWithImage1", formDataWithImage);
 
     // 기존의 form 데이터를 formData에 추가
     // Object.entries(formData).forEach(([key, value]) => {
     //   formDataWithImage.append(key, value);
     // });
 
-    console.log("레시피============1");
     // formDataWithImage.forEach((value, key) => {
-    //   console.log(key, value);
     // });
-    console.log("레시피============2");
 
-    console.log("레시피 등록 data", formData);
     let dataIngre = formData.ingredients;
-    console.log("레시피 등록 formDataWithImage2", formDataWithImage);
-    console.log("레시피 등록 ingredients", ingredients);
-    console.log("레시피 등록 ingredients", dataIngre);
+
     try {
       if (ingredients.length < 1) {
         setErrIngredients(true);
@@ -105,7 +94,6 @@ const RecipeNewPage = () => {
         }
       );
 
-      console.log("result!!!!!!!!", result);
       if (result.status === 203) {
         // 레시피 등록 성공
         toast.success("레시피를 등록했습니다.");

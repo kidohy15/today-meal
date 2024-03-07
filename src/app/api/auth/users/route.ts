@@ -9,8 +9,6 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
   const userData = await req.json();
-  console.log("=======================");
-  console.log("userData", userData);
   const email = userData.email;
   const password = userData.password;
 
@@ -29,7 +27,6 @@ export async function POST(req: Request) {
   // 회원가입 유저 등록
   try {
     const userData = await req.json();
-    console.log("=========== 회원가입 =============", userData);
     const email = userData.email;
     const password = userData.password;
 

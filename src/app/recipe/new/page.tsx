@@ -41,7 +41,6 @@ const RecipeNewPage = () => {
       const username = email.slice(0, atIndex);
       const maskedUsername =
         username.slice(0, 3) + "*".repeat(username.length - 3);
-      console.log("maskedUsername", maskedUsername);
       setMaskId(maskedUsername);
     }
   };
@@ -55,33 +54,21 @@ const RecipeNewPage = () => {
   // const handleImageChange = (event: any) => {
   //   const file = event.target.files[0];
   //   setImageFile(file);
-  //   console.log("file", file);
-  //   console.log("file", file.name);
-  //   console.log("ImageFile", imageFile);
   // };
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
-
-    console.log("imageName!!!!!!!!", imageName);
     if (!imageFile) return;
 
     try {
-      console.log("확인!!!!!!!!", imageName);
-
       const data = new FormData();
       data.set("file", imageName);
       data.set("title", recipeName);
       data.set("writer", writer);
       data.set("ingredients", ingredients);
       data.set("contents", contents);
-      console.log("data!!!!!!!!", data);
-      console.log("imageName!!!!!!!!", imageName);
-      console.log("data!!!!!!!!", recipeName);
-      console.log("data!!!!!!!!", writer);
-      console.log("data!!!!!!!!", ingredients);
-      console.log("data!!!!!!!!", contents);
+
       // if (ingredients.length < 1) {
       //   setErrIngredients(true);
       //   toast.error("하나 이상의 재료를 입력해주세요.");
@@ -92,7 +79,6 @@ const RecipeNewPage = () => {
 
       // if(!res.ok) throw new Error(await res.text())
 
-      console.log("result!!!!!!!!", res);
       if (res.status === 200) {
         // 레시피 등록 성공
         await storageUpload(imageFile, imageName);
@@ -112,8 +98,6 @@ const RecipeNewPage = () => {
     const { data, error } = await supabase.storage
       .from("images")
       .upload(`${imageName}`, file);
-
-    console.log("data?????", data);
 
     if (data) {
       // getImages();
@@ -135,14 +119,10 @@ const RecipeNewPage = () => {
   const uploadImage = async (e: any) => {
     let file = e.target.files?.[0];
     setImageFile(file);
-    console.log("file", file);
 
     const uuid = uuidv4();
     typeof uuid;
     setImageName(uuid);
-    console.log("imageName!!!!!!!!", uuid);
-    console.log("imageName!!!!!!!!", typeof uuid);
-    console.log("imageName!!!!!!!!", imageName);
   };
 
   return (

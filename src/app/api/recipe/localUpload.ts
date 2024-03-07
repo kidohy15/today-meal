@@ -30,9 +30,6 @@ export async function GET(req: Request, res: Request) {
   // const query = searchParams.get("id");
 
   const body = req;
-  // const { params } = context; // '1'
-  // console.log("서버 params", params);
-  // console.log("서버 context", context);
   console.log("서버 searchParams", searchParams);
   // console.log("서버 req", req.url);
 

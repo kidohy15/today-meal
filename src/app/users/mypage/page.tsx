@@ -25,12 +25,8 @@ const MyPage = () => {
 
   // 레시피 댓글 리스트 가져오기
   const fetchComments = async () => {
-    console.log("=====================");
     const res = await axios.get(`/api/comments?page=${page}&user=true`);
-    console.log("res", res);
-
     const result = res?.data;
-    console.log("================= result", result);
 
     return result;
   };
@@ -127,7 +123,7 @@ const MyPage = () => {
             <h3 className="block py-2 px-3 mb-10 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
               내가 등록한 레시피
             </h3>
-              <RecipeList searchKeyword="" userCheck={true} />
+            <RecipeList searchKeyword="" userCheck={true} />
           </div>
 
           {/* 내가 쓴 댓글 */}

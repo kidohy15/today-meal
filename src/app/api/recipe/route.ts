@@ -22,7 +22,6 @@ const prisma = new PrismaClient();
 export async function GET(req: Request, res: Request) {
   // const data = await req.json()
   const { searchParams } = new URL(req.url);
-  console.log("서버 searchParams", searchParams);
 
   const session = await getServerSession(authOptions);
   const user = searchParams.get("user");
@@ -31,8 +30,6 @@ export async function GET(req: Request, res: Request) {
   const page = searchParams.get("page") ?? "1";
   const skipPage = parseInt(page) - 1;
   const userCheck = searchParams.get("userCheck") ?? null;
-  console.log("서버 search", search);
-  console.log("서버 page", page);
 
   // id 가 있는 경우 상세페이지
   if (id) {
@@ -45,11 +42,7 @@ export async function GET(req: Request, res: Request) {
     // res.status(200).json(fetchData);
     return Response.json(data);
   } else {
-    // 전체 목록 가져오기
-
-    console.log("server user:", user);
-    console.log("server userCheck:", userCheck);
-    console.log("server session:", session);
+    // 목록 가져오기
 
     // 내가 등록한 레시피만 가져오기
     if (session && userCheck) {
@@ -124,9 +117,6 @@ export async function POST(req: NextRequest) {
   const title: any = formData.get("title");
   const ingredients: any = formData.get("ingredients");
   const contents: any = formData.get("contents");
-  console.log("=======등록 서버 files =======", file);
-  console.log("=======등록 서버 files =======", title);
-  console.log("=======등록 서버 files =======", contents);
 
   // 레시피 등록
   try {
@@ -142,7 +132,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, data: res });
 
     // const files = formData.getAll('image')[0]
-    // console.log("=======등록 서버 files=======", files);
     // const imageFile: File | null = formData.get("imageFile") as unknown as File;
 
     // const bytes = await imageFile.arrayBuffer();
@@ -150,7 +139,6 @@ export async function POST(req: NextRequest) {
 
     // const path = join("/", "tmp", imageFile.name);
     // await writeFile(path, buffer);
-    // console.log(`${path}`);
 
     // return NextResponse.json({ success: true });
 
@@ -161,9 +149,6 @@ export async function POST(req: NextRequest) {
 
     // const { data: recipe } = await req.json();
     // const data = await req.json();
-    // // console.log("=======서버 data=======", recipe);
-    // console.log("=======서버 formData=======", formData);
-    // console.log("=======서버 file=======", file);
 
     // const result = await prisma.recipe.create({
     //   data: { ...data, userId: session?.user.id },
@@ -206,7 +191,6 @@ export async function DELETE(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
-    console.log("=========== 삭제 req ================", req);
 
     if (id) {
       const result = await prisma.recipe.delete({

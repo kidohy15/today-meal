@@ -16,17 +16,13 @@ export default function CommentList({
   checkRecipe,
 }: CommentListProps) {
   const { data: session } = useSession();
-  console.log("=====session======, ", session);
-  console.log("=====comments======, ", comments);
 
   const handleDeleteComment = async (commentId: number) => {
     const confirm = window.confirm("해당 댓글을 삭제하겠습니까?");
 
     if (confirm) {
       try {
-        console.log("삭제 시작!");
         const res = await axios.delete(`/api/comments?commentId=${commentId}`);
-        console.log("res", res);
 
         if (res.status === 200) {
           toast.success("댓글을 삭제했습니다.");

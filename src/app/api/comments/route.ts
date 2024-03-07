@@ -11,21 +11,18 @@ export async function GET(req: Request, context: any) {
   const page = searchParams.get("page") ?? "1";
   const skipPage = parseInt(page) - 1;
 
-  console.log("서버 searchParams", searchParams);
-
   const recipeId = searchParams.get("recipeId");
   const user = searchParams.get("user");
-  console.log("서버 comments recipeId", recipeId);
-  
+
   const session = await getServerSession(authOptions);
-  
+
   const count = await prisma.comment.count({
     where: {
       recipeId: recipeId ? parseInt(recipeId) : {},
       userId: user ? session?.user.id : {},
-    }
+    },
   });
-  
+
   const comments = await prisma.comment.findMany({
     orderBy: { createdAt: "desc" },
     where: {
@@ -59,8 +56,6 @@ export async function POST(req: NextRequest) {
   // comments 등록
   try {
     const { recipeId, contents } = await req.json();
-    console.log("======= 서버 data =======", recipeId);
-    console.log("======= 서버 data =======", contents);
 
     const result = await prisma.comment.create({
       // tobe : 댓글 기능 확인 먼저하려고 임시임 추후 타입 지정해야함
@@ -85,7 +80,6 @@ export async function POST(req: NextRequest) {
 export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("commentId");
-  console.log("=========== 삭제 searchParams ================", searchParams);
   try {
     // const data = await req.json();
 

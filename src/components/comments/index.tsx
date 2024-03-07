@@ -19,15 +19,11 @@ export default function Comments({ recipeId }: CommentProps) {
 
   // 레시피 댓글 리스트 가져오기
   const fetchComments = async () => {
-    console.log("=====================");
-    console.log("recipeId", recipeId);
     const res = await axios.get(
       `/api/comments?recipeId=${recipeId}&page=${page}`
     );
-    console.log("res", res);
 
     const result = res?.data;
-    console.log("================= result", result);
 
     return result;
   };

@@ -34,7 +34,6 @@ const RecipeNewPage = () => {
       const username = email.slice(0, atIndex);
       const maskedUsername =
         username.slice(0, 3) + "*".repeat(username.length - 3);
-      console.log("maskedUsername", maskedUsername);
       setMaskId(maskedUsername);
     }
   };

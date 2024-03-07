@@ -22,7 +22,6 @@ export default function Signupform() {
         email: email,
         password: password,
       });
-      console.log("result!!!!!!!!", result);
 
       if (result.status === 200) {
         // 회원가입 성공

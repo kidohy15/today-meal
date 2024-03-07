@@ -46,27 +46,15 @@ export default function RecipeList({
         }
       );
       const result = res?.data;
-      console.log("======== result =========", result);
 
       return result;
     } else {
       const res = await axios.get(`/api/recipe?page=${page}`, {
         params: {
           searchKeyword: searchKeyword,
-          // userCheck: false,
         },
       });
       const results = res?.data;
-      console.log("================= result?????1", results);
-      console.log("================= result?????2", results.data[0].image);
-
-      // const result = [...results].map((res) => {
-      //   console.log("================= res.data.image?????1", res.data.image);
-      //   const imageName = getImages(res.data.image);
-      //   console.log("================= imageName?????1", imageName);
-      //   return imageName;
-      // });
-      // console.log("================= result?????1", result);
 
       // 이미지 경로를 가져오고 결과에 추가
       const resultsWithImagePath = await Promise.all(
@@ -76,26 +64,7 @@ export default function RecipeList({
         })
       );
 
-      console.log(
-        "================= resultsWithImagePath?????1",
-        resultsWithImagePath
-      );
-
       return resultsWithImagePath;
-
-      // const result = await makeData(results)
-
-      // const result = [...results].map((res) => {
-      //   console.log("================= res.data.image?????1", res.data.image);
-      //   const imageName = getImages(res.data.image);
-      //   console.log("================= imageName?????1", imageName);
-      //   return imageName
-      // })
-      // console.log("================= result?????1", result);
-      // getImages(result.data[0].image);
-      // getImages(image);
-
-      // return result;
     }
   };
 
@@ -123,46 +92,10 @@ export default function RecipeList({
   };
 
   const getImages = async (image: string) => {
-    const { data } = await supabase.storage
-      .from("images")
-      // .getPublicUrl(imgUrl + image)
-      .getPublicUrl(image);
-    // .download(image);
+    const { data } = await supabase.storage.from("images").getPublicUrl(image);
 
-    console.log("===== data ======", image);
-    console.log("===== data ======", data.publicUrl);
-
-    // setImagePath(data.publicUrl);
     return data.publicUrl;
-    // if (data) {
-    //   // const imageUrl = URL.createObjectURL(blobData);
-    //   // setImagePath(imageUrl);
-    //   // const blobData = new Blob([data]);
-    //   // setImagePath(blobData);
-    //   const text = URL.createObjectURL(imagePath);
-    //   console.log("text", text);
-    // } else {
-    //   console.error("Blob data is null.");
-    // }
-    // const downloadUrl = URL.createObjectURL(data);
-
-    // if (error) {
-    //   console.error("Error downloading image:", error.message);
-    // } else {
-    //   return data;
-    // }
   };
-
-  // const makeData = async (results:any) => {
-  //   console.log("================= res.data.image?????1", results.data.image);
-  //   const result = [...results].map((res) => {
-  //     console.log("================= res.data.image?????1", res.data.image);
-  //     const imageName = getImages(res.data.image);
-  //     console.log("================= imageName?????1", imageName);
-  //     return imageName
-  //   })
-  //   console.log("================= result?????1", result);
-  // }
 
   if (isError) {
     return (

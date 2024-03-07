@@ -13,9 +13,6 @@
 //     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 //   });
 
-//   console.log("req", req);
-//   console.log("process.env.NEXT_PUBLIC_OPENAI_API_KEY", process.env.NEXT_PUBLIC_OPENAI_API_KEY);
-
 //   const userInput = req.body.userInput; // Example: Assuming the user input is sent in the request body
 //   const chatHistory = req.body.chatHistory;
 

@@ -19,9 +19,6 @@ export default function Pagination({
   // 현재 페이지가 속한 네비게이션 그룹 계산
   const currentPageNavi = Math.ceil(currentPage / pageNaviSize);
 
-  console.log("currentPageNavi", currentPageNavi);
-  console.log("totalPage", totalPage);
-  console.log("pathname", pathname);
   // 시작 페이지 계산
   const startPage = (currentPageNavi - 1) * pageNaviSize + 1;
 

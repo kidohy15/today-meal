@@ -32,31 +32,15 @@ export default function Openai() {
   let day = ("0" + today.getDate()).slice(-2);
   let dateString = year + "년 " + month + "월 " + day + "일 ";
 
-  console.log(dateString);
   // 결과 : 2021-05-30
-  console.log("ingredients");
-  console.log("today", today);
 
   useEffect(() => {
-    // setCachedRecipes(null)
-    // setCachedRecipes(null)
-    console.log("cachedRecipes", cachedRecipes);
-    console.log("new Date().getTime()", new Date().getTime());
-    console.log(
-      "new Date(lastCallTime).getTime()",
-      new Date(lastCallTime).getTime()
-    );
     const time = new Date().getTime() - new Date(lastCallTime).getTime();
-    console.log("time", time);
     // new Date().getTime() - new Date(lastCallTime).getTime() > 10 * 1000
     if (time > 10 * 1000) {
       setContentArray(cachedRecipes);
     } else {
       handleRecipe();
-      console.log(
-        "new Date(lastCallTime).getTime()",
-        new Date(lastCallTime).getTime()
-      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

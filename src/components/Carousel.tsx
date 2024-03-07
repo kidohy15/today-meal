@@ -13,8 +13,6 @@ const images = [IMAGE_1_URL, IMAGE_2_URL, IMAGE_3_URL];
 
 export default function Carousel() {
   const [activeImage, setActiveImage] = useState(1);
-  // const [imageData, setImageData] = useState([images]);
-  console.log(activeImage);
 
   return (
     <div className="bg-black">

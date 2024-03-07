@@ -20,8 +20,6 @@ interface User {
 async function login(credentials: User) {
   const email = credentials.email;
   const password = credentials.password;
-  console.log("login email", email);
-  console.log("login password", password);
   try {
     const res = await prisma.user.findFirst({
       where: {
@@ -30,14 +28,12 @@ async function login(credentials: User) {
         // password: password,
       },
     });
-    console.log("login res", res);
 
     if (!res) throw new Error("Wrong Credentials");
     const correct = await bcrypt.compare(
       credentials?.password as string,
       res?.password as string
     );
-    console.log("login correct", correct);
 
     if (!correct) throw new Error("Wrong Credentials");
     return res;
@@ -73,7 +69,6 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials: any) {
         try {
           const user = await login(credentials);
-          console.log("user", user);
           return user;
         } catch (error) {
           console.log("Error: ", error);
