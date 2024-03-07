@@ -10,6 +10,7 @@ import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid";
 import { getImageProps } from "next/image";
+import Loader from "@/components/loader";
 
 const RecipeNewPage = () => {
   const supabase = useSupabaseClient();
@@ -213,10 +214,8 @@ const RecipeNewPage = () => {
         </div>
       ) : (
         <>
-          <div className="bg-slate-400 h-[120px] mt-[112px]">
-            유저 정보를 받아오는 중입니다.
-            <br />
-            잠시만 기다려주세요
+          <div className="h-min-[100vh] mt-[112px]">
+            <Loader />
           </div>
         </>
       )}
