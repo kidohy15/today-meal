@@ -4,11 +4,11 @@ import axios from "axios";
 import OpenAI from "openai";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-// import Carousel from "../Carousel";
+import Loader from "../loader";
 
 const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // 여기에 실제 API 키를 넣어주세요
-  dangerouslyAllowBrowser: true, // 브라우저에서 사용 허용, 보안상 좋은 위치는 아니니 나중에 api 통신하는 부분단 서버단으로 뺄 수 있으면 뺄면 좋음
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // 실제 API 키
+  dangerouslyAllowBrowser: true, // 브라우저에서 사용 허용, 보안상 좋은 위치는 아니니 나중에 api 서버로 뺄 수 있으면 빼자
 });
 
 export default function Openai() {
@@ -74,93 +74,75 @@ export default function Openai() {
     setIsOpen(!isOpen);
   };
 
-  // 360_F_461046251_3A1kgU8SSsJsuBz58nLmZUWezXjhuJJA
-  // /images/19558288.jpg
-  // note-4767083_1280
-  // 4fec8a1312fe2a4049f81335fabee3b8
-  // 360_F_461046251_3A1kgU8SSsJsuBz58nLmZUWezXjhuJJA
-  // depositphotos_156700964-stock-photo-light-wooden-table-top-view
   return (
-    <div className="relative flex justify-center w-full mx-auto h-full bg-[url('/images/depositphotos_156700964-stock-photo-light-wooden-table-top-view.jpg')] bg-cover bg-center overflow-hidden py-20">
+    <div className="relative flex justify-center items-center w-full h-full min-h-[100vh] pt-[112px]">
+      {/* {true ? ( */}
       {isLoading ? (
-        <div className="whitespace-break-spaces h-full">
-          loading 레시피를 작성중입니다.
-          <br />
-          잠시만 기다려주세요.
+        <div className="h-[100vh] w-[100vw] bg-white text-center">
+          <div className="absolute top-[30%] h-full w-full">
+            <img
+              src="/images/pngtree-simple-set-bento-nihon-lunch-box-clipart-png-image_6573042-removebg-preview.png"
+              width={"200px"}
+              height={"200px"}
+              alt="도시락 이미지"
+              className=" mx-auto"
+            />
+            <h2 className="mb-10 text-2xl font-bold">
+              레시피 작성중입니다. 잠시만 기다려주세요!
+            </h2>
+            <Loader />
+          </div>
         </div>
       ) : (
-        // note-4767083_1280.webp
-        // urbanbrush-20190509114253808633
-        <div className="w-[1480px] relative">
-          <div className="w-[500px] absolute top-[20%] left-[32%] transform -translate-x-3/4 -translate-y-1/2 text-center">
-            <p className="text-7xl font-semibold italic leading-snug text-black whitespace-pre-wrap">
-              오늘의 식사가 고민이라면?
-            </p>
+        <div className="w-full md:max-w-6xl h-full  bg-white">
+          <div className="px-8 py-12">
+            <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+              레시피 추천받기
+            </h2>
           </div>
-          <div className=" h-[10%] my-auto absolute top-[280px]"></div>
-          <div className="w-[1480px] h-[920px] items-center justify-center px-10 flex">
-            {/* 슬라이더 자리 */}
-
-            <div className="w-[50%] mt-[30%] mx-auto flex flex-col justify-center">
-              <div className="flex flex-col justify-center bg-orange-300 w-full mx-auto h-[30%] items-center  ">
-                <h1 className=" p-3">이곳에 재료를 입력해주세요</h1>
-                <div className="p-3">
-                  <span className="">선택한 재료</span>
-                  <div className="flex flex-wrap bg-white w-[300px] mt-2">
-                    {ingredients?.map((ingredients: any, index: any) => (
-                      <div
-                        key={index}
-                        className="p-1 m-1 bg-slate-50 rounded-md"
-                      >
-                        {ingredients}
-                      </div>
-                    ))}
-                  </div>
+          <div className="w-full min-h-[920px] items-center justify-center px-10">
+            <div className="mx-auto flex flex-col justify-center">
+              <div className="p-3">
+                <span className="">선택한 재료</span>
+                <div className="flex flex-wrap bg-white w-[300px] mt-2">
+                  {ingredients?.map((ingredients: any, index: any) => (
+                    <div key={index} className="p-1 m-1 bg-slate-50 rounded-md">
+                      {ingredients}
+                    </div>
+                  ))}
                 </div>
-                <div className="mb-7 bg-orange-100">
+              </div>
+              <div className="text-center w-full mx-auto h-[30%]">
+                <h1 className="p-3">이곳에 재료를 입력해주세요</h1>
+                <div className="m-7 bg-orange-100 flex">
                   <input
                     type="text"
-                    className="p-1 m-2 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-blue-500"
+                    className="w-full p-3 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-blue-500"
                     placeholder="재료를 입력해주세요"
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                   />
                   <button
-                    className="p-3 m-1 bg-amber-900"
+                    className="w-[120px] p-2 m-1 "
                     onClick={() => handleAddIngredient()}
                   >
                     추가하기
                   </button>
-                  <div>
-                    <button className="p-3 m-1" onClick={handleRecipe}>
-                      오늘의 레시피 제작 GO!
-                    </button>
-                  </div>
+                </div>
+                <div className="flex justify-center">
+                  <button
+                    className="p-3 m-1 bg-pink-200"
+                    onClick={handleRecipe}
+                  >
+                    오늘의 레시피 제작 GO!
+                  </button>
                 </div>
               </div>
-              {/* <div className="flex justify-center right-0 w-[80%] h-[30%] mx-auto bg-slate-800 items-center text-slate-300">
-                <div className="text-2xl p-4 border-white hover:bg-slate-50 hover:text-black rounded-md">
-                  <button>더 많은 레시피 확인하기!</button>
-                </div>
-              </div> */}
             </div>
 
-            {/* 레시피 결과가 들어 있는 div를 toggleSidebar 함수를 호출하여 열고 닫기
-            화살표 모양으로 열고 닫을 수 있게 수정 예정
-          */}
-            {/* <div
-            className="text-2xl p-4 border-white hover:bg-slate-50 hover:text-black rounded-md"
-            onClick={toggleSidebar}
-            >
-            <button>레시피 결과 보기</button>
-          </div> */}
-
-            {/* bg-orange-100 bg1 4fec8a1312fe2a4049f81335fabee3b8*/}
-            <div className=" w-[1000px] h-[980px] ml-[160px] mx-[40px] mt-[10%]">
-              <div className="bg-[url('/images/4fec8a1312fe2a4049f81335fabee3b82.jpg')] w-full h-full bg-cover bg-center bg-no-repeat">
+            <div className="w-full h-[980px] mt-[5%] mb-5">
+              <div className="bg-black w-full h-full bg-no-repeat">
                 {isOpen && (
-                  // <div className="bg-orange-100 w-[30%] h-[80%] absolute top-[10%] right-0 z-10">
-                  // bg-[url('/images/note.jpg')]
                   <div className="m-1 py-20 px-16 h-full text-white font-serif text-lg leading-7">
                     {chatHistory.map((message: any, index: any) => (
                       <div
@@ -169,8 +151,6 @@ export default function Openai() {
                           message.role === "user" ? "text-left" : "text-left"
                         } mb-2`}
                       >
-                        {/* <div>{message.role === "user" ? "H" : "A"}</div> */}
-                        {/* <div>{message.role === "user" ? "H" : "요리 제목: "}</div> */}
                         <div className="whitespace-break-spaces">
                           {message.content}
                         </div>
