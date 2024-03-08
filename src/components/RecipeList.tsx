@@ -33,7 +33,7 @@ export default function RecipeList({
 
   useEffect(() => {
     setPathname(window.location.pathname);
-  }, [imagePath]);
+  }, [imagePath, () => recipesData()]);
 
   const recipesData = async () => {
     if (userCheck) {
@@ -55,6 +55,7 @@ export default function RecipeList({
         },
       });
       const results = res?.data;
+      console.log("page", results.page);
 
       // 이미지 경로를 가져오고 결과에 추가
       const resultsWithImagePath = await Promise.all(
@@ -71,14 +72,13 @@ export default function RecipeList({
   const {
     data: recipes,
     isLoading,
+    isFetched,
     isFetching,
     isError,
   } = useQuery({
     queryKey: [`recipes-${pathname}-${page}`, searchKeyword],
     queryFn: recipesData,
   }); // 데이터는 data 속성에 있다
-
-  const totalPage: any = parseInt(recipes?.totalPage, 10);
 
   // 작성자 정보를 마스킹 처리
   const maskWriter = (writer: any) => {
@@ -166,9 +166,15 @@ export default function RecipeList({
         )}
       </ul>
 
-      <div className="py-10">
-        <Pagination page={page} totalPage={totalPage} pathname={pathname} />
-      </div>
+      {recipes && (
+        <div className="py-10">
+          <Pagination
+            page={recipes.page}
+            totalPage={recipes.totalPage}
+            pathname={pathname}
+          />
+        </div>
+      )}
     </>
   );
 }

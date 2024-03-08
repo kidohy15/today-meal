@@ -31,6 +31,8 @@ export async function GET(req: Request, res: Request) {
   const skipPage = parseInt(page) - 1;
   const userCheck = searchParams.get("userCheck") ?? null;
 
+  console.log("server data page:", page);
+
   // id 가 있는 경우 상세페이지
   if (id) {
     const data = await prisma.recipe.findFirst({
@@ -68,8 +70,8 @@ export async function GET(req: Request, res: Request) {
       console.log("server recipeData:", recipeData);
 
       return Response.json({
-        page: parseInt(page),
         data: recipeData,
+        page: parseInt(page),
         totalCount: count,
         totalPage: Math.ceil(count / 10),
       });
@@ -78,6 +80,7 @@ export async function GET(req: Request, res: Request) {
     console.log("server 전체 목록 가져오기");
 
     const count = await prisma.recipe.count();
+    console.log("count", count);
     const recipeData = await prisma.recipe.findMany({
       orderBy: { id: "desc" },
       where: {
@@ -90,13 +93,10 @@ export async function GET(req: Request, res: Request) {
         user: true,
       },
     });
-    console.log("server res:", recipeData);
 
-    // res.status(200).json(fetchData);
-    // return Response.json({ })
     return Response.json({
-      page: parseInt(page),
       data: recipeData,
+      page: parseInt(page),
       totalCount: count,
       totalPage: Math.ceil(count / 10),
     });

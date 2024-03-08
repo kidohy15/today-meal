@@ -37,8 +37,6 @@ export default function Comments({ recipeId }: CommentProps) {
     queryFn: fetchComments,
   });
 
-  const totalPage: any = parseInt(comments?.totalPage, 10);
-
   return (
     <div className="py-8 px-2 mb-20 mx-auto">
       {/* 댓글 입력 폼 */}
@@ -56,8 +54,8 @@ export default function Comments({ recipeId }: CommentProps) {
           />
           {/* pagination */}
           <Pagination
-            totalPage={totalPage}
-            page={page}
+            totalPage={comments?.totalPage}
+            page={comments?.page}
             pathname={`/recipe/${recipeId}`}
           />
         </div>

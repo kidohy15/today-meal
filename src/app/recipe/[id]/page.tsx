@@ -22,9 +22,9 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
     const { data: data }: any = await axios.get(`/api/recipe?id=${id}`);
     writerId(data);
 
-    const imageName= await getImages(data.image)
+    const imageName = await getImages(data.image);
 
-    return {...data, imagePath: imageName};
+    return { ...data, imagePath: imageName };
   };
 
   const {
@@ -96,7 +96,12 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
         <div className="flex flex-col p-10">
           <div>
             이미지
-            <img src={`${recipe?.imagePath}`} />
+            <img
+              src={`${recipe?.imagePath}`}
+              width={"200px"}
+              height={"200px"}
+              alt="음식 사진"
+            />
           </div>
           <div className="flex justify-between">
             <div className="mb-8">
@@ -137,7 +142,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             </button>
           </div>
         </div>
-        <div className="my-10">
+        <div className="my-10 p-10">
           <h3 className="px-3 py-2 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
             댓글
           </h3>

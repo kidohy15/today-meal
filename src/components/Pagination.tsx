@@ -12,8 +12,8 @@ export default function Pagination({
   pathname,
 }: PaginationProps) {
   // pagination 변수
-  const currentPage = parseInt(page, 10);
-  const totalPages = parseInt(totalPage, 10);
+  const currentPage = parseInt(page);
+  const totalPages = parseInt(totalPage);
   const pageNaviSize = 10; // 네비게이션 단위 수
 
   // 현재 페이지가 속한 네비게이션 그룹 계산
