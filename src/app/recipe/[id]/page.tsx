@@ -3,6 +3,7 @@
 import Pagination from "@/components/Pagination";
 import Comments from "@/components/comments";
 import Loader from "@/components/loader";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -11,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
+  const supabase = useSupabaseClient();
   const id = params.id;
   const router = useRouter();
 
@@ -19,8 +21,10 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   const recipeData = async () => {
     const { data: data }: any = await axios.get(`/api/recipe?id=${id}`);
     writerId(data);
-    // return await axios.get(`/api/recipe?id=${recipe.id}`);
-    return data;
+
+    const imageName= await getImages(data.image)
+
+    return {...data, imagePath: imageName};
   };
 
   const {
@@ -71,6 +75,12 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
         username.slice(0, 3) + "*".repeat(username.length - 3);
       setMaskId(maskedUsername);
     }
+  };
+
+  const getImages = async (image: string) => {
+    const { data } = await supabase.storage.from("images").getPublicUrl(image);
+
+    return data.publicUrl;
   };
 
   if (isFetching) {
