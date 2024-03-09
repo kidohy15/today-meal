@@ -17,10 +17,13 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
   const [maskId, setMaskId] = useState("");
+  // const [ingredients, setIngredients] = useState("")s
 
   const recipeData = async () => {
     const { data: data }: any = await axios.get(`/api/recipe?id=${id}`);
     writerId(data);
+
+    console.log("data", data)
 
     const imageName = await getImages(data.image);
 

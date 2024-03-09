@@ -70,6 +70,8 @@ const RecipeNewPage = () => {
       data.set("ingredients", ingredients);
       data.set("contents", contents);
 
+      console.log("ingredients", ingredients)
+
       // if (ingredients.length < 1) {
       //   setErrIngredients(true);
       //   toast.error("하나 이상의 재료를 입력해주세요.");
@@ -124,6 +126,12 @@ const RecipeNewPage = () => {
     const uuid = uuidv4();
     typeof uuid;
     setImageName(uuid);
+  };
+
+  const handleOnKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      handleAddIngredient(); // Enter 입력이 되면 재료 추가 실행
+    }
   };
 
   return (
@@ -187,7 +195,46 @@ const RecipeNewPage = () => {
                 />
               </div>
 
-              {/* 재료 등의 입력 필드 추가 */}
+              {/* 재료 입력 필드 추가 */}
+              <div className="mb-14">
+                <label
+                  htmlFor="title"
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                >
+                  재료
+                </label>
+                <div className="p-5">
+                  <span className="text-md font-semibold text-stone-500 ">
+                    선택한 재료
+                  </span>
+                  <div className="flex flex-wrap min-h-[50px] w-full mt-2 items-center shadow-sm border-solid border-2 border-zinc-200">
+                    {ingredients?.map((ingredients: any, index: any) => (
+                      <div
+                        key={index}
+                        className="p-2 m-2 bg-gray-100 rounded-md border-solid border-2 border-amber-900"
+                      >
+                        {ingredients}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="m-7 bg-orange-100 flex">
+                  <input
+                    type="text"
+                    className="w-full p-3 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-blue-500"
+                    placeholder="재료를 입력해주세요"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    onKeyDown={handleOnKeyPress}
+                  />
+                  <button
+                    className="w-[120px] p-2 m-1 "
+                    onClick={() => handleAddIngredient()}
+                  >
+                    추가하기
+                  </button>
+                </div>
+              </div>
 
               <div className="mb-4">
                 <label

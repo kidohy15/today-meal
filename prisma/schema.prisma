@@ -61,7 +61,7 @@ model VerificationToken {
 model Recipe {
   id          Int       @id @default(autoincrement())
   title       String?
-  ingredients String?
+  ingredients String[]
   contents    String?
   writer      String?
   image       String?
