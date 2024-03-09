@@ -112,51 +112,37 @@ export async function POST(req: NextRequest) {
     return Response.json("======= 유저 없음!!!! =========");
   }
 
+  // const data = await req.json();
   const formData = await req.formData();
-  const file: any = formData.get("file");
+
   const title: any = formData.get("title");
+  const writer: any = formData.get("writer");
   const ingredients: any = formData.get("ingredients");
   const contents: any = formData.get("contents");
+
+  // 이미지만 배열 데이터로 가공
+  let imagefiles: any[] = [];
+  for (const key of formData.keys()) {
+    if (key.includes("file")) {
+      const value = formData.get(key);
+      imagefiles.push(value);
+    }
+    console.log("length", imagefiles.length);
+  }
 
   // 레시피 등록
   try {
     const res = await prisma.recipe.create({
       data: {
+        writer,
         title,
-        ingredients,
+        ingredients: ingredients ? ingredients : [],
         contents,
-        image: file,
+        image: imagefiles ? imagefiles : [],
         userId: session?.user.id,
       },
     });
     return NextResponse.json({ success: true, data: res });
-
-    // const files = formData.getAll('image')[0]
-    // const imageFile: File | null = formData.get("imageFile") as unknown as File;
-
-    // const bytes = await imageFile.arrayBuffer();
-    // const buffer = Buffer.from(bytes);
-
-    // const path = join("/", "tmp", imageFile.name);
-    // await writeFile(path, buffer);
-
-    // return NextResponse.json({ success: true });
-
-    // const file = formData.getAll("files")[0];
-    // const filePath = `./public/file/${file.name}`;
-    // await pump(file.stream(), fs.createWriteStream(filePath));
-    // return NextResponse.json({ status: "success", data: file.size });
-
-    // const { data: recipe } = await req.json();
-    // const data = await req.json();
-
-    // const result = await prisma.recipe.create({
-    //   data: { ...data, userId: session?.user.id },
-    // });
-
-    // return res.status(200).json(result);
-    // return Response.json(result);
-    return Response.json("ok");
   } catch (error) {
     console.error("Error creating recipe:", error);
     return Response.json(error);
@@ -167,10 +153,10 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
+    const id = data.id;
 
     // const { searchParams } = new URL(req.url);
     // const id = searchParams.get("id");
-    const id = data.id;
 
     if (id) {
       const result = await prisma.recipe.update({

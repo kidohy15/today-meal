@@ -18,11 +18,11 @@ const RecipeNewPage = () => {
   const [writer, setWriter] = useState<any>("");
   const [maskId, setMaskId] = useState("");
   const [recipeName, setRecipeName] = useState("");
-  const [ingredients, setIngredients] = useState<any>([]);
+  const [ingredients, setIngredients] = useState<any[]>([]);
   const [userInput, setUserInput] = useState<any>("");
   const [contents, setContents] = useState("");
   const [errIngredients, setErrIngredients] = useState(false);
-  const [imageFile, setImageFile] = useState<File>();
+  const [imageFile, setImageFile] = useState<File[]>([]);
   const [imageName, setImageName] = useState<any>("");
 
   const { data: session, status } = useSession();
@@ -48,8 +48,11 @@ const RecipeNewPage = () => {
 
   // 입력한 재료를 배열에 추가
   const handleAddIngredient = () => {
-    setIngredients((prevInputs: any) => [...prevInputs, userInput]);
-    setUserInput("");
+    if (userInput) {
+      setIngredients((prevInputs: any) => [...prevInputs, userInput]);
+      setUserInput("");
+      console.log("ingredients", ingredients);
+    }
   };
 
   // const handleImageChange = (event: any) => {
@@ -57,20 +60,43 @@ const RecipeNewPage = () => {
   //   setImageFile(file);
   // };
 
+  // Form 내용 등록
   const onSubmit = async (e: any) => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
-    if (!imageFile) return;
+    // if (!imageFile) return;
 
     try {
-      const data = new FormData();
-      data.set("file", imageName);
-      data.set("title", recipeName);
-      data.set("writer", writer);
-      data.set("ingredients", ingredients);
-      data.set("contents", contents);
+      if (imageFile) {
+        // data.append("file", imageFile);
+      }
 
-      console.log("ingredients", ingredients)
+      console.log("imageFile", imageFile);
+      const formData = new FormData();
+
+      const encodedImages = await Promise.all(
+        imageFile.map((file: File) => encodeImageFileAsURL(file))
+      );
+
+      encodedImages.forEach((file: any, index) => {
+        formData.append(`files[${index}]`, file);
+      });
+
+      // imageFile.forEach((file, index) => {
+      //   formData.append(`files[${index}]`, file);
+      // });
+      // formData.append(`files[${index}]`, file);
+
+      // formData.append("title", recipeName);
+      // formData.append("contents", contents);
+      // formData.append("writer", writer);
+
+      // JSON 형식으로 파싱 후 추가
+      formData.append("title", JSON.stringify(recipeName));
+      formData.append("contents", JSON.stringify(contents));
+      formData.append("writer", JSON.stringify(writer));
+
+      console.log("ingredients", ingredients);
 
       // if (ingredients.length < 1) {
       //   setErrIngredients(true);
@@ -78,13 +104,17 @@ const RecipeNewPage = () => {
       //   return;
       // }
 
-      const res = await axios.post("/api/recipe", data);
-
-      // if(!res.ok) throw new Error(await res.text())
+      const res = await axios.post("/api/recipe", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (res.status === 200) {
         // 레시피 등록 성공
-        await storageUpload(imageFile, imageName);
+        if (imageFile) {
+          // await storageUpload(imageFile, imageName);
+        }
         toast.success("레시피를 등록했습니다.");
         router.replace(`/recipe/${res?.data?.data?.id}`);
       } else {
@@ -95,6 +125,17 @@ const RecipeNewPage = () => {
       console.log(error);
       toast.error("레시피 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
     }
+  };
+
+  const encodeImageFileAsURL = async (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   };
 
   const storageUpload = async (file: File, imageName: string) => {
@@ -120,18 +161,34 @@ const RecipeNewPage = () => {
   // };
 
   const uploadImage = async (e: any) => {
-    let file = e.target.files?.[0];
-    setImageFile(file);
+    // let file = e.target.files?.[0];
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setImageFile((prevFiles: any) => [...prevFiles, ...Array.from(files)]);
+    }
+    // setImageFile(Array.from(e.target.files));
+    // const nowSelectImageList = e.target.files;
+    // console.log(nowSelectImageList, "파일 데이터");
+    console.log(imageFile, "파일 데이터");
+    // setImageFile(...imageFile, );
+    // setImageFile(file);
 
     const uuid = uuidv4();
-    typeof uuid;
     setImageName(uuid);
   };
 
   const handleOnKeyPress = (e: any) => {
     if (e.key === "Enter") {
-      handleAddIngredient(); // Enter 입력이 되면 재료 추가 실행
+      handleAddIngredient(); // Enter 입력이 되면 재료 추가버튼 실행
     }
+  };
+
+  // 삭제
+  const handleImageRemove = (indexToRemove: any) => {
+    const updatedImages = imageFile.filter(
+      (_, index) => index !== indexToRemove
+    );
+    setImageFile(updatedImages);
   };
 
   return (
@@ -158,12 +215,13 @@ const RecipeNewPage = () => {
                     id="image"
                     type="file"
                     name="file"
-                    multiple
                     accept="image/*"
-                    onChange={(e) => uploadImage(e)}
+                    multiple
+                    onChange={uploadImage}
                     className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
+
                 <div className="mb-14">
                   <label
                     htmlFor="writer"
@@ -179,7 +237,23 @@ const RecipeNewPage = () => {
                   />
                 </div>
               </div>
-
+              <div className="flex mb-16">
+                {imageFile.map((image, index) => (
+                  <div key={index}>
+                    <div className="flex w-40 h-40 items-center">
+                      <img
+                        src={URL.createObjectURL(image)}
+                        width={"150px"}
+                        height={"150px"}
+                        alt={`이미지 ${index}`}
+                      />
+                    </div>
+                    <button onClick={() => handleImageRemove(index)}>
+                      이미지 제거
+                    </button>
+                  </div>
+                ))}
+              </div>
               <div className="mb-14">
                 <label
                   htmlFor="title"
@@ -225,11 +299,16 @@ const RecipeNewPage = () => {
                     placeholder="재료를 입력해주세요"
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
-                    onKeyDown={handleOnKeyPress}
+                    onKeyDown={() => handleOnKeyPress}
                   />
                   <button
+                    type="button"
                     className="w-[120px] p-2 m-1 "
-                    onClick={() => handleAddIngredient()}
+                    onClick={(e) => {
+                      if (userInput !== "" && userInput !== null) {
+                        handleAddIngredient();
+                      }
+                    }}
                   >
                     추가하기
                   </button>
@@ -251,11 +330,13 @@ const RecipeNewPage = () => {
               </div>
 
               <div className="flex items-center justify-end">
-                <input
+                <button
                   type="submit"
-                  value="upload"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                />
+                  value="레시피 등록"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:cursor-pointer focus:shadow-outline"
+                >
+                  버튼
+                </button>
               </div>
             </form>
           </div>
