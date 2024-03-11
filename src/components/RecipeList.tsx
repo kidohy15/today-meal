@@ -33,7 +33,7 @@ export default function RecipeList({
 
   useEffect(() => {
     setPathname(window.location.pathname);
-  }, [imagePath, () => recipesData()]);
+  }, [imagePath, maskedUsername]);
 
   const recipesData = async () => {
     if (userCheck) {
@@ -46,6 +46,7 @@ export default function RecipeList({
         }
       );
       const result = res?.data;
+      console.log("res", result)
 
       return result;
     } else {
@@ -55,17 +56,21 @@ export default function RecipeList({
         },
       });
       const results = res?.data;
-      console.log("page", results.page);
+      console.log("results", results.data);
+      console.log("results", results.page);
+      console.log("results", results.totalPage);
 
       // 이미지 경로를 가져오고 결과에 추가
-      const resultsWithImagePath = await Promise.all(
-        results.data.map(async (result: any) => {
-          const imageName = (await getImages(result.image)) ?? null;
-          return { ...result, imagePath: imageName };
-        })
-      );
+      // const resultsWithImagePath = await Promise.all(
+      //   results.data.map(async (result: any) => {
+      //     const imageName = (await getImages(result.image)) ?? null;
+      //     return { ...result, imagePath: imageName };
+      //   })
+      // );
 
-      return resultsWithImagePath;
+      // const newResult = [...results, resultsWithImagePath]
+      // console.log("newResult", newResult)
+      return results;
     }
   };
 
@@ -86,9 +91,11 @@ export default function RecipeList({
 
     const atIndex = writer.indexOf("@");
     const username = writer.slice(0, atIndex);
-    return atIndex !== -1
+    const maskedName = atIndex !== -1
       ? username.slice(0, 3) + "*".repeat(username.length - 3)
       : writer;
+    
+    return maskedName
   };
 
   const getImages = async (image: string) => {
@@ -105,11 +112,11 @@ export default function RecipeList({
     );
   }
 
-  if (isFetching) {
+  if (isFetching || isLoading) {
     return <Loader className="my-[20%]" />;
   }
 
-  if (recipes?.length === 0)
+  if (recipes.data.length === 0)
     return (
       <div className="my-[20%] p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
         등록된 레시피가 없습니다.
@@ -117,60 +124,70 @@ export default function RecipeList({
     );
   return (
     <>
-      <ul role="list" className="pt-2 flex flex-col">
-        {isLoading ? (
-          <div>로딩중입니다.</div>
-        ) : (
-          recipes?.map((recipe: any, index: any) => (
-            <li
-              className="flex justify-between gap-x-6 h-[160px] py-6 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
-              key={index}
-              onClick={() => router.push(`/recipe/${recipe.id}`)}
-            >
-              <div className="flex gap-x-4">
-                {recipe?.image ? (
+      <div className="flex justify-center">
+        <ul
+          role="list"
+          className="w-[1000px] mx-auto pt-2 flex flex-wrap gap-1 items-center"
+        >
+          {isLoading ? (
+            <div>로딩중입니다.</div>
+          ) : (
+            recipes?.data.map((recipe: any, index: any) => (
+              <li
+                className="flex justify-between gap-x-20 w-[33%] h-[160px] py-6 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
+                key={index}
+                onClick={() => router.push(`/recipe/${recipe.id}`)}
+              >
+                <div className="flex gap-x-4">
+                  {recipe?.image ? (
+                    <div>
+                      <img
+                        // src={`${recipe.imagePath}`}
+                        src={`1`}
+                        className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400"
+                        alt="레시피 이미지"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                      이미지
+                    </div>
+                  )}
                   <div>
-                    <img
-                      src={`${recipe.imagePath}`}
-                      className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400"
-                      alt="레시피 이미지"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
-                    이미지
-                  </div>
-                )}
-                <div>
-                  <div className="text-3xl font-semibold leading-6 text-gray-900 py-2">
-                    {recipe.title}
-                  </div>
-                  <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
-                    {recipe.ingredients}
-                  </div>
-                  <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
+                    <div className="text-xl font-semibold leading-6 text-gray-900 py-2">
+                      {recipe.title}
+                    </div>
+                    <div className="mt-1 text-xs truncate font-medium leading-5 text-gray-500 py-2">
+                      {recipe.ingredients.length !== 0 ? (
+                        recipe.ingredients
+                      ) : (
+                        <span>없음</span>
+                      )}
+                    </div>
+                    {/* <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
                     {recipe.contents}
+                  </div> */}
+                    <div className="flex flex-col">
+                      <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
+                        {maskWriter(recipe?.writer)}
+                      </div>
+                      <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
+                        {new Date(recipe?.createdAt)?.toLocaleDateString()}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col items-end">
-                <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                  {maskWriter(recipe?.writer)}
-                </div>
-                <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                  {new Date(recipe?.createdAt)?.toLocaleDateString()}
-                </div>
-              </div>
-            </li>
-          ))
-        )}
-      </ul>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
 
       {recipes && (
         <div className="py-10">
           <Pagination
-            page={recipes.page}
-            totalPage={recipes.totalPage}
+            page={recipes?.page}
+            totalPage={recipes?.totalPage}
             pathname={pathname}
           />
         </div>

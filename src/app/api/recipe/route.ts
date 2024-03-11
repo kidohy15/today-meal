@@ -81,14 +81,15 @@ export async function GET(req: Request, res: Request) {
 
     const count = await prisma.recipe.count();
     console.log("count", count);
+
     const recipeData = await prisma.recipe.findMany({
       orderBy: { id: "desc" },
       where: {
         title: search ? { contains: search } : {},
         userId: userCheck ? session?.user.id : {},
       },
-      take: 10,
-      skip: skipPage * 10,
+      take: 30,
+      skip: skipPage * 30,
       include: {
         user: true,
       },
@@ -98,7 +99,7 @@ export async function GET(req: Request, res: Request) {
       data: recipeData,
       page: parseInt(page),
       totalCount: count,
-      totalPage: Math.ceil(count / 10),
+      totalPage: Math.ceil(count / 30),
     });
   }
 }
