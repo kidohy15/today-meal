@@ -46,7 +46,7 @@ export default function RecipeList({
         }
       );
       const result = res?.data;
-      console.log("res", result)
+      console.log("res", result);
 
       return result;
     } else {
@@ -57,6 +57,7 @@ export default function RecipeList({
       });
       const results = res?.data;
       console.log("results", results.data);
+      console.log("results", results.data.image);
       console.log("results", results.page);
       console.log("results", results.totalPage);
 
@@ -91,11 +92,12 @@ export default function RecipeList({
 
     const atIndex = writer.indexOf("@");
     const username = writer.slice(0, atIndex);
-    const maskedName = atIndex !== -1
-      ? username.slice(0, 3) + "*".repeat(username.length - 3)
-      : writer;
-    
-    return maskedName
+    const maskedName =
+      atIndex !== -1
+        ? username.slice(0, 3) + "*".repeat(username.length - 3)
+        : writer;
+
+    return maskedName;
   };
 
   const getImages = async (image: string) => {
@@ -134,17 +136,19 @@ export default function RecipeList({
           ) : (
             recipes?.data.map((recipe: any, index: any) => (
               <li
-                className="flex justify-between gap-x-20 w-[33%] h-[160px] py-6 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
+                className="flex flex-col justify-between gap-x-20 w-[33%] h-[360px] py-1 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
                 key={index}
                 onClick={() => router.push(`/recipe/${recipe.id}`)}
               >
-                <div className="flex gap-x-4">
+                <div className="flex justify-center">
                   {recipe?.image ? (
-                    <div>
+                    <div className="flex justify-center items-center w-[200px] h-[200px]">
                       <img
-                        // src={`${recipe.imagePath}`}
-                        src={`1`}
-                        className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400"
+                        src={`${recipe.image[0]}`}
+                        // src={`1`}
+                        width={"200px"}
+                        height={"200px"}
+                        className="bg-gray-200 rounded-md flex text-gray-400 object-cover"
                         alt="레시피 이미지"
                       />
                     </div>
@@ -153,7 +157,9 @@ export default function RecipeList({
                       이미지
                     </div>
                   )}
-                  <div>
+                </div>
+                <div className="flex gap-x-4 h-full">
+                  <div className="py-2">
                     <div className="text-xl font-semibold leading-6 text-gray-900 py-2">
                       {recipe.title}
                     </div>
