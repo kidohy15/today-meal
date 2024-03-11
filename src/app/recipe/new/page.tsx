@@ -11,6 +11,7 @@ import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { v4 as uuidv4 } from "uuid";
 import { getImageProps } from "next/image";
 import Loader from "@/components/loader";
+import { MdCancel } from "react-icons/md";
 
 const RecipeNewPage = () => {
   const supabase = useSupabaseClient();
@@ -240,7 +241,7 @@ const RecipeNewPage = () => {
               <div className="flex mb-16">
                 {imageFile.map((image, index) => (
                   <div key={index}>
-                    <div className="flex w-40 h-40 items-center">
+                    <div className="flex mb-2 w-40 h-40 items-center overflow-hidden">
                       <img
                         src={URL.createObjectURL(image)}
                         width={"150px"}
@@ -248,9 +249,16 @@ const RecipeNewPage = () => {
                         alt={`이미지 ${index}`}
                       />
                     </div>
-                    <button onClick={() => handleImageRemove(index)}>
-                      이미지 제거
-                    </button>
+                    <div className="flex justify-center cursor-pointer">
+                      <div onClick={() => handleImageRemove(index)}>
+                        <span className="mr-2 text-gray-500 font-semibold">
+                          제거
+                        </span>
+                        <button>
+                          <MdCancel className="text-red-600" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Pagination from "@/components/Pagination";
@@ -23,7 +24,8 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
     const { data: data }: any = await axios.get(`/api/recipe?id=${id}`);
     writerId(data);
 
-    console.log("data", data)
+    console.log("data", data);
+    console.log("dataimage", data.image);
 
     const imageName = await getImages(data.image);
 
@@ -97,24 +99,32 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           {recipe?.title}
         </h2>
         <div className="flex flex-col p-10">
-          <div>
-            이미지
-            <img
-              src={`${recipe?.imagePath}`}
-              width={"200px"}
-              height={"200px"}
-              alt="음식 사진"
-            />
+          <span className="text-lg font-semibold">이미지</span>
+          <div className="flex items-center gap-7">
+            {recipe?.image.map((image: any, i: any) => (
+              <div
+                key={i}
+                className="flex flex-col justify-center items-center w-[150px] h-[150px] shadow-lg overflow-hidden"
+              >
+                <img
+                  src={`${image}`}
+                  alt="음식 사진"
+                  className="w-[100%] h-[100%] object-cover"
+                />
+              </div>
+            ))}
           </div>
           <div className="flex justify-between">
-            <div className="mb-8">
+            <div className="my-8">
               <span className="text-lg font-semibold">작성자</span>
+              <br />
               {/* <p>{recipe?.writer}</p> */}
-              <div>{maskId}</div>
+              <span>{maskId}</span>
             </div>
-            <div className="mt-1 text-xm font-semibold leading-5 text-gray-500">
-              <span className="">생성일</span>
-              {new Date(recipe?.createdAt)?.toLocaleDateString()}
+            <div className="my-8 text-xm font-semibold leading-5 text-gray-500">
+              <span>생성일</span>
+              <br />
+              <span>{new Date(recipe?.createdAt)?.toLocaleDateString()}</span>
             </div>
             {/* <div>
             <h2 className="text-lg font-semibold">등록 날짜</h2>
@@ -129,7 +139,6 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             <span className="text-lg font-semibold">과정</span>
             <div>{recipe?.contents}</div>
           </div>
-
           <div className="flex justify-end my-2 gap-2">
             <button
               className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"

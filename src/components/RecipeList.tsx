@@ -127,47 +127,51 @@ export default function RecipeList({
   return (
     <>
       <div className="flex justify-center">
-        <ul
-          role="list"
-          className="w-[1000px] mx-auto pt-2 flex flex-wrap gap-1 items-center"
-        >
+        <ul role="list" className="pt-2 flex flex-wrap gap-1 j items-center">
           {isLoading ? (
             <div>로딩중입니다.</div>
           ) : (
             recipes?.data.map((recipe: any, index: any) => (
               <li
-                className="flex flex-col justify-between gap-x-20 w-[33%] h-[360px] py-1 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
+                className="flex flex-col justify-between gap-x-20 w-[22.5%] h-[370px] py-1 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
                 key={index}
                 onClick={() => router.push(`/recipe/${recipe.id}`)}
               >
                 <div className="flex justify-center">
-                  {recipe?.image ? (
-                    <div className="flex justify-center items-center w-[200px] h-[200px]">
+                  {recipe?.image && recipe.image.length !== 0 ? (
+                    <div className="flex flex-col justify-center items-center w-[200px] h-[200px] overflow-hidden">
                       <img
                         src={`${recipe.image[0]}`}
-                        // src={`1`}
-                        width={"200px"}
-                        height={"200px"}
-                        className="bg-gray-200 rounded-md flex text-gray-400 object-cover"
+                        className="w-[100%] h-[100%] object-cover bg-gray-200 rounded-md flex text-gray-400"
                         alt="레시피 이미지"
                       />
                     </div>
                   ) : (
-                    <div className="w-24 h-full bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                    <div className="w-[200px] h-[200px] bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
                       이미지
                     </div>
                   )}
                 </div>
                 <div className="flex gap-x-4 h-full">
-                  <div className="py-2">
+                  <div className="py-2 w-full">
                     <div className="text-xl font-semibold leading-6 text-gray-900 py-2">
-                      {recipe.title}
-                    </div>
-                    <div className="mt-1 text-xs truncate font-medium leading-5 text-gray-500 py-2">
-                      {recipe.ingredients.length !== 0 ? (
-                        recipe.ingredients
+                      {recipe.title ? (
+                        recipe.title
                       ) : (
-                        <span>없음</span>
+                        <div className="text-gray-400 text-center">
+                          제목이 없습니다.
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-1 text-xs truncate font-medium leading-5 text-center text-gray-500 py-2">
+                      {recipe.ingredients.length !== 0 ? (
+                        <div className="w-10 p-1 m-1 bg-gray-100 rounded-md border-solid border-2 border-amber-900">
+                          {recipe.ingredients}
+                        </div>
+                      ) : (
+                        <span className="block p-1 m-1 text-center">
+                          지정된 재료가 없습니다.
+                        </span>
                       )}
                     </div>
                     {/* <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
