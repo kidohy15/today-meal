@@ -24,7 +24,7 @@ export default function Comments({ recipeId }: CommentProps) {
     );
 
     const result = res?.data;
-    console.log("comments", result)
+    console.log("comments", result);
 
     return result;
   };

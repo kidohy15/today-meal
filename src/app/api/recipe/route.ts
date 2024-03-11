@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
 
   const title: any = formData.get("title");
   const writer: any = formData.get("writer");
-  const ingredients: any = formData.get("ingredients");
+  // const ingredients: any = formData.get("ingredients");
   const contents: any = formData.get("contents");
 
   // 이미지만 배열 데이터로 가공
@@ -128,7 +128,17 @@ export async function POST(req: NextRequest) {
       const value = formData.get(key);
       imagefiles.push(value);
     }
-    console.log("length", imagefiles.length);
+    console.log("imagefiles length", imagefiles.length);
+  }
+
+  // 이미지만 배열 데이터로 가공
+  let ingredients: any[] = [];
+  for (const key of formData.keys()) {
+    if (key.includes("ingredient")) {
+      const value = formData.get(key);
+      ingredients.push(value);
+    }
+    console.log("ingredients length", ingredients.length);
   }
 
   // 레시피 등록

@@ -33,7 +33,7 @@ const RecipeNewPage = () => {
 
   useEffect(() => {
     writerId();
-  }, [imageName]);
+  }, [imageName, ingredients]);
 
   const writerId = () => {
     const email = session?.user?.email;
@@ -67,6 +67,7 @@ const RecipeNewPage = () => {
     // 이미지 파일을 formData에 추가
     // if (!imageFile) return;
 
+    console.log("ingredients", ingredients);
     try {
       if (imageFile) {
         // data.append("file", imageFile);
@@ -83,6 +84,10 @@ const RecipeNewPage = () => {
         formData.append(`files[${index}]`, file);
       });
 
+      ingredients.forEach((ingredient: any, index) => {
+        formData.append(`ingredients[${index}]`, ingredient);
+      });
+
       // imageFile.forEach((file, index) => {
       //   formData.append(`files[${index}]`, file);
       // });
@@ -96,6 +101,7 @@ const RecipeNewPage = () => {
       formData.append("title", JSON.stringify(recipeName));
       formData.append("contents", JSON.stringify(contents));
       formData.append("writer", JSON.stringify(writer));
+      // formData.append("ingredients", JSON.stringify(ingredients));
 
       console.log("ingredients", ingredients);
 
@@ -244,9 +250,8 @@ const RecipeNewPage = () => {
                     <div className="flex mb-2 w-40 h-40 items-center overflow-hidden">
                       <img
                         src={URL.createObjectURL(image)}
-                        width={"150px"}
-                        height={"150px"}
                         alt={`이미지 ${index}`}
+                        className="w-[100%] h-[100%] object-cover"
                       />
                     </div>
                     <div className="flex justify-center cursor-pointer">

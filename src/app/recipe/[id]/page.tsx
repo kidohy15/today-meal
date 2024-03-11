@@ -133,9 +133,15 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="mb-8">
             <span className="text-lg font-semibold">재료</span>
-            <div>{recipe?.ingredients}</div>
+            <div>{recipe?.ingredients.map((ingredient:any, i:any)=> (
+              <span
+                className="leading-7"
+                key={i}>
+                {ingredient} <br/>
+              </span>
+            ))}</div>
           </div>
-          <div className="mb-8">
+          <div className="mb-8 py-2">
             <span className="text-lg font-semibold">과정</span>
             <div>{recipe?.contents}</div>
           </div>

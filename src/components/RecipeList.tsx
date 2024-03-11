@@ -152,7 +152,7 @@ export default function RecipeList({
                     </div>
                   )}
                 </div>
-                <div className="flex gap-x-4 h-full">
+                <div className="flex gap-x-4 h-full overflow-hidden">
                   <div className="py-2 w-full">
                     <div className="text-xl font-semibold leading-6 text-gray-900 py-2">
                       {recipe.title ? (
@@ -163,17 +163,27 @@ export default function RecipeList({
                         </div>
                       )}
                     </div>
-                    <div className="mt-1 text-xs truncate font-medium leading-5 text-center text-gray-500 py-2">
+
+                    {/* 재료 부분인데 보여줄지 고민중 */}
+                    {/* <div className="mt-1 py-2 text-xs font-medium leading-5 text-center text-gray-500">
                       {recipe.ingredients.length !== 0 ? (
-                        <div className="w-10 p-1 m-1 bg-gray-100 rounded-md border-solid border-2 border-amber-900">
-                          {recipe.ingredients}
+                        <div className="flex overflow-hidden">
+                          {recipe.ingredients.map((ingredient: any, i: any) => (
+                            <div
+                              key={i}
+                              className="w-10 p-1 m-1 text-xs bg-gray-100 rounded-md border-solid border-2 border-amber-900"
+                            >
+                              <span className="truncate">{ingredient}</span>
+                            </div>
+                          ))}
                         </div>
                       ) : (
                         <span className="block p-1 m-1 text-center">
                           지정된 재료가 없습니다.
                         </span>
                       )}
-                    </div>
+                    </div> */}
+
                     {/* <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
                     {recipe.contents}
                   </div> */}
