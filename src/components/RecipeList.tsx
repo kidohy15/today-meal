@@ -11,7 +11,7 @@ import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 interface RecipeListProps {
   searchKeyword: string;
-  userCheck: boolean | null;
+  userCheck?: boolean | null;
 }
 
 export default function RecipeList({
@@ -92,10 +92,16 @@ export default function RecipeList({
 
     const atIndex = writer.indexOf("@");
     const username = writer.slice(0, atIndex);
-    const maskedName =
+    let maskedName =
       atIndex !== -1
         ? username.slice(0, 3) + "*".repeat(username.length - 3)
         : writer;
+
+    // 아이디 특정이 안되도록 일정 길이 이하에는 * 붙이기
+    if (maskedName.length < 8) {
+      const additionalMasks = 8 - maskedName.length;
+      maskedName += "*".repeat(additionalMasks);
+    }
 
     return maskedName;
   };

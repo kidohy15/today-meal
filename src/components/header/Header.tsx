@@ -8,7 +8,7 @@ const Navbar = () => {
   const router = useRouter();
   const [menuOn, setMenuOn] = useState("");
 
-  const handleItemClick = (item: any) => {
+  const handleItemClick = (item: string) => {
     setMenuOn(item);
   };
 

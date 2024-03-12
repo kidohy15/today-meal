@@ -121,7 +121,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
               {/* <p>{recipe?.writer}</p> */}
               <span>{maskId}</span>
             </div>
-            <div className="my-8 text-xm font-semibold leading-5 text-gray-500">
+            <div className="my-8 text-xm font-medium leading-5 text-gray-500">
               <span>생성일</span>
               <br />
               <span>{new Date(recipe?.createdAt)?.toLocaleDateString()}</span>
@@ -143,7 +143,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="mb-8 py-2">
             <span className="text-lg font-semibold">과정</span>
-            <div>{recipe?.contents}</div>
+            <div className="mt-2">{recipe?.contents}</div>
           </div>
           <div className="flex justify-end my-2 gap-2">
             <button

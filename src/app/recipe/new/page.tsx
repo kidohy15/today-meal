@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import axios from "axios";
@@ -33,6 +34,7 @@ const RecipeNewPage = () => {
 
   useEffect(() => {
     writerId();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageName, ingredients]);
 
   const writerId = () => {
@@ -98,9 +100,9 @@ const RecipeNewPage = () => {
       // formData.append("writer", writer);
 
       // JSON 형식으로 파싱 후 추가
-      formData.append("title", JSON.stringify(recipeName));
-      formData.append("contents", JSON.stringify(contents));
-      formData.append("writer", JSON.stringify(writer));
+      formData.append("title", recipeName);
+      formData.append("contents", contents);
+      formData.append("writer", writer);
       // formData.append("ingredients", JSON.stringify(ingredients));
 
       console.log("ingredients", ingredients);

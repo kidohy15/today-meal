@@ -3,7 +3,6 @@ import React from "react";
 
 interface slideNavbarProps {
   activeSlide: number;
-
 }
 
 const SideNavbar = ({ activeSlide }: slideNavbarProps) => {

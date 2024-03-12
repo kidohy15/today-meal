@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import SecondSlidePage from "./SecondSlidePage";
-// import OpenaiRecipe from "@/components/openai/OpenaiRecipe";
-// import OpenaiCook from "@/components/openai/OpenaiCook";
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -20,7 +18,6 @@ import { Mousewheel, Pagination } from "swiper/modules";
 import Link from "next/link";
 import SecondSlidePage2 from "./SecondSlidePage2";
 import SideNavbar from "./SideNavbar";
-// import { Mousewheel, Pagination } from 'swiper';
 
 const MainSlidePage = () => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -30,7 +27,6 @@ const MainSlidePage = () => {
   };
 
   return (
-    // h-[954px]
     <div className="relative h-full">
       <SideNavbar activeSlide={activeSlide} />
       <Swiper
@@ -42,10 +38,7 @@ const MainSlidePage = () => {
         onSlideChange={handleSlideChange}
       >
         <SwiperSlide>
-          {/* <div className="flex items-center w-full h-full bg-[#fff]"> images2*/}
-          {/* peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif*/}
           <div className="h-full flex justify-center items-center bg-[url('/images/tapas-table.jpg')] bg-cover p-1">
-            {/* <div className="flex items-center w-full h-full bg-opacity-10 bg-[url('/images/textile-2918844_1280.jpg')] bg-center bg-cover bg-no-repeat"> */}
             <div className="pb-[200px]">
               <p className="mt-56 text-8xl font-bold text-lime-300 text-shadow">
                 Yummy Recipe

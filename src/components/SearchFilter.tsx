@@ -1,7 +1,11 @@
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
-const SearchFilter = ({ setSearchKeyword }: any) => {
+interface SearchFilter {
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SearchFilter = ({ setSearchKeyword }: SearchFilter) => {
   return (
     <div className="px-4 md:max-w-4xl mx-auto py-8">
       <div className="flex items-center justify-center w-full">

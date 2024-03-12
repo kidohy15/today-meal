@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 /* use client */
 
-import axios from "axios";
 import OpenAI from "openai";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

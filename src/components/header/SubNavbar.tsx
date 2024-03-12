@@ -2,7 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 interface subNavbarProps{
-  menuOn: any;
+  menuOn: string;
   handleItemClick: any;
 }
 
