@@ -7,6 +7,7 @@ import Loader from "@/components/loader";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -16,6 +17,8 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   const supabase = useSupabaseClient();
   const id = params.id;
   const router = useRouter();
+
+  const { data: session, status } = useSession();
 
   const [maskId, setMaskId] = useState("");
   // const [ingredients, setIngredients] = useState("")s
@@ -133,32 +136,34 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="mb-8">
             <span className="text-lg font-semibold">재료</span>
-            <div>{recipe?.ingredients.map((ingredient:any, i:any)=> (
-              <span
-                className="leading-7"
-                key={i}>
-                {ingredient} <br/>
-              </span>
-            ))}</div>
+            <div>
+              {recipe?.ingredients.map((ingredient: any, i: any) => (
+                <span className="leading-7" key={i}>
+                  {ingredient} <br />
+                </span>
+              ))}
+            </div>
           </div>
           <div className="mb-8 py-2">
             <span className="text-lg font-semibold">과정</span>
             <div className="mt-2">{recipe?.contents}</div>
           </div>
-          <div className="flex justify-end my-2 gap-2">
-            <button
-              className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
-              onClick={handleEdit}
-            >
-              수정
-            </button>
-            <button
-              className="block bottom-2 right-2 px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none"
-              onClick={handleDelete}
-            >
-              삭제
-            </button>
-          </div>
+          {session?.user.email === recipe?.writer && (
+            <div className="flex justify-end my-2 gap-2">
+              <button
+                className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+                onClick={handleEdit}
+              >
+                수정
+              </button>
+              <button
+                className="block bottom-2 right-2 px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none"
+                onClick={handleDelete}
+              >
+                삭제
+              </button>
+            </div>
+          )}
         </div>
         <div className="my-10 p-10">
           <h3 className="px-3 py-2 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">

@@ -18,6 +18,7 @@ const MyPage = () => {
 
   useEffect(() => {
     setUser(data?.user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   const searchParams = useSearchParams();
