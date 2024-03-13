@@ -11,7 +11,6 @@ import Providers from "./utils/Provider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppProps } from "next/app";
-import Carousel from "@/components/Carousel";
 import SideNavbar from "@/components/mainPage/SideNavbar";
 import MainSlidePage from "@/components/mainPage/MainSlidePage";
 import Footer from "@/components/Footer";

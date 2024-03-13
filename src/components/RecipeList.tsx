@@ -22,12 +22,12 @@ export default function RecipeList({
   const router = useRouter();
 
   const searchParams = useSearchParams();
-  const page: any = searchParams.get("page") ?? "1";
+  const page: string = searchParams.get("page") ?? "1";
 
-  const [writer, setWriter] = useState<any>("");
-  const [maskedUsername, setMaskedUsername] = useState("");
-  const [pathname, setPathname] = useState("");
-  const [imagePath, setImagePath] = useState<any>();
+  const [writer, setWriter] = useState<string>("");
+  const [maskedUsername, setMaskedUsername] = useState<string>("");
+  const [pathname, setPathname] = useState<string>("");
+  const [imagePath, setImagePath] = useState<string>();
   const imgUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/images/";
 
@@ -56,10 +56,6 @@ export default function RecipeList({
         },
       });
       const results = res?.data;
-      console.log("results", results.data);
-      console.log("results", results.data.image);
-      console.log("results", results.page);
-      console.log("results", results.totalPage);
 
       // 이미지 경로를 가져오고 결과에 추가
       // const resultsWithImagePath = await Promise.all(
@@ -70,7 +66,6 @@ export default function RecipeList({
       // );
 
       // const newResult = [...results, resultsWithImagePath]
-      // console.log("newResult", newResult)
       return results;
     }
   };
@@ -87,7 +82,7 @@ export default function RecipeList({
   }); // 데이터는 data 속성에 있다
 
   // 작성자 정보를 마스킹 처리
-  const maskWriter = (writer: any) => {
+  const maskWriter = (writer: string) => {
     if (!writer) return ""; // writer가 없을 경우 빈 문자열 반환
 
     const atIndex = writer.indexOf("@");
@@ -174,7 +169,7 @@ export default function RecipeList({
                     {/* <div className="mt-1 py-2 text-xs font-medium leading-5 text-center text-gray-500">
                       {recipe.ingredients.length !== 0 ? (
                         <div className="flex overflow-hidden">
-                          {recipe.ingredients.map((ingredient: any, i: any) => (
+                          {recipe.ingredients.map((ingredient: string, i: any) => (
                             <div
                               key={i}
                               className="w-10 p-1 m-1 text-xs bg-gray-100 rounded-md border-solid border-2 border-amber-900"

@@ -104,7 +104,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
         <div className="flex flex-col p-10">
           <span className="text-lg font-semibold">이미지</span>
           <div className="flex items-center gap-7">
-            {recipe?.image.map((image: any, i: any) => (
+            {recipe?.image.map((image: string, i: any) => (
               <div
                 key={i}
                 className="flex flex-col justify-center items-center w-[150px] h-[150px] shadow-lg overflow-hidden"
@@ -137,7 +137,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           <div className="mb-8">
             <span className="text-lg font-semibold">재료</span>
             <div>
-              {recipe?.ingredients.map((ingredient: any, i: any) => (
+              {recipe?.ingredients.map((ingredient: string, i: any) => (
                 <span className="leading-7" key={i}>
                   {ingredient} <br />
                 </span>

@@ -38,7 +38,7 @@ export default function CommentList({
   };
 
   // 작성자 정보를 마스킹 처리
-  const maskWriter = (writer: any) => {
+  const maskWriter = (writer: string) => {
     if (!writer) return ""; // writer가 없을 경우 빈 문자열 반환
 
     const atIndex = writer.indexOf("@");

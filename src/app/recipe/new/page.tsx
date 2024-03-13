@@ -17,15 +17,14 @@ import { MdCancel } from "react-icons/md";
 const RecipeNewPage = () => {
   const supabase = useSupabaseClient();
 
-  const [writer, setWriter] = useState<any>("");
-  const [maskId, setMaskId] = useState("");
-  const [recipeName, setRecipeName] = useState("");
-  const [ingredients, setIngredients] = useState<any[]>([]);
-  const [userInput, setUserInput] = useState<any>("");
-  const [contents, setContents] = useState("");
-  const [errIngredients, setErrIngredients] = useState(false);
+  const [writer, setWriter] = useState<string>("");
+  const [maskId, setMaskId] = useState<string>("");
+  const [recipeName, setRecipeName] = useState<string>("");
+  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [userInput, setUserInput] = useState<string>("");
+  const [contents, setContents] = useState<string>("");
   const [imageFile, setImageFile] = useState<File[]>([]);
-  const [imageName, setImageName] = useState<any>("");
+  const [imageName, setImageName] = useState<string>("");
 
   const { data: session, status } = useSession();
 
@@ -39,8 +38,9 @@ const RecipeNewPage = () => {
 
   const writerId = () => {
     const email = session?.user?.email;
-    setWriter(email);
     if (email) {
+      setWriter(email);
+
       const atIndex = email.indexOf("@");
       const username = email.slice(0, atIndex);
       const maskedUsername =
@@ -52,7 +52,7 @@ const RecipeNewPage = () => {
   // 입력한 재료를 배열에 추가
   const handleAddIngredient = () => {
     if (userInput) {
-      setIngredients((prevInputs: any) => [...prevInputs, userInput]);
+      setIngredients((prevInputs: string[]) => [...prevInputs, userInput]);
       setUserInput("");
       console.log("ingredients", ingredients);
     }

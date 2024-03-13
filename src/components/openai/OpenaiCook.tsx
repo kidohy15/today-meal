@@ -10,10 +10,10 @@ const openai = new OpenAI({
 });
 
 export default function Openai() {
-  const [chatHistory, setChatHistory] = useState<any>([]);
-  const [contentArray, setContentArray] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState<any>(false);
-  const [lastCallTime, setLastCallTime] = useState<any>();
+  const [chatHistory, setChatHistory] = useState<string>([]);
+  const [contentArray, setContentArray] = useState<string>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [lastCallTime, setLastCallTime] = useState<string>();
   // const [lastCallTime, setLastCallTime] = useState<any>(() => {
   //   // 로컬 스토리지에서 마지막 호출 시간을 가져온다.
   //   const storedTime = localStorage.getItem("lastCallTime");

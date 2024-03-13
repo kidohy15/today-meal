@@ -43,7 +43,7 @@ const MyPage = () => {
     queryFn: fetchComments,
   });
 
-  const totalPage: any = parseInt(comments?.totalPage, 10);
+  const totalPage: number = parseInt(comments?.totalPage, 10);
 
   if (isError) {
     return (

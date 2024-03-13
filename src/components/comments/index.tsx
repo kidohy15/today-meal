@@ -15,7 +15,7 @@ export default function Comments({ recipeId }: CommentProps) {
   const { status } = useSession();
 
   const searchParams = useSearchParams();
-  const page: any = searchParams.get("page") ?? "1";
+  const page: string = searchParams.get("page") ?? "1";
 
   // 레시피 댓글 리스트 가져오기
   const fetchComments = async () => {

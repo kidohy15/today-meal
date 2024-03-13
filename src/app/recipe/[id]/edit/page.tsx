@@ -44,16 +44,6 @@ const EditPage = ({ params }: EditPageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, recipe]);
 
-  // if (isSuccess) {
-  //   (recipe: any) => {
-  //     setValue("writer", recipe.writer);
-  //     setValue("title", recipe.title);
-  //     setValue("createdAt", recipe.createdAt);
-  //     setValue("ingredients", recipe.ingredients);
-  //     setValue("contents", recipe.contents);
-  //   };
-  // }
-
   const {
     register,
     handleSubmit,
