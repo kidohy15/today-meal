@@ -33,7 +33,7 @@ const RecipeNewPage = () => {
 
   useEffect(() => {
     writerId();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageName, ingredients]);
 
   const writerId = () => {
@@ -177,8 +177,7 @@ const RecipeNewPage = () => {
     }
     // setImageFile(Array.from(e.target.files));
     // const nowSelectImageList = e.target.files;
-    // console.log(nowSelectImageList, "파일 데이터");
-    console.log(imageFile, "파일 데이터");
+
     // setImageFile(...imageFile, );
     // setImageFile(file);
 
@@ -241,34 +240,42 @@ const RecipeNewPage = () => {
                   <input
                     id="writer"
                     type="text"
-                    defaultValue={session?.user?.email}
+                    value={session?.user?.email}
                     className="hidden appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
               </div>
-              <div className="flex mb-16">
-                {imageFile.map((image, index) => (
-                  <div key={index}>
-                    <div className="flex mb-2 w-40 h-40 items-center overflow-hidden">
-                      <img
-                        src={URL.createObjectURL(image)}
-                        alt={`이미지 ${index}`}
-                        className="w-[100%] h-[100%] object-cover"
-                      />
-                    </div>
-                    <div className="flex justify-center cursor-pointer">
-                      <div onClick={() => handleImageRemove(index)}>
-                        <span className="mr-2 text-gray-500 font-semibold">
-                          제거
-                        </span>
-                        <button>
-                          <MdCancel className="text-red-600" />
-                        </button>
+              {imageFile.length > 0 && (
+                <div>
+                  <span className="mt-5 text-xs text-gray-400">
+                    (첫번째 이미지가 대표 이미지로 보여집니다. )
+                  </span>
+                  <div className="flex mb-16">
+                    {imageFile.map((image, index) => (
+                      <div key={index}>
+                        <div className="flex mb-2 w-40 h-40 items-center overflow-hidden">
+                          <img
+                            src={URL.createObjectURL(image)}
+                            alt={`이미지 ${index}`}
+                            className="w-[100%] h-[100%] object-cover"
+                          />
+                        </div>
+                        <div className="flex justify-center cursor-pointer">
+                          <div onClick={() => handleImageRemove(index)}>
+                            <span className="mr-2 text-gray-500 font-semibold">
+                              제거
+                            </span>
+                            <button>
+                              <MdCancel className="text-red-600" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
+
               <div className="mb-14">
                 <label
                   htmlFor="title"
