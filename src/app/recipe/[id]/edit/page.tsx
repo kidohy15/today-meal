@@ -18,6 +18,7 @@ interface EditPageProps {
 const EditPage = ({ params }: EditPageProps) => {
   const router = useRouter();
   const id = params.id;
+  console.log("id", id)
 
   const [writer, setWriter] = useState<string>("");
   const [maskId, setMaskId] = useState<string>("");
@@ -140,6 +141,7 @@ const EditPage = ({ params }: EditPageProps) => {
       formData.append("title", recipeName);
       formData.append("contents", contents);
       formData.append("writer", writer);
+      formData.append("id", id);
       // formData.append("ingredients", JSON.stringify(ingredients));
 
       const res = await axios.put("/api/recipe", formData, {
@@ -147,6 +149,11 @@ const EditPage = ({ params }: EditPageProps) => {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      console.log("res?.data?.data?.id",res?.data?.data?.id)
+      console.log("res?.data?.data?.id",res?.data?.data)
+      console.log("res?.data?.data?.id",res?.data)
+      console.log("res?.data?.data?.id",res)
 
       if (res.status === 200) {
         // 레시피 등록 성공

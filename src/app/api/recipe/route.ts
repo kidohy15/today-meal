@@ -162,22 +162,60 @@ export async function POST(req: NextRequest) {
 
 // 레시피 수정
 export async function PUT(req: Request) {
-  try {
-    const data = await req.json();
-    const id = data.id;
+  const session = await getServerSession(authOptions);
 
-    // const { searchParams } = new URL(req.url);
-    // const id = searchParams.get("id");
+  // 현재 로그인 상태인지 확인
+  if (!session?.user) {
+    return Response.json("======= 유저 없음!!!! =========");
+  }
 
-    if (id) {
-      const result = await prisma.recipe.update({
-        where: { id: parseInt(id) },
-        data: { ...data },
-      });
-      return Response.json({ result });
+  // const data = await req.json();
+  const formData = await req.formData();
+
+  const id: any = formData.get("id");
+  const title: any = formData.get("title");
+  const writer: any = formData.get("writer");
+  // const ingredients: any = formData.get("ingredients");
+  const contents: any = formData.get("contents");
+
+  // 이미지만 배열 데이터로 가공
+  let imagefiles: any[] = [];
+  for (const key of formData.keys()) {
+    if (key.includes("file")) {
+      const value = formData.get(key);
+      imagefiles.push(value);
     }
+    console.log("imagefiles length", imagefiles.length);
+  }
+
+  // 이미지만 배열 데이터로 가공
+  let ingredients: any[] = [];
+  for (const key of formData.keys()) {
+    if (key.includes("ingredient")) {
+      const value = formData.get(key);
+      ingredients.push(value);
+    }
+    console.log("ingredients length", ingredients.length);
+  }
+
+  // 레시피 수정
+  try {
+    const res = await prisma.recipe.update({
+      where: { id: parseInt(id) },
+      data: {
+        writer,
+        title,
+        ingredients: ingredients ? ingredients : [],
+        contents,
+        image: imagefiles ? imagefiles : [],
+        userId: session?.user.id,
+        updatedAt: new Date(),
+      },
+    });
+    return NextResponse.json({ success: true, data: res });
   } catch (error) {
-    console.error("Error updating recipe:", error);
+    console.error("Error creating recipe:", error);
+    return Response.json(error);
   }
 }
 
