@@ -2,7 +2,14 @@
 "use client";
 
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  FormEvent,
+  ChangeEvent,
+  KeyboardEvent,
+} from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
@@ -34,7 +41,7 @@ const RecipeNewPage = () => {
   useEffect(() => {
     writerId();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageName, ingredients]);
+  }, [imageFile, ingredients]);
 
   const writerId = () => {
     const email = session?.user?.email;
@@ -64,7 +71,7 @@ const RecipeNewPage = () => {
   // };
 
   // Form 내용 등록
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
     // if (!imageFile) return;
@@ -82,12 +89,12 @@ const RecipeNewPage = () => {
         imageFile.map((file: File) => encodeImageFileAsURL(file))
       );
 
-      encodedImages.forEach((file: any, index) => {
-        formData.append(`files[${index}]`, file);
+      encodedImages.forEach((file, index) => {
+        formData.append(`files[${index}]`, file as string);
       });
 
-      ingredients.forEach((ingredient: any, index) => {
-        formData.append(`ingredients[${index}]`, ingredient);
+      ingredients.forEach((ingredient, index) => {
+        formData.append(`ingredients[${index}]`, ingredient as string);
       });
 
       // imageFile.forEach((file, index) => {
@@ -169,11 +176,11 @@ const RecipeNewPage = () => {
   //   }
   // };
 
-  const uploadImage = async (e: any) => {
+  const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     // let file = e.target.files?.[0];
     const files = e.target.files;
     if (files && files.length > 0) {
-      setImageFile((prevFiles: any) => [...prevFiles, ...Array.from(files)]);
+      setImageFile((prevFiles) => [...prevFiles, ...Array.from(files)]);
     }
     // setImageFile(Array.from(e.target.files));
     // const nowSelectImageList = e.target.files;
@@ -185,24 +192,28 @@ const RecipeNewPage = () => {
     setImageName(uuid);
   };
 
-  const handleOnKeyPress = (e: any) => {
+  const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleAddIngredient(); // Enter 입력이 되면 재료 추가버튼 실행
     }
   };
 
   // 삭제
-  const handleImageRemove = (indexToRemove: any) => {
+  const handleImageRemove = (indexToRemove: number) => {
     const updatedImages = imageFile.filter(
       (_, index) => index !== indexToRemove
     );
     setImageFile(updatedImages);
   };
 
+  if (!session) {
+    return <Loader className="my-[20%]" />;
+  }
+
   return (
     <>
       {session ? (
-        <div className="w-full h-full  pt-[112px]">
+        <div className="w-full h-full pt-[112px]">
           <div className="md:max-w-6xl min-h-[100vh] mx-auto px-8 py-12 h-full shadow-md bg-white items-center">
             <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
               레시피 등록
@@ -304,7 +315,7 @@ const RecipeNewPage = () => {
                     선택한 재료
                   </span>
                   <div className="flex flex-wrap min-h-[50px] w-full mt-2 items-center shadow-sm border-solid border-2 border-zinc-200">
-                    {ingredients?.map((ingredients: any, index: any) => (
+                    {ingredients?.map((ingredients: string, index: number) => (
                       <div
                         key={index}
                         className="p-2 m-2 bg-gray-100 rounded-md border-solid border-2 border-amber-900"

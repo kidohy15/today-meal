@@ -77,7 +77,7 @@ const SecondSlidePage = () => {
         modules={[Autoplay]}
         className="mySwiper"
       >
-        {slideImages.map((image: string, i: any) => (
+        {slideImages.map((image: string, i: number) => (
           <SwiperSlide key={i} className="w-full w-min-[235px]">
             <div
               // w-[235px] h-[180px]

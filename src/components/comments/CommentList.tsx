@@ -1,3 +1,4 @@
+import { CommentApiResponse, CommentType } from "@/interface";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { toast } from "react-toastify";
 
 /* eslint-disable @next/next/no-img-element */
 interface CommentListProps {
-  comments: any;
+  comments: CommentApiResponse;
   refetch: () => void;
   checkRecipe: boolean;
 }
@@ -51,7 +52,7 @@ export default function CommentList({
   return (
     <div className="my-10">
       {comments?.data && comments?.data?.length > 0 ? (
-        comments?.data?.map((comment: any) => (
+        comments?.data?.map((comment: CommentType) => (
           <div
             key={comment.id}
             className="flex items-center space-x-4 text-sm text-gray-500 mb-8 border-b pb-8"
@@ -59,7 +60,7 @@ export default function CommentList({
             <div className="">
               {comment.user?.image ? (
                 <img
-                  src={comment.user?.image || null}
+                  src={comment.user?.image}
                   width={40}
                   height={40}
                   className="rounded-md bg-gray-100"
@@ -74,10 +75,10 @@ export default function CommentList({
             <div className="flex flex-col space-y-1 flex-1">
               <div className="flex gap-2">
                 <div className="font-semibold text-black">
-                  {maskWriter(comment.user?.email) ?? "사용자"}
+                  {maskWriter(comment.user?.email as string) ?? "사용자"}
                 </div>
                 <div className="text-xs">
-                  {new Date(comment?.createdAt)?.toLocaleDateString()}
+                  {new Date(comment?.createdAt as Date)?.toLocaleDateString()}
                 </div>
               </div>
               <div className="mt-1 text-base">{comment.contents}</div>

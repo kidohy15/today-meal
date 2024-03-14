@@ -116,26 +116,25 @@ export async function POST(req: NextRequest) {
   // const data = await req.json();
   const formData = await req.formData();
 
-  const title: any = formData.get("title");
-  const writer: any = formData.get("writer");
-  // const ingredients: any = formData.get("ingredients");
-  const contents: any = formData.get("contents");
+  const title = formData.get("title") as string;
+  const writer = formData.get("writer") as string;
+  const contents = formData.get("contents") as string;
 
   // 이미지만 배열 데이터로 가공
-  let imagefiles: any[] = [];
+  let imagefiles: string[] = [];
   for (const key of formData.keys()) {
     if (key.includes("file")) {
-      const value = formData.get(key);
+      const value = formData.get(key) as string;
       imagefiles.push(value);
     }
     console.log("imagefiles length", imagefiles.length);
   }
 
   // 이미지만 배열 데이터로 가공
-  let ingredients: any[] = [];
+  let ingredients: string[] = [];
   for (const key of formData.keys()) {
     if (key.includes("ingredient")) {
-      const value = formData.get(key);
+      const value = formData.get(key) as string;
       ingredients.push(value);
     }
     console.log("ingredients length", ingredients.length);
@@ -172,27 +171,26 @@ export async function PUT(req: Request) {
   // const data = await req.json();
   const formData = await req.formData();
 
-  const id: any = formData.get("id");
-  const title: any = formData.get("title");
-  const writer: any = formData.get("writer");
-  // const ingredients: any = formData.get("ingredients");
-  const contents: any = formData.get("contents");
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const writer = formData.get("writer") as string;
+  const contents = formData.get("contents") as string;
 
   // 이미지만 배열 데이터로 가공
-  let imagefiles: any[] = [];
+  let imagefiles: string[] = [];
   for (const key of formData.keys()) {
     if (key.includes("file")) {
-      const value = formData.get(key);
+      const value = formData.get(key) as string;
       imagefiles.push(value);
     }
     console.log("imagefiles length", imagefiles.length);
   }
 
   // 이미지만 배열 데이터로 가공
-  let ingredients: any[] = [];
+  let ingredients: string[] = [];
   for (const key of formData.keys()) {
     if (key.includes("ingredient")) {
-      const value = formData.get(key);
+      const value = formData.get(key) as string;
       ingredients.push(value);
     }
     console.log("ingredients length", ingredients.length);

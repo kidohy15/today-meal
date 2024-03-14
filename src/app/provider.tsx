@@ -15,8 +15,7 @@ import SideNavbar from "@/components/mainPage/SideNavbar";
 import MainSlidePage from "@/components/mainPage/MainSlidePage";
 import Footer from "@/components/Footer";
 import { SessionContextProvider, useUser } from "@supabase/auth-helpers-react";
-import { createClient } from "@supabase/supabase-js"; 
-
+import { createClient } from "@supabase/supabase-js";
 
 interface Props {
   children?: React.ReactNode;
@@ -24,12 +23,13 @@ interface Props {
 }
 
 // @ts-ignore
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
-
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+);
 
 // const NextProvider = ({ children, pageProps }: Props) => {
 const NextProvider = ({ children }: Props) => {
-  // const { session }:any = pageProps
   return (
     <Providers>
       {/* <SessionProvider session={session}> */}

@@ -4,6 +4,7 @@
 import Pagination from "@/components/Pagination";
 import Comments from "@/components/comments";
 import Loader from "@/components/loader";
+import { RecipeType } from "@/interface";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -24,7 +25,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   // const [ingredients, setIngredients] = useState("")s
 
   const recipeData = async () => {
-    const { data: data }: any = await axios.get(`/api/recipe?id=${id}`);
+    const { data: data } = await axios.get(`/api/recipe?id=${id}`);
     writerId(data);
 
     console.log("data", data);
@@ -32,7 +33,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
 
     const imageName = await getImages(data.image);
 
-    return { ...data, imagePath: imageName };
+    return { ...data, imagePath: imageName } as RecipeType;
   };
 
   const {
@@ -58,7 +59,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
 
     if (confirm) {
       try {
-        const result = await axios.delete(`/api/recipe?id=${recipe.id}`);
+        const result = await axios.delete(`/api/recipe?id=${recipe?.id}`);
 
         // 삭제 성공하면 메인 페이지로 이동
         if (result.status === 200) {
@@ -74,7 +75,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  const writerId = (data: any) => {
+  const writerId = (data: RecipeType) => {
     const writer = data?.writer;
     if (writer) {
       const atIndex = writer.indexOf("@");
@@ -97,14 +98,32 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="w-full h-full min-h-[100vh] pt-[112px]">
-      <div className="shadow-lg md:max-w-6xl mx-auto h-full px-8 py-12 bg-white border-gray-400 border-2">
+      <div className="shadow-lg md:max-w-6xl mx-auto h-full min-h-[100vh] px-8 py-12 bg-white border-gray-400 border-2">
         <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           {recipe?.title}
         </h2>
+
         <div className="flex flex-col p-10">
+          <div className="flex justify-between">
+            <div className="my-8">
+              <span className="text-lg font-semibold">작성자</span>{" "}
+              <span>{maskId}</span>
+            </div>
+            <div className="my-8 text-xm font-medium leading-5 text-gray-500">
+              <span>생성일</span>
+              <br />
+              {/* <span>{new Date(recipe?.createdAt)?.toLocaleDateString()}</span> */}
+              <span>{recipe?.createdAt?.toLocaleDateString()}</span>
+            </div>
+            {/* <div>
+            <h2 className="text-lg font-semibold">등록 날짜</h2>
+            <p>{recipe?.createdAt}</p>
+          </div> */}
+          </div>
+
           <span className="text-lg font-semibold">이미지</span>
           <div className="flex items-center gap-7">
-            {recipe?.image.map((image: string, i: any) => (
+            {recipe?.image?.map((image: string, i: any) => (
               <div
                 key={i}
                 className="flex flex-col justify-center items-center w-[150px] h-[150px] shadow-lg overflow-hidden"
@@ -117,27 +136,11 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
               </div>
             ))}
           </div>
-          <div className="flex justify-between">
-            <div className="my-8">
-              <span className="text-lg font-semibold">작성자</span>
-              <br />
-              {/* <p>{recipe?.writer}</p> */}
-              <span>{maskId}</span>
-            </div>
-            <div className="my-8 text-xm font-medium leading-5 text-gray-500">
-              <span>생성일</span>
-              <br />
-              <span>{new Date(recipe?.createdAt)?.toLocaleDateString()}</span>
-            </div>
-            {/* <div>
-            <h2 className="text-lg font-semibold">등록 날짜</h2>
-            <p>{recipe?.createdAt}</p>
-          </div> */}
-          </div>
-          <div className="mb-8">
+
+          <div className="my-8">
             <span className="text-lg font-semibold">재료</span>
             <div>
-              {recipe?.ingredients.map((ingredient: string, i: any) => (
+              {recipe?.ingredients?.map((ingredient: string, i: any) => (
                 <span className="leading-7" key={i}>
                   {ingredient} <br />
                 </span>
@@ -166,7 +169,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           )}
         </div>
         <div className="my-10 p-10">
-          <h3 className="px-3 py-2 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
+          <h3 className="py-2 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
             댓글
           </h3>
           {/* 댓글 */}

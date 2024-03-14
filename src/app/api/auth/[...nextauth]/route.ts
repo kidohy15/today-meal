@@ -72,7 +72,7 @@ export const authOptions: NextAuthOptions = {
           return user;
         } catch (error) {
           console.log("Error: ", error);
-          return null;
+          throw new Error("Wrong Credentials");
         }
       },
     }),

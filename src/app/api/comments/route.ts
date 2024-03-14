@@ -6,7 +6,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 const prisma = new PrismaClient();
 
 // comments 목록 조회
-export async function GET(req: Request, context: any) {
+export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const page = searchParams.get("page") ?? "1";
   const skipPage = parseInt(page) - 1;

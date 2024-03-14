@@ -4,7 +4,6 @@ import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SecondSlidePage from "./SecondSlidePage";
 
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -18,11 +17,12 @@ import { Mousewheel, Pagination } from "swiper/modules";
 import Link from "next/link";
 import SecondSlidePage2 from "./SecondSlidePage2";
 import SideNavbar from "./SideNavbar";
+import { Swiper as SwiperType } from "swiper/types";
 
 const MainSlidePage = () => {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const handleSlideChange = (swiper: any) => {
+  const handleSlideChange = (swiper: SwiperType) => {
     setActiveSlide(swiper.activeIndex);
   };
 

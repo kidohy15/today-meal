@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Loader from "./loader";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { RecipeType } from "@/interface";
 
 interface RecipeListProps {
   searchKeyword: string;
@@ -128,11 +129,11 @@ export default function RecipeList({
   return (
     <>
       <div className="flex justify-center">
-        <ul role="list" className="pt-2 flex flex-wrap gap-1 j items-center">
+        <ul role="list" className="pt-2 flex flex-wrap gap-1 items-center">
           {isLoading ? (
             <div>로딩중입니다.</div>
           ) : (
-            recipes?.data.map((recipe: any, index: any) => (
+            recipes?.data.map((recipe: RecipeType, index: number) => (
               <li
                 className="flex flex-col justify-between gap-x-20 w-[22.5%] h-[370px] py-1 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
                 key={index}
@@ -190,10 +191,10 @@ export default function RecipeList({
                   </div> */}
                     <div className="flex flex-col">
                       <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                        {maskWriter(recipe?.writer)}
+                        {maskWriter(recipe.writer as string)}
                       </div>
                       <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                        {new Date(recipe?.createdAt)?.toLocaleDateString()}
+                        {recipe?.createdAt?.toLocaleDateString()}
                       </div>
                     </div>
                   </div>

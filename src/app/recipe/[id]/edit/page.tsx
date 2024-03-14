@@ -4,7 +4,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  FormEvent,
+  ChangeEvent,
+  KeyboardEvent,
+} from "react";
 import { useForm } from "react-hook-form";
 import { MdCancel } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -18,7 +24,7 @@ interface EditPageProps {
 const EditPage = ({ params }: EditPageProps) => {
   const router = useRouter();
   const id = params.id;
-  console.log("id", id)
+  console.log("id", id);
 
   const [writer, setWriter] = useState<string>("");
   const [maskId, setMaskId] = useState<string>("");
@@ -60,15 +66,15 @@ const EditPage = ({ params }: EditPageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, recipe]);
 
-  const extractBase64DataFromURI = (dataURI:string) => {
+  const extractBase64DataFromURI = (dataURI: string) => {
     // "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." 형태에서 Base64 부분을 추출
     const base64String = dataURI.split(",")[1];
     return base64String;
   };
 
-  const imageToBlob = (base64Images: any[]) => {
+  const imageToBlob = (base64Images: string[]) => {
     console.log("base64Images", base64Images);
-    let imageToBlobs: any[] = [];
+    let imageToBlobs: File[] = [];
     base64Images?.map((base64Data: string) => {
       console.log("base64Data", base64Data);
       console.log("base64Data", base64Data.toString());
@@ -113,7 +119,7 @@ const EditPage = ({ params }: EditPageProps) => {
   // } = useForm<any>();
 
   // Form 내용 등록
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
     // if (!imageFile) return;
@@ -129,12 +135,12 @@ const EditPage = ({ params }: EditPageProps) => {
         imageFile.map((file: File) => encodeImageFileAsURL(file))
       );
 
-      encodedImages.forEach((file: any, index) => {
-        formData.append(`files[${index}]`, file);
+      encodedImages.forEach((file, index) => {
+        formData.append(`files[${index}]`, file as string);
       });
 
-      ingredients.forEach((ingredient: any, index) => {
-        formData.append(`ingredients[${index}]`, ingredient);
+      ingredients.forEach((ingredient, index) => {
+        formData.append(`ingredients[${index}]`, ingredient as string);
       });
 
       // JSON 형식으로 파싱 후 추가
@@ -150,10 +156,10 @@ const EditPage = ({ params }: EditPageProps) => {
         },
       });
 
-      console.log("res?.data?.data?.id",res?.data?.data?.id)
-      console.log("res?.data?.data?.id",res?.data?.data)
-      console.log("res?.data?.data?.id",res?.data)
-      console.log("res?.data?.data?.id",res)
+      console.log("res?.data?.data?.id", res?.data?.data?.id);
+      console.log("res?.data?.data?.id", res?.data?.data);
+      console.log("res?.data?.data?.id", res?.data);
+      console.log("res?.data?.data?.id", res);
 
       if (res.status === 200) {
         // 레시피 등록 성공
@@ -172,11 +178,11 @@ const EditPage = ({ params }: EditPageProps) => {
     }
   };
 
-  const uploadImage = async (e: any) => {
+  const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     // let file = e.target.files?.[0];
     const files = e.target.files;
     if (files && files.length > 0) {
-      setImageFile((prevFiles: any) => [...prevFiles, ...Array.from(files)]);
+      setImageFile((prevFiles) => [...prevFiles, ...Array.from(files)]);
     }
 
     const uuid = uuidv4();
@@ -203,14 +209,14 @@ const EditPage = ({ params }: EditPageProps) => {
     }
   };
 
-  const handleOnKeyPress = (e: any) => {
+  const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleAddIngredient(); // Enter 입력이 되면 재료 추가버튼 실행
     }
   };
 
   // 삭제
-  const handleImageRemove = (indexToRemove: any) => {
+  const handleImageRemove = (indexToRemove: number) => {
     const updatedImages = imageFile.filter(
       (_, index) => index !== indexToRemove
     );
@@ -219,8 +225,8 @@ const EditPage = ({ params }: EditPageProps) => {
   console.log("imageFile111", imageFile);
 
   return (
-    <div className="min-h-screen pt-[112px]">
-      <div className="flex flex-col h-full items-center justify-center md:max-w-6xl mx-auto bg-white px-8 py-12 shadow-md">
+    <div className="min-h-[100vh] h-full pt-[112px]">
+      <div className=" h-full min-h-[100vh] md:max-w-6xl mx-auto bg-white px-8 py-12 shadow-md">
         {/* <div className=" w-[1250px] h-[1250px] bg-[url('/images/301029217_PJ72317.jpg')] bg-cover bg-center"> */}
         <h2 className="block w-full text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           {recipe?.title}
@@ -229,6 +235,22 @@ const EditPage = ({ params }: EditPageProps) => {
           className="bg-white h-full rounded px-8 pt-6 pb-8 mb-4 w-full bottom-0"
           onSubmit={onSubmit}
         >
+          <div className="mb-8">
+            <label
+              htmlFor="writer"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              작성자 :{" "}
+              <span className="text-sm font-medium">{recipe?.writer}</span>
+            </label>
+            <input
+              id="writer"
+              type="text"
+              value={writer}
+              className="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
           <div className="flex justify-between pr-16">
             <div className="mb-14">
               <label
@@ -249,29 +271,13 @@ const EditPage = ({ params }: EditPageProps) => {
             </div>
           </div>
 
-          <div className="mb-8">
-            <label
-              htmlFor="writer"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              작성자 :{" "}
-              <span className="text-sm font-medium">{recipe?.writer}</span>
-            </label>
-            <input
-              id="writer"
-              type="text"
-              value={writer}
-              className="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-
           <div className="flex mb-16">
-            {imageFile.map((image: any, index: any) => (
+            {imageFile.map((image: File, index: number) => (
               <div key={index}>
                 <div className="flex mb-2 w-40 h-40 items-center overflow-hidden">
                   <img
                     src={URL.createObjectURL(image)}
-                    alt={`이미지 ${index}`}
+                    alt={`레시피 이미지 ${index}`}
                     className="w-[100%] h-[100%] object-cover"
                   />
                 </div>
@@ -317,7 +323,7 @@ const EditPage = ({ params }: EditPageProps) => {
                 선택한 재료
               </span>
               <div className="flex flex-wrap min-h-[50px] w-full mt-2 items-center shadow-sm border-solid border-2 border-zinc-200">
-                {ingredients?.map((ingredients: any, index: any) => (
+                {ingredients?.map((ingredients: string, index: number) => (
                   <div
                     key={index}
                     className="p-2 m-2 bg-gray-100 rounded-md border-solid border-2 border-amber-900"

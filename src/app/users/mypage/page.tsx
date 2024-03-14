@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -72,7 +73,21 @@ const MyPage = () => {
           </div>
           <div className="mt-6 border-t border-gray-100">
             <dl className="divide-y divide-gray-100">
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-1 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  내 프로필
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <img
+                    alt="프로필 이미지"
+                    width={80}
+                    height={80}
+                    className="rounded w-20 h-20"
+                    src={session?.data?.user?.image || "/images/default.jpg"}
+                  />
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   이름
                 </dt>
@@ -80,7 +95,7 @@ const MyPage = () => {
                   {session?.data?.user?.name ?? "사용자"}
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   이메일
                 </dt>
@@ -88,20 +103,7 @@ const MyPage = () => {
                   {session?.data?.user?.email}
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
-                  이미지
-                </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <img
-                    alt="프로필 이미지"
-                    width={48}
-                    height={48}
-                    className="rounded-full w-12 h-12"
-                    src={session?.data?.user?.image || "/images/default.jpg"}
-                  />
-                </dd>
-              </div>
+
               {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   설정

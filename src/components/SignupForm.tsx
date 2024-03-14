@@ -33,11 +33,14 @@ export default function Signupform() {
         setIsLoading(false);
         toast.error("다시 시도해주세요.");
       }
-    } catch (error: any) {
-      console.log("error", error);
-      console.log("error", error.response.data.message);
+    } catch (error) {
+      console.error("error", error);
       // toast.error(error?.code);
-      toast.error(error?.response.data.message);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("에러가 발생했습니다.");
+      }
     }
   };
 
