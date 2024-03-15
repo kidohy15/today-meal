@@ -65,7 +65,6 @@ const RecipeNewPage = () => {
     }
   };
 
-
   // Form 내용 등록
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -210,7 +209,7 @@ const RecipeNewPage = () => {
                   <input
                     id="writer"
                     type="text"
-                    value={session?.user?.email}
+                    defaultValue={session?.user?.email}
                     className="hidden appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
@@ -324,7 +323,6 @@ const RecipeNewPage = () => {
               <div className="flex items-center justify-end">
                 <button
                   type="submit"
-                  value="레시피 등록"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:cursor-pointer focus:shadow-outline"
                 >
                   버튼

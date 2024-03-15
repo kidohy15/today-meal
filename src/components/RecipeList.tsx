@@ -185,7 +185,9 @@ export default function RecipeList({
                         {maskWriter(recipe.writer as string)}
                       </div>
                       <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                        {recipe?.createdAt?.toLocaleDateString()}
+                        {new Date(
+                          recipe?.createdAt as Date
+                        )?.toLocaleDateString()}
                       </div>
                     </div>
                   </div>

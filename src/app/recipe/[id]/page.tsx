@@ -111,7 +111,9 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
               <span>생성일</span>
               <br />
               {/* <span>{new Date(recipe?.createdAt)?.toLocaleDateString()}</span> */}
-              <span>{recipe?.createdAt?.toLocaleDateString()}</span>
+              <span>
+                {new Date(recipe?.createdAt as Date)?.toLocaleDateString()}
+              </span>
             </div>
             {/* <div>
             <h2 className="text-lg font-semibold">등록 날짜</h2>
