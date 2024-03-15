@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Loader from "./loader";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { RecipeType } from "@/interface";
+import { RecipeApiResponse, RecipeType } from "@/interface";
 
 interface RecipeListProps {
   searchKeyword: string;
@@ -51,6 +51,7 @@ export default function RecipeList({
 
       return result;
     } else {
+      console.log("==============")
       const res = await axios.get(`/api/recipe?page=${page}`, {
         params: {
           searchKeyword: searchKeyword,
@@ -95,7 +96,6 @@ export default function RecipeList({
 
   const getImages = async (image: string) => {
     const { data } = await supabase.storage.from("images").getPublicUrl(image);
-
     return data.publicUrl;
   };
 
@@ -111,7 +111,7 @@ export default function RecipeList({
     return <Loader className="my-[20%]" />;
   }
 
-  if (recipes.data.length === 0)
+  if (recipes?.data?.length === 0)
     return (
       <div className="my-[20%] p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
         등록된 레시피가 없습니다.
@@ -120,13 +120,13 @@ export default function RecipeList({
   return (
     <>
       <div className="flex justify-center">
-        <ul role="list" className="pt-2 flex flex-wrap gap-1 items-center">
+        <ul role="list" className="pt-2 flex-wrap gap-1 items-center grid grid-cols-4">
           {isLoading ? (
             <div>로딩중입니다.</div>
           ) : (
-            recipes?.data.map((recipe: RecipeType, index: number) => (
+            recipes?.data?.map((recipe: RecipeType, index: number) => (
               <li
-                className="flex flex-col justify-between gap-x-20 w-[22.5%] h-[370px] py-1 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
+                className="flex flex-col justify-between gap-x-20 h-[370px] py-1 border border-solid border-gray-200 px-4 my-2 cursor-pointer z-10"
                 key={index}
                 onClick={() => router.push(`/recipe/${recipe.id}`)}
               >
@@ -210,3 +210,6 @@ export default function RecipeList({
     </>
   );
 }
+
+
+

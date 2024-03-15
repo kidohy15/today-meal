@@ -11,6 +11,14 @@ export interface RecipeType {
   userId: number | null; // 유저id
 }
 
+// 레시피 api 결과 타입
+export interface RecipeApiResponse {
+  data?: RecipeType[];
+  totalPage?: number;
+  page?: number;
+}
+
+
 // 레시피 유저
 export interface User {
   id: number;

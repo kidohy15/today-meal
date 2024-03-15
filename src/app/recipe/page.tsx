@@ -12,15 +12,16 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Pagination from "@/components/Pagination";
 import RecipeList from "@/components/RecipeList";
+import { RecipeApiResponse } from "@/interface";
 
 interface RecipeListProps {
   params: { id: string; page: string };
 }
 
 const RecipeListPage = () => {
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -39,3 +40,23 @@ const RecipeListPage = () => {
 };
 
 export default RecipeListPage;
+
+async function getServerSideProps () {
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipe`, {
+  const res = await fetch(`/api/recipe`, {
+    cache: "no-store",
+  });
+
+  const repo: RecipeApiResponse = await res.json()
+  // Pass data to the page via props
+
+  console.log("res", res)
+  console.log("repo", repo)
+  
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  
+  // return { props: { repo } }
+  return repo;
+}
