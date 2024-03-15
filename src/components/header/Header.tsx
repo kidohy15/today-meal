@@ -3,20 +3,30 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import SubNavbar from "./SubNavbar";
+import { BiMenu } from "react-icons/bi";
+import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const [menuOn, setMenuOn] = useState("");
+  const { status } = useSession();
 
   const handleItemClick = (item: string): void => {
     setMenuOn(item);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [isOpen]);
+  console.log(isOpen);
 
   return (
-    <div className="fixed z-50 flex flex-col top-0 w-full min-w-[1200px]">
-      <SubNavbar menuOn={menuOn} handleItemClick={handleItemClick} />
+    <div className="fixed z-50 mx-auto flex flex-col top-0 w-full">
+      <SubNavbar
+        menuOn={menuOn}
+        handleItemClick={handleItemClick}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
 
       <div className="navbar">
         <div className="navbar__list">
@@ -62,6 +72,57 @@ const Navbar = () => {
           </Link> */}
         </div>
       </div>
+      {/* mobile navbar */}
+      {isOpen && (
+        <div className="navbar--mobile">
+          <div className="navbar__list--mobile">
+            <Link
+              href="/recipe/todayMeal"
+              className="navbar__list__item--mobile"
+            >
+              레시피 추천받기
+            </Link>
+            <Link href="/recipe" className="navbar__list__item--mobile">
+              레시피 목록
+            </Link>
+            <Link href="/recipe/new" className="navbar__list__item--mobile">
+              레시피 등록
+            </Link>
+            <Link
+              href={"/users/mypage"}
+              className={
+                menuOn === "item4"
+                  ? "navbar__list__item on"
+                  : "navbar__list__item"
+              }
+            >
+              마이 페이지
+            </Link>
+            {status === "authenticated" ? (
+              <Link
+                href={""}
+                className="navbar__list__item"
+                onClick={() => {
+                  signOut({ callbackUrl: "http://127.0.0.1:3000/" });
+                }}
+              >
+                로그아웃
+              </Link>
+            ) : (
+              <Link
+                href={"/api/auth/signin"}
+                className={
+                  menuOn === "item5"
+                    ? "navbar__list__item on"
+                    : "navbar__list__item"
+                }
+              >
+                로그인
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
