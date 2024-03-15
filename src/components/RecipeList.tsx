@@ -58,15 +58,6 @@ export default function RecipeList({
       });
       const results = res?.data;
 
-      // 이미지 경로를 가져오고 결과에 추가
-      // const resultsWithImagePath = await Promise.all(
-      //   results.data.map(async (result: any) => {
-      //     const imageName = (await getImages(result.image)) ?? null;
-      //     return { ...result, imagePath: imageName };
-      //   })
-      // );
-
-      // const newResult = [...results, resultsWithImagePath]
       return results;
     }
   };

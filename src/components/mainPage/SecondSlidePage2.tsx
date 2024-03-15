@@ -61,7 +61,6 @@ const images = [
 ];
 
 const SecondSlidePage2 = () => {
-  // const slideNums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [slideImages, setSlideImages] = useState(images);
   return (
     <div className="p-1 h-[220px]">
@@ -80,7 +79,6 @@ const SecondSlidePage2 = () => {
         {slideImages.map((image: string, i: number) => (
           <SwiperSlide key={i} className="w-full w-min-[235px]">
             <div
-              // w-[235px] h-[180px]
               className="w-full w-min-[235px] h-full bg-center bg-no-repeat overflow-hidden m-1"
               style={{ backgroundImage: `url(${image})` }}
             ></div>

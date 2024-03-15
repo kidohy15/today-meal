@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import axios from "axios";
@@ -64,14 +65,6 @@ const RecipeNewPage = () => {
     const formDataWithImage = new FormData();
     formDataWithImage.append("imageFile", imageFile);
 
-    // 기존의 form 데이터를 formData에 추가
-    // Object.entries(formData).forEach(([key, value]) => {
-    //   formDataWithImage.append(key, value);
-    // });
-
-    // formDataWithImage.forEach((value, key) => {
-    // });
-
     let dataIngre = formData.ingredients;
 
     try {
@@ -114,7 +107,6 @@ const RecipeNewPage = () => {
         <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           레시피 등록
         </h2>
-        {/* <div className=" w-[1250px] h-[1250px] bg-[url('/images/301029217_PJ72317.jpg')] bg-cover bg-center"> */}
         <form
           className="bg-white rounded px-0 pt-10 pb-8 my-4 w-full mx-auto bottom-0"
           onSubmit={handleSubmit(handleSubmitAction)}
@@ -170,12 +162,6 @@ const RecipeNewPage = () => {
                 defaultValue={writer}
                 className="hidden appearance-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
-
-              {/* {errors?.writer?.type === "required" && (
-                <p className="text-xs text-red-500 pt-2">
-                  필수 입력사항입니다.
-                </p>
-              )} */}
             </div>
           </div>
 
@@ -213,10 +199,6 @@ const RecipeNewPage = () => {
               ))}
               <input
                 id="ingredientsHiddenInput"
-                // {...register("ingredients", {
-                //   value: ingredients.join(","),
-                //   required: true,
-                // })}
                 hidden
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />

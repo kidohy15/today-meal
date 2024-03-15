@@ -35,7 +35,6 @@ export default function Signupform() {
       }
     } catch (error) {
       console.error("error", error);
-      // toast.error(error?.code);
       if (error instanceof Error) {
         toast.error(error.message);
       } else {

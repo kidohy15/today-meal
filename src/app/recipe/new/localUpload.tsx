@@ -44,14 +44,6 @@ const RecipeNewPage = () => {
     setUserInput("");
   };
 
-  // const handleImageChange = (event: any) => {
-  //   const file = event.target.files[0];
-  //   setImageFile(file);
-  //   console.log("file", file);
-  //   console.log("file", file.name);
-  //   console.log("ImageFile", imageFile);
-  // };
-
   const onSubmit = async (e: any) => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
@@ -65,21 +57,9 @@ const RecipeNewPage = () => {
       data.set("writer", writer);
       data.set("ingredients", ingredients);
       data.set("contents", contents);
-      console.log("data!!!!!!!!", data);
-      console.log("data!!!!!!!!", recipeName);
-      console.log("data!!!!!!!!", writer);
-      console.log("data!!!!!!!!", ingredients);
-      console.log("data!!!!!!!!", contents);
-      // if (ingredients.length < 1) {
-      //   setErrIngredients(true);
-      //   toast.error("하나 이상의 재료를 입력해주세요.");
-      //   return;
-      // }
+
       const res = await axios.post("/api/recipe", data);
 
-      // if(!res.ok) throw new Error(await res.text())
-
-      console.log("result!!!!!!!!", res);
       if (res.status === 203) {
         // 레시피 등록 성공
         toast.success("레시피를 등록했습니다.");

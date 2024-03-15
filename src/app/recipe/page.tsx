@@ -17,9 +17,10 @@ interface RecipeListProps {
   params: { id: string; page: string };
 }
 
-// const RecipeListPage = ({ params }: RecipeListProps) => {
 const RecipeListPage = () => {
+
   useEffect(() => {
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

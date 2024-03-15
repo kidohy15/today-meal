@@ -73,11 +73,8 @@ const EditPage = ({ params }: EditPageProps) => {
   };
 
   const imageToBlob = (base64Images: string[]) => {
-    console.log("base64Images", base64Images);
     let imageToBlobs: File[] = [];
     base64Images?.map((base64Data: string) => {
-      console.log("base64Data", base64Data);
-      console.log("base64Data", base64Data.toString());
 
       // 데이터 URI에서 Base64 부분 추출
       const base64String = extractBase64DataFromURI(base64Data);
@@ -111,23 +108,13 @@ const EditPage = ({ params }: EditPageProps) => {
     return imageToBlobs;
   };
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   setValue,
-  //   formState: { errors },
-  // } = useForm<any>();
-
   // Form 내용 등록
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
-    // if (!imageFile) return;
 
     try {
-      // if (imageFile) {
-      // data.append("file", imageFile);
-      // }
+
 
       const formData = new FormData();
 
@@ -179,7 +166,6 @@ const EditPage = ({ params }: EditPageProps) => {
   };
 
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    // let file = e.target.files?.[0];
     const files = e.target.files;
     if (files && files.length > 0) {
       setImageFile((prevFiles) => [...prevFiles, ...Array.from(files)]);
@@ -227,7 +213,6 @@ const EditPage = ({ params }: EditPageProps) => {
   return (
     <div className="min-h-[100vh] h-full pt-[112px]">
       <div className=" h-full min-h-[100vh] md:max-w-6xl mx-auto bg-white px-8 py-12 shadow-md">
-        {/* <div className=" w-[1250px] h-[1250px] bg-[url('/images/301029217_PJ72317.jpg')] bg-cover bg-center"> */}
         <h2 className="block w-full text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           {recipe?.title}
         </h2>

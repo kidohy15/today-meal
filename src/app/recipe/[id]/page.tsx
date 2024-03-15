@@ -18,11 +18,9 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   const supabase = useSupabaseClient();
   const id = params.id;
   const router = useRouter();
-
   const { data: session, status } = useSession();
 
   const [maskId, setMaskId] = useState("");
-  // const [ingredients, setIngredients] = useState("")s
 
   const recipeData = async () => {
     const { data: data } = await axios.get(`/api/recipe?id=${id}`);

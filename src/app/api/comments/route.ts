@@ -68,10 +68,8 @@ export async function POST(req: NextRequest) {
     });
     return Response.json(result);
 
-    // return res.status(200).json(result);
   } catch (error) {
     console.error("Error creating comments:", error);
-    // return data.status(500).json({ error: "Internal Server Error" });
     return Response.json(error);
   }
 }

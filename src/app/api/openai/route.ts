@@ -6,8 +6,6 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.json());
 
-// export default async function handler(req: any, res: any) {
-// app.post("/api/openai" , async (req: any, res: any) => {
 export async function GET(req: any, res: any) {
   const openai = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -16,7 +14,6 @@ export async function GET(req: any, res: any) {
   const userInput = req.body.userInput; // Example: Assuming the user input is sent in the request body
   const chatHistory = req.body.chatHistory;
 
-  // const chatCompletion = await openai.chat.completions.create({
   const chatCompletion = await openai.chat.completions.create({
     messages: chatHistory,
     model: "gpt-3.5-turbo",

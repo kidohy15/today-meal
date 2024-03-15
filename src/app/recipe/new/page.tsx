@@ -65,24 +65,17 @@ const RecipeNewPage = () => {
     }
   };
 
-  // const handleImageChange = (event: any) => {
-  //   const file = event.target.files[0];
-  //   setImageFile(file);
-  // };
 
   // Form 내용 등록
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 이미지 파일을 formData에 추가
-    // if (!imageFile) return;
 
-    console.log("ingredients", ingredients);
     try {
       if (imageFile) {
         // data.append("file", imageFile);
       }
 
-      console.log("imageFile", imageFile);
       const formData = new FormData();
 
       const encodedImages = await Promise.all(
@@ -97,28 +90,10 @@ const RecipeNewPage = () => {
         formData.append(`ingredients[${index}]`, ingredient as string);
       });
 
-      // imageFile.forEach((file, index) => {
-      //   formData.append(`files[${index}]`, file);
-      // });
-      // formData.append(`files[${index}]`, file);
-
-      // formData.append("title", recipeName);
-      // formData.append("contents", contents);
-      // formData.append("writer", writer);
-
       // JSON 형식으로 파싱 후 추가
       formData.append("title", recipeName);
       formData.append("contents", contents);
       formData.append("writer", writer);
-      // formData.append("ingredients", JSON.stringify(ingredients));
-
-      console.log("ingredients", ingredients);
-
-      // if (ingredients.length < 1) {
-      //   setErrIngredients(true);
-      //   toast.error("하나 이상의 재료를 입력해주세요.");
-      //   return;
-      // }
 
       const res = await axios.post("/api/recipe", formData, {
         headers: {
@@ -166,27 +141,11 @@ const RecipeNewPage = () => {
     }
   };
 
-  // const getImages = async () => {
-  //   const { data, error } = await supabase.storage
-  //     .from("images")
-  //     // .createSignedUrl();
-
-  //   if (data !== null) {
-  //     setImage(data);
-  //   }
-  // };
-
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    // let file = e.target.files?.[0];
     const files = e.target.files;
     if (files && files.length > 0) {
       setImageFile((prevFiles) => [...prevFiles, ...Array.from(files)]);
     }
-    // setImageFile(Array.from(e.target.files));
-    // const nowSelectImageList = e.target.files;
-
-    // setImageFile(...imageFile, );
-    // setImageFile(file);
 
     const uuid = uuidv4();
     setImageName(uuid);

@@ -32,7 +32,6 @@ const Navbar = () => {
         <div className="navbar__list">
           <Link
             href={"/recipe/todayMeal"}
-            // className={menuOn === "on" ? "navbar__list__item" : "navbar__list__item on"}>
             className={
               menuOn === "item1"
                 ? "navbar__list__item on"

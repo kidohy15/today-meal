@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import fs from "fs";
-import { pipeline } from "stream";
-import { promisify } from "util";
-import { writeFile } from "fs/promises";
-import { join } from "path";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
@@ -20,7 +15,6 @@ const prisma = new PrismaClient();
 
 // 레시피 목록 조회
 export async function GET(req: Request, res: Request) {
-  // const data = await req.json()
   const { searchParams } = new URL(req.url);
 
   const session = await getServerSession(authOptions);
@@ -113,7 +107,6 @@ export async function POST(req: NextRequest) {
     return Response.json("======= 유저 없음!!!! =========");
   }
 
-  // const data = await req.json();
   const formData = await req.formData();
 
   const title = formData.get("title") as string;
@@ -220,7 +213,6 @@ export async function PUT(req: Request) {
 // 레시피 삭제
 export async function DELETE(req: Request) {
   try {
-    // const data = await req.json();
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");

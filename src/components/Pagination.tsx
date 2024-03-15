@@ -11,6 +11,7 @@ export default function Pagination({
   totalPage,
   pathname,
 }: PaginationProps) {
+  
   // pagination 변수
   const currentPage = parseInt(page);
   const totalPages = parseInt(totalPage);
