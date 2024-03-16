@@ -32,9 +32,34 @@ export default function RecipeList({
   const imgUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/images/";
 
+  const [recipes, setRecipes] = useState<RecipeApiResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const fetchRecipes = async (page: string) => {
+    try {
+      const res = await axios.get("/api/recipe", {
+        params: {
+          page,
+          searchKeyword,
+          userCheck,
+        },
+      });
+      setRecipes(res.data);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // setPathname(window.location.pathname);
-  }, [imagePath, maskedUsername]);
+    fetchRecipes("1");
+  }, [searchKeyword, userCheck]);
+
+  // useEffect(() => {
+  //   // setPathname(window.location.pathname);
+
+  // }, [imagePath, maskedUsername]);
 
   const recipesData = async () => {
     if (userCheck) {
@@ -63,16 +88,16 @@ export default function RecipeList({
     }
   };
 
-  const {
-    data: recipes,
-    isLoading,
-    isFetched,
-    isFetching,
-    isError,
-  } = useQuery({
-    queryKey: [`recipes-${pathname}-${page}`, searchKeyword],
-    queryFn: recipesData,
-  }); // 데이터는 data 속성에 있다
+  // const {
+  //   data: recipes1,
+  //   isLoading,
+  //   isFetched,
+  //   isFetching,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: [`recipes-${pathname}-${page}`, searchKeyword],
+  //   queryFn: recipesData,
+  // }); // 데이터는 data 속성에 있다
 
   // 작성자 정보를 마스킹 처리
   const maskWriter = (writer: string) => {
@@ -99,24 +124,38 @@ export default function RecipeList({
     return data.publicUrl;
   };
 
-  if (isError) {
-    return (
-      <div className="w-full h-screen mx-auto pt-[10%] text-red-500 text-center font-semibold">
-        다시 시도해주세요
-      </div>
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <div className="w-full h-screen mx-auto pt-[10%] text-red-500 text-center font-semibold">
+  //       다시 시도해주세요
+  //     </div>
+  //   );
+  // }
 
-  if (isFetching || isLoading) {
+  // if (isFetching || isLoading) {
+  //   return <Loader className="my-[20%]" />;
+  // }
+
+  const handlePageChange = (page: string) => {
+    fetchRecipes(page);
+  };
+
+  const handleRecipeClick = (recipeId: string) => {
+    router.push(`/recipe/${recipeId}`);
+  };
+
+  if (isLoading) {
     return <Loader className="my-[20%]" />;
   }
 
-  if (recipes?.data?.length === 0)
+  if (!recipes || recipes?.data?.length === 0) {
     return (
       <div className="my-[20%] p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
         등록된 레시피가 없습니다.
       </div>
     );
+  }
+
   return (
     <>
       <div className="flex justify-center">
@@ -206,7 +245,7 @@ export default function RecipeList({
           <Pagination
             page={recipes?.page}
             totalPage={recipes?.totalPage}
-            pathname={pathname}
+            onPageChange={handlePageChange}
           />
         </div>
       )}
