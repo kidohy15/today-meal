@@ -2,17 +2,12 @@
 
 import React from "react";
 import "./globals.css";
-import Layout from "@/components/Layout";
 import Header from "@/components/header/Header";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { SessionContext, SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import Providers from "./utils/Provider";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppProps } from "next/app";
-import SideNavbar from "@/components/mainPage/SideNavbar";
-import MainSlidePage from "@/components/mainPage/MainSlidePage";
 import Footer from "@/components/Footer";
 import { SessionContextProvider, useUser } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
