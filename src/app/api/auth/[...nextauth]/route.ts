@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions, RequestInternal } from "next-auth";
+import NextAuth, { NextAuthOptions, AuthOptions  } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
@@ -42,7 +42,7 @@ async function login(credentials: User) {
   }
 }
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt" as const,
     maxAge: 60 * 60 * 24,
