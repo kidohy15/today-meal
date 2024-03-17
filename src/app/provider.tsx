@@ -4,7 +4,7 @@ import React from "react";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import { SessionProvider } from "next-auth/react";
-import Providers from "./utils/Provider";
+import Providers from "./utils/Providers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppProps } from "next/app";
