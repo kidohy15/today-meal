@@ -122,7 +122,7 @@ export default function RecipeList({
       <div className="flex justify-center">
         <ul
           role="list"
-          className="pt-2 flex-wrap gap-1 items-center grid grid-cols-4"
+          className="pt-2 flex-wrap gap-1 items-center sm:grid sm:grid-cols-2 md:grid md:grid-cols-3 lg:grid lg:grid-cols-4"
         >
           {isLoading ? (
             <div>로딩중입니다.</div>
@@ -135,7 +135,7 @@ export default function RecipeList({
               >
                 <div className="flex justify-center">
                   {recipe?.image && recipe.image.length !== 0 ? (
-                    <div className="flex flex-col justify-center items-center w-[200px] h-[200px] overflow-hidden">
+                    <div className="flex flex-col justify-center items-center md:w-[200px] h-[200px] overflow-hidden">
                       <img
                         src={`${recipe.image[0]}`}
                         className="w-[100%] h-[100%] object-cover bg-gray-200 rounded-md flex text-gray-400"

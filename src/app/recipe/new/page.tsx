@@ -180,7 +180,7 @@ const RecipeNewPage = () => {
               className="bg-white rounded px-0 pt-10 pb-8 my-4 w-full mx-auto bottom-0"
               onSubmit={onSubmit}
             >
-              <div className="flex justify-between pr-16">
+              <div className="flex justify-between pr-3">
                 <div className="mb-14">
                   <label
                     htmlFor="image"
@@ -268,7 +268,7 @@ const RecipeNewPage = () => {
                 >
                   재료
                 </label>
-                <div className="p-5">
+                <div className="py-5">
                   <span className="text-md font-semibold text-stone-500 ">
                     선택한 재료
                   </span>
@@ -283,7 +283,7 @@ const RecipeNewPage = () => {
                     ))}
                   </div>
                 </div>
-                <div className="m-7 bg-orange-100 flex">
+                <div className="my-5 flex">
                   <input
                     type="text"
                     className="w-full p-3 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-blue-500"
@@ -294,7 +294,7 @@ const RecipeNewPage = () => {
                   />
                   <button
                     type="button"
-                    className="w-[120px] p-2 m-1 "
+                    className="w-[120px] p-2 mx-1 bg-stone-200 hover:bg-stone-300 rounded-md"
                     onClick={(e) => {
                       if (userInput !== "" && userInput !== null) {
                         handleAddIngredient();

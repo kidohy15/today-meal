@@ -8,7 +8,7 @@ import Loader from "../loader";
 
 const openai = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // 실제 API 키
-  dangerouslyAllowBrowser: true, // 브라우저에서 사용 허용, 보안상 좋은 위치는 아니니 나중에 api 서버로 뺄 수 있으면 빼자
+  dangerouslyAllowBrowser: true, // 브라우저에서 사용 허용
 });
 
 export default function Openai() {
@@ -107,7 +107,7 @@ export default function Openai() {
                 <span className="p-3 text-2xl font-semibold text-stone-500">
                   이곳에 재료를 입력해주세요
                 </span>
-                <div className="m-7 bg-orange-100 flex">
+                <div className="m-7 flex">
                   <input
                     type="text"
                     className="w-full p-3 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-blue-500"
@@ -117,7 +117,7 @@ export default function Openai() {
                     onKeyDown={handleOnKeyPress}
                   />
                   <button
-                    className="w-[120px] p-2 m-1 "
+                    className="w-[120px] p-2 mx-1 bg-stone-200 hover:bg-stone-300 rounded-md"
                     onClick={() => handleAddIngredient()}
                   >
                     추가하기
@@ -155,7 +155,7 @@ export default function Openai() {
               </span>
               <div className="w-full h-full shadow-sm border-solid border-2 border-zinc-200">
                 {isOpen ? (
-                  <div className="m-3 py-20 px-16 h-full text-stone-900 font-sans text-lg leading-7">
+                  <div className="m-3 sm:py-20 sm:px-16 h-full text-stone-900 font-sans test-sm md:text-lg leading-7">
                     {chatHistory.map((message: any, index: any) => (
                       <div
                         key={index}

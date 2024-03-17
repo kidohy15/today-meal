@@ -75,7 +75,6 @@ const EditPage = ({ params }: EditPageProps) => {
   const imageToBlob = (base64Images: string[]) => {
     let imageToBlobs: File[] = [];
     base64Images?.map((base64Data: string) => {
-
       // 데이터 URI에서 Base64 부분 추출
       const base64String = extractBase64DataFromURI(base64Data);
       // Base64 문자열을 디코딩하여 이진 데이터로 변환
@@ -114,8 +113,6 @@ const EditPage = ({ params }: EditPageProps) => {
     // 이미지 파일을 formData에 추가
 
     try {
-
-
       const formData = new FormData();
 
       const encodedImages = await Promise.all(
@@ -212,7 +209,7 @@ const EditPage = ({ params }: EditPageProps) => {
 
   return (
     <div className="min-h-[100vh] h-full pt-[112px]">
-      <div className=" h-full min-h-[100vh] md:max-w-6xl mx-auto bg-white px-8 py-12 shadow-md">
+      <div className="h-full min-h-[100vh] md:max-w-6xl mx-auto bg-white px-8 py-12 shadow-md">
         <h2 className="block w-full text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
           {recipe?.title}
         </h2>
@@ -303,7 +300,7 @@ const EditPage = ({ params }: EditPageProps) => {
             >
               재료
             </label>
-            <div className="p-5">
+            <div className="py-5">
               <span className="text-md font-semibold text-stone-500 ">
                 선택한 재료
               </span>
@@ -318,7 +315,7 @@ const EditPage = ({ params }: EditPageProps) => {
                 ))}
               </div>
             </div>
-            <div className="m-7 bg-orange-100 flex">
+            <div className="my-5 flex">
               <input
                 type="text"
                 className="w-full p-3 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-blue-500"
@@ -329,7 +326,7 @@ const EditPage = ({ params }: EditPageProps) => {
               />
               <button
                 type="button"
-                className="w-[120px] p-2 m-1 "
+                className="w-[120px] p-2 mx-1 bg-stone-200 hover:bg-stone-300 rounded-md"
                 onClick={(e) => {
                   if (userInput !== "" && userInput !== null) {
                     handleAddIngredient();

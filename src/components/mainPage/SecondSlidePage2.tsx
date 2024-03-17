@@ -63,7 +63,7 @@ const images = [
 const SecondSlidePage2 = () => {
   const [slideImages, setSlideImages] = useState(images);
   return (
-    <div className="p-1 h-[220px]">
+    <div className="hidden lg:block p-1 h-[220px]">
       <Swiper
         dir="rtl"
         slidesPerView={8}

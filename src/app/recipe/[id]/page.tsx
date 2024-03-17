@@ -101,13 +101,13 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           {recipe?.title}
         </h2>
 
-        <div className="flex flex-col p-10">
+        <div className="flex flex-col sm:p-10">
           <div className="flex justify-between">
-            <div className="my-8">
+            <div className="sm:my-8">
               <span className="text-lg font-semibold">작성자</span>{" "}
               <span>{maskId}</span>
             </div>
-            <div className="my-8 text-xm font-medium leading-5 text-gray-500">
+            <div className="sm:my-8 text-xm font-medium leading-5 text-gray-500">
               <span>생성일</span>
               <br />
               {/* <span>{new Date(recipe?.createdAt)?.toLocaleDateString()}</span> */}

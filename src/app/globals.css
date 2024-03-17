@@ -85,7 +85,7 @@ table {
 @media only screen and (max-width: 640px) {
 
   .navbar--mobile {
-    @apply fixed bg-stone-800 h-[100vh] w-full top-[112px] right-0 text-white
+    @apply fixed bg-stone-800 h-full w-[50%] top-[112px] left-0 text-white
   }
 
   .navbar__list {
@@ -93,7 +93,7 @@ table {
   }
 
   .navbar__button {
-    @apply block absolute left-0 px-0 py-[18px] text-2xl
+    @apply block absolute left-3 px-0 py-[18px] text-2xl
   }
 
   .navbar__list__item--mobile {
@@ -167,7 +167,7 @@ table {
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
 }
 
-@media only screen and (max-width: 1312px) {
+@media only screen and (max-width: 1024px) {
   #sideNavbar {
     display: none;
   }
