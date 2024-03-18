@@ -61,53 +61,52 @@ const MyPage = () => {
   }
 
   return (
-    <Suspense>
-      <div className="pt-[112px] h-full min-h-[100vh]">
-        {!session && <p>로그인해주세요</p>}
-        {session && (
-          <div className="shadow-lg md:max-w-6xl mx-auto h-full min-h-[100vh] px-8 py-12 bg-white border-gray-400 border-2">
-            <div className="px-4 sm:px-0">
-              <h2 className="block text-2xl py-3 px-1 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
-                마이 페이지
-              </h2>
-              <p className="mt-5 max-w-2xl text-sm leading-6 text-gray-500">
-                사용자 기본정보
-              </p>
-            </div>
-            <div className="mt-6 border-t border-gray-100">
-              <dl className="divide-y divide-gray-100">
-                <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-1 sm:px-0">
-                  <dt className="text-sm font-medium leading-6 text-gray-900">
-                    내 프로필
-                  </dt>
-                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    <img
-                      alt="프로필 이미지"
-                      width={80}
-                      height={80}
-                      className="rounded w-20 h-20"
-                      src={session?.data?.user?.image || "/images/default.jpg"}
-                    />
-                  </dd>
-                </div>
-                <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
-                  <dt className="text-sm font-medium leading-6 text-gray-900">
-                    이름
-                  </dt>
-                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {session?.data?.user?.name ?? "사용자"}
-                  </dd>
-                </div>
-                <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
-                  <dt className="text-sm font-medium leading-6 text-gray-900">
-                    이메일
-                  </dt>
-                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {session?.data?.user?.email}
-                  </dd>
-                </div>
+    <div className="pt-[112px] h-full min-h-[100vh]">
+      {!session && <p>로그인해주세요</p>}
+      {session && (
+        <div className="shadow-lg md:max-w-6xl mx-auto h-full min-h-[100vh] px-8 py-12 bg-white border-gray-400 border-2">
+          <div className="px-4 sm:px-0">
+            <h2 className="block text-2xl py-3 px-1 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+              마이 페이지
+            </h2>
+            <p className="mt-5 max-w-2xl text-sm leading-6 text-gray-500">
+              사용자 기본정보
+            </p>
+          </div>
+          <div className="mt-6 border-t border-gray-100">
+            <dl className="divide-y divide-gray-100">
+              <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-1 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  내 프로필
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <img
+                    alt="프로필 이미지"
+                    width={80}
+                    height={80}
+                    className="rounded w-20 h-20"
+                    src={session?.data?.user?.image || "/images/default.jpg"}
+                  />
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  이름
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  {session?.data?.user?.name ?? "사용자"}
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  이메일
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  {session?.data?.user?.email}
+                </dd>
+              </div>
 
-                {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   설정
                 </dt>
@@ -121,20 +120,20 @@ const MyPage = () => {
                   </button>
                 </dd>
               </div> */}
-              </dl>
-            </div>
+            </dl>
+          </div>
 
-            {/* 내가 등록한 레시피 */}
-            <div className="mt-40 px-4 sm:px-0 ">
-              <h3 className="block py-2 px-3 mb-10 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
-                내가 등록한 레시피
-              </h3>
-              <RecipeList searchKeyword="" userCheck={true} page={page} />
-            </div>
+          {/* 내가 등록한 레시피 */}
+          <div className="mt-40 px-4 sm:px-0 ">
+            <h3 className="block py-2 px-3 mb-10 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
+              내가 등록한 레시피
+            </h3>
+            <RecipeList searchKeyword="" userCheck={true} page={page} />
+          </div>
 
-            {/* 내가 쓴 댓글 */}
-            {/* <div className="mt-8 px-4 sm:px-0"> */}
-            {/* <h3 className="text-base font-semibold leading-7 text-gray-900">
+          {/* 내가 쓴 댓글 */}
+          {/* <div className="mt-8 px-4 sm:px-0"> */}
+          {/* <h3 className="text-base font-semibold leading-7 text-gray-900">
               내가 쓴 댓글
             </h3>
             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
@@ -145,21 +144,29 @@ const MyPage = () => {
               refetch={refetch}
               checkRecipe={true}
             /> */}
-            {/* pagination */}
-            {/* {comments?.totalPage && (
+          {/* pagination */}
+          {/* {comments?.totalPage && (
               <Pagination
                 totalPage={totalPage}
                 page={page}
                 pathname={`/users/mypage`}
               />
             )} */}
-            {/* </div> */}
-          </div>
-        )}
-      </div>
-    </Suspense>
+          {/* </div> */}
+        </div>
+      )}
+    </div>
   );
 };
+
+export function MyPageSuspense() {
+  return (
+    // You could have a loading skeleton as the `fallback` too
+    <Suspense>
+      <MyPage />
+    </Suspense>
+  );
+}
 
 export const dynamicParams = true;
 export const dynamic = "force-dynamic";
