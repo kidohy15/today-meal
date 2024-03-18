@@ -127,7 +127,7 @@ const MyPage = () => {
             <h3 className="block py-2 px-3 mb-10 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
               내가 등록한 레시피
             </h3>
-            {/* <RecipeList searchKeyword="" userCheck={true} /> */}
+            <RecipeList searchKeyword="" userCheck={true} page={page} />
           </div>
 
           {/* 내가 쓴 댓글 */}

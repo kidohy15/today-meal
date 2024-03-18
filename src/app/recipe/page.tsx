@@ -23,6 +23,9 @@ const RecipeListPage = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
+  const searchParams = useSearchParams();
+  const page: string = searchParams.get("page") ?? "1";
+
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -33,7 +36,7 @@ const RecipeListPage = () => {
           레시피 목록
         </h2>
         <SearchFilter setSearchKeyword={setSearchKeyword} />
-        <RecipeList searchKeyword={searchKeyword} userCheck={false} />
+        <RecipeList searchKeyword={searchKeyword} userCheck={false} page={page} />
       </div>
     </div>
   );

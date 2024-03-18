@@ -15,17 +15,19 @@ import { RecipeApiResponse, RecipeType } from "@/interface";
 interface RecipeListProps {
   searchKeyword: string;
   userCheck?: boolean | null;
+  page: string
 }
 
 export default function RecipeList({
   searchKeyword,
   userCheck,
+  page
 }: RecipeListProps) {
   const supabase = useSupabaseClient();
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const page: string = searchParams.get("page") ?? "1";
+  // const searchParams = useSearchParams();
+  // const page: string = searchParams.get("page") ?? "1";
 
   const [writer, setWriter] = useState<string>("");
   const [maskedUsername, setMaskedUsername] = useState<string>("");
