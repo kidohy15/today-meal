@@ -39,4 +39,5 @@ const RecipeListPage = () => {
   );
 };
 
+export const dynamic = 'force-dynamic'
 export default RecipeListPage;

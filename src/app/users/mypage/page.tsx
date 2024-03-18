@@ -158,4 +158,5 @@ const MyPage = () => {
   );
 };
 
+export const dynamic = 'force-dynamic'
 export default MyPage;
