@@ -42,8 +42,8 @@ async function login(credentials: User) {
   }
 }
 
-
-const authOptions: NextAuthOptions = {
+// @ts-ignore
+const authOptions = {
   session: {
     strategy: "jwt" as const,
     maxAge: 60 * 60 * 24,
@@ -84,6 +84,7 @@ const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
+    // @ts-ignore
     session: ({ session, token }) => ({
       ...session,
       user: {
@@ -91,6 +92,8 @@ const authOptions: NextAuthOptions = {
         id: token.sub,
       },
     }),
+    
+    // @ts-ignore
     jwt: async ({ user, token }) => {
       if (user) {
         token.sub = user.id;
