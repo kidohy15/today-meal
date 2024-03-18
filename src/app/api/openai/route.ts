@@ -1,25 +1,25 @@
-// // server-side code (e.g., in a Next.js API route)
-// import OpenAI from "openai";
-// const express = require("express");
-// const bodyParser = require("body-parser");
+// server-side code (e.g., in a Next.js API route)
+import OpenAI from "openai";
+const express = require("express");
+const bodyParser = require("body-parser");
 
-// const app = express();
-// app.use(bodyParser.json());
+const app = express();
+app.use(bodyParser.json());
 
-// export async function GET(req: any, res: any) {
-//   const openai = new OpenAI({
-//     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-//   });
+export async function GET(req: any, res: any) {
+  const openai = new OpenAI({
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  });
 
-//   const userInput = req.body.userInput; // Example: Assuming the user input is sent in the request body
-//   const chatHistory = req.body.chatHistory;
+  const userInput = req.body.userInput; // Example: Assuming the user input is sent in the request body
+  const chatHistory = req.body.chatHistory;
 
-//   const chatCompletion = await openai.chat.completions.create({
-//     messages: chatHistory,
-//     model: "gpt-3.5-turbo",
-//   });
+  const chatCompletion = await openai.chat.completions.create({
+    messages: chatHistory,
+    model: "gpt-3.5-turbo",
+  });
 
-//   // ... rest of the logic ...
+  // ... rest of the logic ...
 
-//   res.status(200).json({ chatHistory }); // Example: Sending the chat history as a response
-// }
+  res.status(200).json({ chatHistory }); // Example: Sending the chat history as a response
+}
