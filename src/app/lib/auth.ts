@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions, AuthOptions  } from "next-auth";
+import NextAuth, { NextAuthOptions, AuthOptions } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
@@ -16,7 +16,33 @@ interface User {
   image?: string;
 }
 
-export const authOptions: NextAuthOptions = {
+async function login(credentials: User) {
+  const email = credentials.email;
+  const password = credentials.password;
+  try {
+    const res = await prisma.user.findFirst({
+      where: {
+        email: email,
+        // 암호화된 비번과 where 절 비교를 하기 때문에 여기서 password 비교하면 계속 null 나오기 때문에 밑에서 비교
+        // password: password,
+      },
+    });
+
+    if (!res) throw new Error("Wrong Credentials");
+    const correct = await bcrypt.compare(
+      credentials?.password as string,
+      res?.password as string
+    );
+
+    if (!correct) throw new Error("Wrong Credentials");
+    return res;
+  } catch (error) {
+    console.log("login error");
+    throw new Error("error");
+  }
+}
+
+const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt" as const,
     maxAge: 60 * 60 * 24,
@@ -73,28 +99,4 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-async function login(credentials: User) {
-  const email = credentials.email;
-  const password = credentials.password;
-  try {
-    const res = await prisma.user.findFirst({
-      where: {
-        email: email,
-        // 암호화된 비번과 where 절 비교를 하기 때문에 여기서 password 비교하면 계속 null 나오기 때문에 밑에서 비교
-        // password: password,
-      },
-    });
-
-    if (!res) throw new Error("Wrong Credentials");
-    const correct = await bcrypt.compare(
-      credentials?.password as string,
-      res?.password as string
-    );
-
-    if (!correct) throw new Error("Wrong Credentials");
-    return res;
-  } catch (error) {
-    console.log("login error");
-    throw new Error("error");
-  }
-}
+export default authOptions;
