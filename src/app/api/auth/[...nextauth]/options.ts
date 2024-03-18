@@ -43,7 +43,7 @@ async function login(credentials: User) {
   }
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt" as const,
     maxAge: 60 * 60 * 24,
@@ -101,5 +101,5 @@ export const authOptions: NextAuthOptions = {
   },
 } satisfies NextAuthOptions;
 
-// export default authOptions;
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
+export default authOptions;
+// export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
