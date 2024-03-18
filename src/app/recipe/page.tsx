@@ -18,7 +18,7 @@ interface RecipeListProps {
   params: { id: string; page: string };
 }
 
-const RecipeListPageSuspense = () => {
+const RecipeListPage = () => {
   // useEffect(() => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
@@ -30,30 +30,23 @@ const RecipeListPageSuspense = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   return (
-    <div className="w-full h-full pt-[112px]">
-      <div className="px-8 py-12 min-h-[100vh] md:max-w-6xl mx-auto h-full bg-white shadow-md">
-        <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
-          레시피 목록
-        </h2>
-        <SearchFilter setSearchKeyword={setSearchKeyword} />
-        <RecipeList
-          searchKeyword={searchKeyword}
-          userCheck={false}
-          page={page}
-        />
-      </div>
-    </div>
-  );
-};
-
-export function RecipeListPage() {
-  return (
-    // You could have a loading skeleton as the `fallback` too
     <Suspense>
-      <RecipeListPageSuspense />
+      <div className="w-full h-full pt-[112px]">
+        <div className="px-8 py-12 min-h-[100vh] md:max-w-6xl mx-auto h-full bg-white shadow-md">
+          <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+            레시피 목록
+          </h2>
+          <SearchFilter setSearchKeyword={setSearchKeyword} />
+          <RecipeList
+            searchKeyword={searchKeyword}
+            userCheck={false}
+            page={page}
+          />
+        </div>
+      </div>
     </Suspense>
   );
-}
+};
 
 export const dynamicParams = true;
 export const dynamic = "force-dynamic";
