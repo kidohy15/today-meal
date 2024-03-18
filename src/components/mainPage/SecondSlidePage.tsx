@@ -13,35 +13,35 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const img1 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZi6JvsjNbsAu35vfRDA_2c__xzDzP6dD8ww&usqp=CAU";
+  "/images/slide/slide1/a-dish-of-grilled-meat-on-the-black-wooden-surface-top-view_508835-5944.avif";
 const img2 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKuLP6B8S4AYye8i67-d35clvfYXMsY0Bi5w&usqp=CAU";
+  "/images/slide/slide1/bibimbap-on-a-dark-concrete-background-traditional-korean-dish-top-view_233226-997.jpg";
 const img3 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcFQi-aHb6DGpURPRq79vwS4f2iEVwc-HIMA&usqp=CAU";
+  "/images/slide/slide1/cheesy-tokbokki-korean-traditional-food-on-black-board-background-lunch-dish_1150-42992.avif";
 const img4 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKuLP7B9DPR4_gr4X9hs0O4ZsOZuB6KFjW-A&usqp=CAU";
+  "/images/slide/slide1/close-up-on-delicious-asian-food_23-2149091611.avif";
 const img5 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvVYFLPFxQ35LMgob9pu2j8tka0hhoCi1h5g&usqp=CAU";
+  "/images/slide/slide1/grilled-pork-served-with-sauce-in-korean-style_1150-42934.avif";
 const img6 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCpISk1gMD1BTE7TII4teFLHapbCn3ebT_Cw&usqp=CAU";
+  "/images/slide/slide1/high-protein-meal-close-up-detail_23-2149098887.avif";
 const img7 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD6lD1HJT9C-RbYdCI8UctihUBeYxGTiUnLg&usqp=CAU";
+  "/images/slide/slide1/korean-food-fried-rice-with-kimchi-serve-with-fried-egg_1150-42929.avif";
 const img8 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnBqLbPfJ09Nw8dJd9xCCZ_q-TBgH13FLX0w&usqp=CAU";
+  "/images/slide/slide1/noodle-pasta-with-vegetables-and-egg-on-bowl-top-view_116380-113.avif";
 const img9 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe5ko14Beyj3wrUpQgAz6VxS-54iT85ufvjQ&usqp=CAU";
+  "/images/slide/slide1/offal-with-sweet-pepper-and-green-beans-on-a-white-plate_171081-216.avif";
 const img10 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSne-KMXnhUqmq3YaL-CT50GQvOXEsdYksjtw&usqp=CAU";
+  "/images/slide/slide1/portion-of-asian-sweet-and-sour-shrimp-with-rice_219193-10611.jpg";
 const img11 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl0768iaqsaa-gM7m-OAWUhJ6dFCeSceIa1Q&usqp=CAU";
+  "/images/slide/slide1/restaurant-food-restaurant-menu-photos-for-the-menu_830198-1280.jpg";
 const img12 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0P7BWky1xbhD2tt-qVMAHY35c6nFa1J2ITWOUyGWT34OJHrghBOmGwE5T56WuNU2IXQ&usqp=CAU";
+  "/images/slide/slide1/seafood-salad-with-crabsters-and-cherry-tomatoes_114579-1718.avif";
 const img13 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKmr6zKwTTkNDto9lIlnje_kzkT9FdA6coeUoA2-4o6smeZsmiL6TTOzbJ3uXqIU1CW4o&usqp=CAU";
+  "/images/slide/slide1/stir-fried-pork-with-korean-sauce-on-dark-background_1150-37952.avif";
 const img14 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzfDHt_USVEXECVXriVeeAO8tjQEb4jmiSrA&usqp=CAU";
+  "/images/slide/slide1/thai-food_181624-35416.avif";
 const img15 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkkpQ347UISu6Nl0LC3RgsWwXqGpRXbJtg5A&usqp=CAU";
+  "/images/slide/slide1/tofu-and-yolk-boiled-in-spicy-soup_1150-42895.avif";
 
 const images = [
   img1,

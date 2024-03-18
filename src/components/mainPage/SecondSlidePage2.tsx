@@ -13,34 +13,35 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const img1 =
-  "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/20/00/a2000642/img/basic/a2000642_main.jpg";
+  "/images/slide/slide2/above-view-delicious-food-still-life_23-2149178180.avif";
 const img2 =
-  "https://i0.wp.com/phoebescafe.com/wp-content/uploads/2015/05/NIKON%ED%8C%9F%ED%83%80%EC%9D%B4.jpg?resize=600%2C900&ssl=1";
+  "/images/slide/slide2/asian-cooked-beef-with-spring-onion-and-rice_219193-10698.jpg";
 const img3 =
-  "https://www.semie.cooking/image/contents/recipe/kk/ye/jnmyplxm/127652387qeqr.jpg";
+  "/images/slide/slide2/bean-paste-soup-in-korean-style_1150-42945.avif";
 const img4 =
-  "https://blog.kakaocdn.net/dn/tEO9y/btsoToCZErC/gRTYZ0MKwC0yhx3ImBH9oK/img.jpg";
+  "/images/slide/slide2/classic-spaghetti-bolognese-with-parmesan_140725-2273.avif";
 const img5 =
-  "https://recipe1.ezmember.co.kr/cache/recipe/2018/02/27/b5806f01ccb6f6d5d9aa94bdd6f4287e1.jpg";
-const img6 = "https://gomean.co.kr/wp-content/uploads/2023/05/gm-mapo-tofu.jpg";
+  "/images/slide/slide2/close-up-of-food-in-plate-on-table_1048944-2346665.jpg";
+const img6 =
+  "/images/slide/slide2/composition-of-delicious-indonesian-bakso_23-2148933301.avif";
 const img7 =
-  "https://static.wtable.co.kr/image/production/service/recipe/1056/58782693-2f01-4e26-aae8-9e35dd1074d5.jpg?size=800x800";
+  "/images/slide/slide2/delicious-thai-food-still-life_23-2149508915.avif";
 const img8 =
-  "https://recipe1.ezmember.co.kr/cache/recipe/2022/09/28/72dcbff6533146043c7d9c06a3e41fec1_m.jpg";
+  "/images/slide/slide2/korean-food-jeyuk-bokkeum-or-fried-pork-in-korean-style-sauce_1150-42837.avif";
 const img9 =
-  "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/55oP/image/hTxn2Acc2Sneqn18cSKK-jyGHqw.jpg";
+  "/images/slide/slide2/person-eating-chinese-food-from-a-black-plate-with-chopsticks_181624-27129.avif";
 const img10 =
-  "https://static.wtable.co.kr/image/production/service/recipe/1758/3c097a13-3fa7-41d6-9a62-cb5fd38db246.jpg?size=800x800";
+  "/images/slide/slide2/photo-basil-minced-pork-with-rice-and-fried-egg-food-photography_131346-140.avif";
 const img11 =
-  "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/20/00/a2000644/img/basic/a2000644_main.jpg";
+  "/images/slide/slide2/spicy-meat-and-pork-boil-in-hot-pot_1150-42915.avif";
 const img12 =
-  "https://recipe1.ezmember.co.kr/cache/recipe/2022/04/01/c06fcf9c5ee0acc162d2e01de1453ec01.jpg";
+  "/images/slide/slide2/top-view-composition-of-delicious-poke-bowl_23-2148873843.avif";
 const img13 =
-  "https://t1.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/55oP/image/V00ogNI5g0y6RhtJ--AwBW74F_0.jpg";
+  "/images/slide/slide2/top-view-delicious-vegetarian-meal_23-2149178175.avif";
 const img14 =
-  "https://recipe1.ezmember.co.kr/cache/recipe/2017/03/21/a640f519093bf7804bdc46379bf890031.jpg";
+  "/images/slide/slide2/top-view-over-chinese-hot-pot_23-2149529786.avif";
 const img15 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6OT4UGCoyDTaINgNGf0i8Rk2dcDQZGXsG0w&usqp=CAU";
+  "/images/slide/slide2/top-view-over-hotpot-dishes_23-2149563775.avif";
 
 const images = [
   img1,

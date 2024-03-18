@@ -28,9 +28,9 @@ const MainSlidePage = () => {
 
   return (
     <div className="relative h-full">
-      <div>
+      {/* <div>
         <SideNavbar activeSlide={activeSlide} />
-      </div>
+      </div> */}
       <Swiper
         direction={"vertical"}
         slidesPerView={1}

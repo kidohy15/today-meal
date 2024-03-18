@@ -123,78 +123,86 @@ table {
 /* sideNavbar */
 
 #sideNavbar {
-  position: fixed;
+  /* position: fixed;
   width: 150px;
   height: 310px;
   left: 1%;
   top: 50%;
   margin-top: -189px;
   font-size: 20px;
-  z-index: 50;
-
+  z-index: 50; */
+  @apply fixed w-[150px] h-[310px] left-[1%] top-[50%] mt-[189px] text-[20px] z-50
 }
 
 #sideNavbar div {
-  padding: 10px;
+  /* padding: 10px;
   position: absolute;
   width: 178px;
   height: 50px;
   line-height: 20px;
   left: 10px;
-  color: antiquewhite;
   cursor: pointer;
-  overflow: hidden;
+  overflow: hidden; */
+  color: antiquewhite;
+  @apply p-[10px] absolute w-[178px] h-[50px] leading-[20px] left-[10px] cursor-pointer overflow-hidden
 }
 #sideNavbar div:hover {
-  color:white;
+  /* color:white; */
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
+  @apply text-white
 }
 
 #sideNavbar #nav1 {
-  top: 100px;
+  /* top: 100px; */
+  @apply top-[100px]
 }
 
 #sideNavbar #nav2 {
-  top: 170px;
+  /* top: 170px; */
+  @apply top-[170px]
 }
 
 #sideNavbar #nav3 {
-  top: 240px;
+  /* top: 240px; */
+  @apply top-[240px]
 }
 
 #sideNavbar .on {
-  color:white;
+  /* color:white; */
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
+  @apply text-white
 }
 
 @media only screen and (max-width: 1024px) {
   #sideNavbar {
-    display: none;
+    /* display: none; */
+    @apply hidden
   }
 }
 
 /* swiper slide */
 .swiper {
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
+  @apply w-full h-full
 }
 
 .swiper-slide {
-  text-align: center;
+  /* text-align: center;
   font-size: 18px;
   background: #fff;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+  @apply text-center text-[18px] bg-white flex justify-center items-center
 }
 
 .swiper-slide img {
-  display: block;
+  /* display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; */
+  @apply block w-full h-full object-cover
 }
 
 /* Main page 첫번째 슬라이드 페이지의 초록색 덮개를 사다리꼴로 변경 */
