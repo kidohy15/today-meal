@@ -13,7 +13,7 @@ import RecipeList from "@/components/RecipeList";
 import Loader from "@/components/loader";
 import { Suspense } from "react";
 
-const MyPage = () => {
+const MyPageSuspense = () => {
   const { data, status } = useSession();
   const session = useSession();
   const [user, setUser] = useState(data?.user);
@@ -159,11 +159,11 @@ const MyPage = () => {
   );
 };
 
-export function MyPageSuspense() {
+export function MyPage() {
   return (
     // You could have a loading skeleton as the `fallback` too
     <Suspense>
-      <MyPage />
+      <MyPageSuspense />
     </Suspense>
   );
 }

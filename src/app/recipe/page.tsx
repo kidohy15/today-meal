@@ -18,7 +18,7 @@ interface RecipeListProps {
   params: { id: string; page: string };
 }
 
-const RecipeListPage = () => {
+const RecipeListPageSuspense = () => {
   // useEffect(() => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
@@ -46,11 +46,11 @@ const RecipeListPage = () => {
   );
 };
 
-export function RecipeListPageSuspense() {
+export function RecipeListPage() {
   return (
     // You could have a loading skeleton as the `fallback` too
     <Suspense>
-      <RecipeListPage />
+      <RecipeListPageSuspense />
     </Suspense>
   );
 }
