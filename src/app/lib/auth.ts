@@ -1,9 +1,10 @@
-import { NextAuthOptions, AuthOptions } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import NextAuth from "next-auth";
 
 const prisma = new PrismaClient();
 
@@ -42,8 +43,7 @@ async function login(credentials: User) {
   }
 }
 
-// @ts-ignore
-const authOptions = {
+const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt" as const,
     maxAge: 60 * 60 * 24,
@@ -84,7 +84,6 @@ const authOptions = {
   },
 
   callbacks: {
-    // @ts-ignore
     session: ({ session, token }) => ({
       ...session,
       user: {
@@ -93,7 +92,6 @@ const authOptions = {
       },
     }),
     
-    // @ts-ignore
     jwt: async ({ user, token }) => {
       if (user) {
         token.sub = user.id;
@@ -101,6 +99,7 @@ const authOptions = {
       return token;
     },
   },
-};
+} satisfies NextAuthOptions;
 
-export default authOptions;
+// export default authOptions;
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
