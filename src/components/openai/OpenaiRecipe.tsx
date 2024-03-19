@@ -18,7 +18,6 @@ export default function Openai() {
   const [isLoading, setIsLoading] = useState<any>(false);
   const [isOpen, setIsOpen] = useState<any>(false);
 
-  console.log("ingredients", ingredients);
   const recipeText = `
     음식명:
 
@@ -35,6 +34,9 @@ export default function Openai() {
 
   // 입력한 재료를 배열에 추가
   const handleAddIngredient = () => {
+    if (userInput === "" || userInput === undefined) {
+      return toast.error("다시 입력해주세요.");
+    }
     setIngredients((prevInputs: any) => [...prevInputs, userInput]);
     setUserInput("");
   };
@@ -42,7 +44,6 @@ export default function Openai() {
   // openai 로 재료 전송
   const handleRecipe = async () => {
     if (ingredients.length < 2) {
-      console.log("길이: ", ingredients.length);
       return toast.error("최소 2개 이상의 재료를 입력해주세요.");
     }
     setIsLoading(true);
@@ -104,9 +105,10 @@ export default function Openai() {
           <div className="w-full min-h-[920px] items-center justify-center px-10">
             <div className="mx-auto flex flex-col justify-center">
               <div className="text-center w-full mx-auto h-[30%]">
-                <span className="p-3 text-2xl font-semibold text-stone-500">
-                  이곳에 재료를 입력해주세요
-                </span>
+                <span className="p-3 text-2xl font-semibold text-stone-600">
+                    이곳에 재료를 입력해주세요
+                  </span> <br />
+                  <span className="inline-block py-2 text-stone-500">(음식과 관련된 키워드를 입력해야 적절한 레시피를 제공받을 수 있습니다.)</span>
                 <div className="m-7 flex">
                   <input
                     type="text"

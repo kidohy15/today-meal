@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SecondSlidePage from "./SecondSlidePage";
 
@@ -13,7 +13,7 @@ import "swiper/css/free-mode";
 import "swiper/css/scrollbar";
 
 // import required modules
-import { Mousewheel, Pagination } from "swiper/modules";
+import { Mousewheel } from "swiper/modules";
 import Link from "next/link";
 import SecondSlidePage2 from "./SecondSlidePage2";
 import SideNavbar from "./SideNavbar";
@@ -40,7 +40,7 @@ const MainSlidePage = () => {
         onSlideChange={handleSlideChange}
       >
         <SwiperSlide>
-          <div className="relative h-full w-full flex justify-center items-center bg-[url('/images/tapas-table.jpg')] bg-cover p-1">
+          <div className="relative h-full w-full flex justify-center items-center bg-[url('/images/main-slide1.jpg')] bg-cover p-1">
             <div className="pb-[320px] sm:pb-[200px]">
               <p className="mt-56 text-8xl font-bold text-lime-300 text-shadow">
                 Yummy Recipe
@@ -86,7 +86,8 @@ const MainSlidePage = () => {
         </SwiperSlide>
 
         <SwiperSlide>
-          <div className="relative flex flex-col justify-center h-full w-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1 overflow-hidden">
+          {/* <div className="relative flex flex-col justify-center h-full w-full bg-[url('/images/peking-roast-duck-recipe-food-on-dish-ai-generated_848903-845.avif')] bg-cover p-1 overflow-hidden"> */}
+          <div className="relative flex flex-col justify-center h-full w-full bg-[url('/images/main-slide2.avif')] bg-cover p-1 overflow-hidden">
             <div className="hidden lg:block absolute inset-0 w-full h-full justify-end bg-amber-500 brightness-50 opacity-75 clip-path-polygon3 z-0"></div>
             <div className="relative hidden xl:flex flex-wrap md:w-[760px] xl:h-[520px] xl:w-[980px] mx-auto justify-center gap-8 mt-24 p-8 bg-[#f4f4f4] z-10">
               <div className="bg-white xl:w-[420px] h-[100px] rounded-lg text-center xl:leading-[112px] xl:text-xl font-semibold">
@@ -143,7 +144,8 @@ const MainSlidePage = () => {
         <SwiperSlide>
           <div className="h-full flex flex-col justify-between">
             <SecondSlidePage />
-            <div className="relative bg-[url('/images/wood-texture-background-rough-vintage-wooden-table-brown-timber-for-backdrop-top-view_230497-3208.avif')] h-full text-center leading-[350px] text-4xl bg-cover bg-center z-0">
+            {/* <div className="relative bg-[url('/images/wood-texture-background-rough-vintage-wooden-table-brown-timber-for-backdrop-top-view_230497-3208.avif')] h-full text-center leading-[350px] text-4xl bg-cover bg-center z-0"> */}
+            <div className="relative bg-[url('/images/main-slide3.avif')] h-full text-center leading-[350px] text-4xl bg-cover bg-center z-0">
               <div className="hidden lg:block absolute inset-0 left-[-100%] justify-end bg-green-200 brightness-50 opacity-75 z-10 clip-path-polygon2"></div>
               <p className="mt-80 md:mt-72 lg:mt-40 text-4xl font-bold text-shadow">
                 더 많은 레시피를 확인하세요!

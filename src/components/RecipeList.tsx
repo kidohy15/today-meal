@@ -2,15 +2,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import SearchFilter from "./SearchFilter";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import Pagination from "./Pagination";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import Loader from "./loader";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { RecipeApiResponse, RecipeType } from "@/interface";
+import { RecipeType } from "@/interface";
 
 interface RecipeListProps {
   searchKeyword: string;
@@ -23,22 +20,18 @@ export default function RecipeList({
   userCheck,
   page
 }: RecipeListProps) {
-  const supabase = useSupabaseClient();
   const router = useRouter();
 
   // const searchParams = useSearchParams();
   // const page: string = searchParams.get("page") ?? "1";
 
   const [writer, setWriter] = useState<string>("");
-  const [maskedUsername, setMaskedUsername] = useState<string>("");
   const [pathname, setPathname] = useState<string>("");
   const [imagePath, setImagePath] = useState<string>();
-  const imgUrl =
-    process.env.NEXT_PUBLIC_SUPABASE_URL + "/storage/v1/object/public/images/";
 
   useEffect(() => {
     // setPathname(window.location.pathname);
-  }, [imagePath, maskedUsername]);
+  }, [imagePath]);
 
   const recipesData = async () => {
     if (userCheck) {
@@ -51,11 +44,9 @@ export default function RecipeList({
         }
       );
       const result = res?.data;
-      console.log("res", result);
 
       return result;
     } else {
-      console.log("==============");
       const res = await axios.get(`/api/recipe?page=${page}`, {
         params: {
           searchKeyword: searchKeyword,
@@ -70,7 +61,6 @@ export default function RecipeList({
   const {
     data: recipes,
     isLoading,
-    isFetched,
     isFetching,
     isError,
   } = useQuery({
@@ -96,11 +86,6 @@ export default function RecipeList({
     }
 
     return maskedName;
-  };
-
-  const getImages = async (image: string) => {
-    const { data } = await supabase.storage.from("images").getPublicUrl(image);
-    return data.publicUrl;
   };
 
   if (isError) {
@@ -164,29 +149,6 @@ export default function RecipeList({
                       )}
                     </div>
 
-                    {/* 재료 부분인데 보여줄지 고민중 */}
-                    {/* <div className="mt-1 py-2 text-xs font-medium leading-5 text-center text-gray-500">
-                      {recipe.ingredients.length !== 0 ? (
-                        <div className="flex overflow-hidden">
-                          {recipe.ingredients.map((ingredient: string, i: any) => (
-                            <div
-                              key={i}
-                              className="w-10 p-1 m-1 text-xs bg-gray-100 rounded-md border-solid border-2 border-amber-900"
-                            >
-                              <span className="truncate">{ingredient}</span>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <span className="block p-1 m-1 text-center">
-                          지정된 재료가 없습니다.
-                        </span>
-                      )}
-                    </div> */}
-
-                    {/* <div className="mt-1 text-xl truncate font-medium leading-5 text-gray-500 py-2">
-                    {recipe.contents}
-                  </div> */}
                     <div className="flex flex-col">
                       <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
                         {maskWriter(recipe.writer as string)}

@@ -1,28 +1,12 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import React, { Suspense, useState } from "react";
 // import { Router, useRouter } from "next/router";
-import { useRouter } from "next/navigation";
 import SearchFilter from "@/components/SearchFilter";
-import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import Pagination from "@/components/Pagination";
 import RecipeList from "@/components/RecipeList";
-import { RecipeApiResponse } from "@/interface";
-
-interface RecipeListProps {
-  params: { id: string; page: string };
-}
 
 const RecipeListPage = () => {
-  // useEffect(() => {
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "1";
 
