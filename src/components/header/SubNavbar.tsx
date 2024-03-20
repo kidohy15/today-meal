@@ -32,7 +32,7 @@ export default function SubNavbar({
           className="navbar__logo"
           onClick={() => handleItemClick("")}
         >
-          YummyRecipe
+          TodayMeal
         </Link>
       </div>
 

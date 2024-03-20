@@ -16,7 +16,7 @@ import "swiper/css/scrollbar";
 import { Mousewheel } from "swiper/modules";
 import Link from "next/link";
 import SecondSlidePage2 from "./SecondSlidePage2";
-import SideNavbar from "./SideNavbar";
+// import SideNavbar from "./SideNavbar";
 import { Swiper as SwiperType } from "swiper/types";
 
 const MainSlidePage = () => {

@@ -53,7 +53,7 @@ export default function LoginForm() {
     >
       <div className="bg-slate-200 py-16 mx-auto w-full max-w-xl">
         <h1 className="mt-30 text-orange-400 text-center text-3xl font-semibold">
-          YummyRecipe
+          TodayMeal
         </h1>
         <div className="text-center mt-4 text-3xl font-bold text-gray-600">
           로그인해주세요
@@ -121,7 +121,7 @@ export default function LoginForm() {
                   className="text-white flex gap-2 bg-[#e4a668] hover:bg-[#bc854a]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center"
                 >
                   <BsFillSignIntersectionYFill className="w-6 h-6" />
-                  YummyRecipe 로그인
+                  TodayMeal 로그인
                 </button>
               </div>
               <div className="flex flex-col gap-3 mt-5">
