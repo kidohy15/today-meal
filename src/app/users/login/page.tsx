@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { AiOutlineGoogle } from "react-icons/ai";
-import { BsFillSignIntersectionYFill } from "react-icons/bs";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import LoginForm from "@/components/LoginForm";
 
 export default function LoginPage() {
-  const { status, data: session } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {

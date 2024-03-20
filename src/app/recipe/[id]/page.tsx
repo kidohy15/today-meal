@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Pagination from "@/components/Pagination";
 import Comments from "@/components/comments";
 import Loader from "@/components/loader";
 import { RecipeType } from "@/interface";
@@ -9,7 +8,6 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -34,11 +32,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
     return { ...data, imagePath: imageName } as RecipeType;
   };
 
-  const {
-    data: recipe,
-    isLoading,
-    isFetching,
-  } = useQuery({
+  const { data: recipe, isFetching } = useQuery({
     queryKey: [`recipe-${id}`],
     queryFn: recipeData,
     enabled: !!id,
@@ -110,15 +104,10 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             <div className="sm:my-8 text-xm font-medium leading-5 text-gray-500">
               <span>생성일</span>
               <br />
-              {/* <span>{new Date(recipe?.createdAt)?.toLocaleDateString()}</span> */}
               <span>
                 {new Date(recipe?.createdAt as Date)?.toLocaleDateString()}
               </span>
             </div>
-            {/* <div>
-            <h2 className="text-lg font-semibold">등록 날짜</h2>
-            <p>{recipe?.createdAt}</p>
-          </div> */}
           </div>
 
           <span className="text-lg font-semibold">이미지</span>

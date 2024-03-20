@@ -4,20 +4,17 @@
 import axios from "axios";
 import React, {
   useEffect,
-  useRef,
   useState,
   FormEvent,
   ChangeEvent,
   KeyboardEvent,
 } from "react";
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid";
-import { getImageProps } from "next/image";
 import Loader from "@/components/loader";
 import { MdCancel } from "react-icons/md";
 
@@ -33,10 +30,8 @@ const RecipeNewPage = () => {
   const [imageFile, setImageFile] = useState<File[]>([]);
   const [imageName, setImageName] = useState<string>("");
 
-  const { data: session, status } = useSession();
-
+  const { data: session } = useSession();
   const router = useRouter();
-  const user = useUser();
 
   useEffect(() => {
     writerId();
@@ -61,20 +56,14 @@ const RecipeNewPage = () => {
     if (userInput) {
       setIngredients((prevInputs: string[]) => [...prevInputs, userInput]);
       setUserInput("");
-      console.log("ingredients", ingredients);
     }
   };
 
   // Form 내용 등록
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 이미지 파일을 formData에 추가
 
     try {
-      if (imageFile) {
-        // data.append("file", imageFile);
-      }
-
       const formData = new FormData();
 
       const encodedImages = await Promise.all(
@@ -102,9 +91,6 @@ const RecipeNewPage = () => {
 
       if (res.status === 200) {
         // 레시피 등록 성공
-        if (imageFile) {
-          // await storageUpload(imageFile, imageName);
-        }
         toast.success("레시피를 등록했습니다.");
         router.replace(`/recipe/${res?.data?.data?.id}`);
       } else {
@@ -126,18 +112,6 @@ const RecipeNewPage = () => {
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
-  };
-
-  const storageUpload = async (file: File, imageName: string) => {
-    const { data, error } = await supabase.storage
-      .from("images")
-      .upload(`${imageName}`, file);
-
-    if (data) {
-      // getImages();
-    } else {
-      console.log(error);
-    }
   };
 
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {

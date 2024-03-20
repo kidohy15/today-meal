@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppProps } from "next/app";
 import Footer from "@/components/Footer";
-import { SessionContextProvider, useUser } from "@supabase/auth-helpers-react";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
 
 interface Props {
@@ -27,13 +27,10 @@ const supabase = createClient(
 const NextProvider = ({ children }: Props) => {
   return (
     <Providers>
-      {/* <SessionProvider session={session}> */}
       <SessionProvider>
         <SessionContextProvider supabaseClient={supabase}>
-          {/* <Layout> */}
           {children}
           <ToastContainer />
-          {/* </Layout> */}
         </SessionContextProvider>
       </SessionProvider>
     </Providers>
@@ -42,11 +39,9 @@ const NextProvider = ({ children }: Props) => {
 
 export const NextLayout = ({ children }: Props) => {
   return (
-    // <div className="layout">
     <div className="layout">
       <Header />
       <div className="inner">
-        {/* <Carousel /> */}
         {children}
       </div>
       <Footer />

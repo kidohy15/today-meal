@@ -19,7 +19,6 @@ export async function GET(req: Request, res: Request) {
   const { searchParams } = new URL(req.url);
 
   const session = await getServerSession(authOptions);
-  const user = searchParams.get("user");
   const id = searchParams.get("id");
   const search = searchParams.get("searchKeyword");
   const page = searchParams.get("page") ?? "1";
@@ -36,7 +35,6 @@ export async function GET(req: Request, res: Request) {
       },
     });
     console.log("server data:", data);
-    // res.status(200).json(fetchData);
     return Response.json(data);
   } else {
     // 목록 가져오기

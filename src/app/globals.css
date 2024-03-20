@@ -53,7 +53,9 @@ table {
 	border-spacing: 0;
 }
 
-/* 커스텀 */
+/* 
+  공통 Nav CSS 
+*/
 .navbar {
   @apply relative hidden sm:flex w-[100vw] justify-center sm:items-center shadow-md shadow-slate-900/40 h-12 bg-white font-['Noto_Sans_KR'] font-[600] text-base
 }
@@ -109,7 +111,9 @@ table {
   }
 }
 
-/* 전체 레이아웃 */
+/* 
+  전체 레이아웃 
+*/
 
 .layout{
   @apply w-full h-full min-w-[375px]
@@ -120,88 +124,58 @@ table {
 } 
 
 
-/* sideNavbar */
+/* 
+  sideNavbar 
+*/
 
 #sideNavbar {
-  /* position: fixed;
-  width: 150px;
-  height: 310px;
-  left: 1%;
-  top: 50%;
-  margin-top: -189px;
-  font-size: 20px;
-  z-index: 50; */
   @apply fixed w-[150px] h-[310px] left-[1%] top-[50%] mt-[189px] text-[20px] z-50
 }
 
 #sideNavbar div {
-  /* padding: 10px;
-  position: absolute;
-  width: 178px;
-  height: 50px;
-  line-height: 20px;
-  left: 10px;
-  cursor: pointer;
-  overflow: hidden; */
   color: antiquewhite;
   @apply p-[10px] absolute w-[178px] h-[50px] leading-[20px] left-[10px] cursor-pointer overflow-hidden
 }
 #sideNavbar div:hover {
-  /* color:white; */
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
   @apply text-white
 }
 
 #sideNavbar #nav1 {
-  /* top: 100px; */
   @apply top-[100px]
 }
 
 #sideNavbar #nav2 {
-  /* top: 170px; */
   @apply top-[170px]
 }
 
 #sideNavbar #nav3 {
-  /* top: 240px; */
   @apply top-[240px]
 }
 
 #sideNavbar .on {
-  /* color:white; */
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
   @apply text-white
 }
 
 @media only screen and (max-width: 1024px) {
   #sideNavbar {
-    /* display: none; */
     @apply hidden
   }
 }
 
-/* swiper slide */
+/* 
+  swiper slide 
+*/
 .swiper {
-  /* width: 100%;
-  height: 100%; */
   @apply w-full h-full
 }
 
 .swiper-slide {
-  /* text-align: center;
-  font-size: 18px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
   @apply text-center text-[18px] bg-white flex justify-center items-center
 }
 
 .swiper-slide img {
-  /* display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; */
   @apply block w-full h-full object-cover
 }
 

@@ -2,13 +2,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import { useSession } from "next-auth/client";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import CommentList from "@/components/comments/CommentList";
-import Pagination from "@/components/Pagination";
 import RecipeList from "@/components/RecipeList";
 import Loader from "@/components/loader";
 import { Suspense } from "react";
@@ -37,8 +34,6 @@ const MyPage = () => {
 
   const {
     data: comments,
-    isLoading,
-    refetch,
     isError,
     isFetching,
   } = useQuery({
@@ -106,21 +101,6 @@ const MyPage = () => {
                     {session?.data?.user?.email}
                   </dd>
                 </div>
-
-                {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
-                  설정
-                </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <button
-                    type="button"
-                    className="underline hover:text-gray-500"
-                    onClick={() => signOut()}
-                  >
-                    로그아웃
-                  </button>
-                </dd>
-              </div> */}
               </dl>
             </div>
 
@@ -131,29 +111,6 @@ const MyPage = () => {
               </h3>
               <RecipeList searchKeyword="" userCheck={true} page={page} />
             </div>
-
-            {/* 내가 쓴 댓글 */}
-            {/* <div className="mt-8 px-4 sm:px-0"> */}
-            {/* <h3 className="text-base font-semibold leading-7 text-gray-900">
-              내가 쓴 댓글
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-              댓글 리스트
-            </p>
-            <CommentList
-              comments={comments}
-              refetch={refetch}
-              checkRecipe={true}
-            /> */}
-            {/* pagination */}
-            {/* {comments?.totalPage && (
-              <Pagination
-                totalPage={totalPage}
-                page={page}
-                pathname={`/users/mypage`}
-              />
-            )} */}
-            {/* </div> */}
           </div>
         )}
       </div>

@@ -4,7 +4,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import NextAuth from "next-auth";
 
 const prisma = new PrismaClient();
 
@@ -52,7 +51,7 @@ const authOptions: NextAuthOptions = {
 
   adapter: PrismaAdapter(prisma),
   providers: [
-    // ...add more providers here
+    // 구글 로그인
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
@@ -91,7 +90,7 @@ const authOptions: NextAuthOptions = {
         id: token.sub,
       },
     }),
-    
+
     jwt: async ({ user, token }) => {
       if (user) {
         token.sub = user.id;
@@ -102,4 +101,3 @@ const authOptions: NextAuthOptions = {
 } satisfies NextAuthOptions;
 
 export default authOptions;
-// export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)

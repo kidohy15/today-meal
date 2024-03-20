@@ -18,13 +18,14 @@ const RecipeNewPage = () => {
   const [errIngredients, setErrIngredients] = useState(false);
   const [imageFile, setImageFile] = useState<any>();
 
-  const { data, status } = useSession();
+  const { data } = useSession();
   const inputRef = useRef(null);
 
   const router = useRouter();
 
   useEffect(() => {
     writerId();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const writerId = () => {
@@ -117,7 +118,6 @@ const RecipeNewPage = () => {
                 htmlFor="writer"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                {/* 작성자 {data?.user?.email} */}
                 이미지
               </label>
               <div onClick={handleImageClick}>
@@ -153,7 +153,6 @@ const RecipeNewPage = () => {
                 htmlFor="writer"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                {/* 작성자 {data?.user?.email} */}
                 작성자 : {maskId}
               </label>
               <input
@@ -245,7 +244,6 @@ const RecipeNewPage = () => {
             </button>
           </div>
         </form>
-        {/* </div> */}
       </div>
     </div>
   );

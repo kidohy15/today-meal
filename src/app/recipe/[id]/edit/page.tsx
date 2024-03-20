@@ -11,7 +11,6 @@ import React, {
   ChangeEvent,
   KeyboardEvent,
 } from "react";
-import { useForm } from "react-hook-form";
 import { MdCancel } from "react-icons/md";
 import { toast } from "react-toastify";
 // @ts-ignore
@@ -27,7 +26,6 @@ const EditPage = ({ params }: EditPageProps) => {
   console.log("id", id);
 
   const [writer, setWriter] = useState<string>("");
-  const [maskId, setMaskId] = useState<string>("");
   const [recipeName, setRecipeName] = useState<string>("");
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [userInput, setUserInput] = useState<string>("");
@@ -44,9 +42,7 @@ const EditPage = ({ params }: EditPageProps) => {
 
   const {
     data: recipe,
-    isFetching,
     isSuccess,
-    isError,
   } = useQuery({
     queryKey: [`recipe-${id}`],
     queryFn: recipeData,
@@ -60,8 +56,6 @@ const EditPage = ({ params }: EditPageProps) => {
     setContents(recipe?.contents);
     let imageToBlobs = imageToBlob(recipe?.image);
     setImageFile(imageToBlobs);
-    console.log("recipe?.image", recipe?.image);
-    console.log("imageToBlobs", imageToBlobs);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, recipe]);
@@ -103,14 +97,12 @@ const EditPage = ({ params }: EditPageProps) => {
       // 이미지 파일을 배열에 추가
       imageToBlobs.push(file);
     });
-    console.log("imageToBlobs", imageToBlobs);
     return imageToBlobs;
   };
 
   // Form 내용 등록
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 이미지 파일을 formData에 추가
 
     try {
       const formData = new FormData();
@@ -132,7 +124,6 @@ const EditPage = ({ params }: EditPageProps) => {
       formData.append("contents", contents);
       formData.append("writer", writer);
       formData.append("id", id);
-      // formData.append("ingredients", JSON.stringify(ingredients));
 
       const res = await axios.put("/api/recipe", formData, {
         headers: {
@@ -140,16 +131,8 @@ const EditPage = ({ params }: EditPageProps) => {
         },
       });
 
-      console.log("res?.data?.data?.id", res?.data?.data?.id);
-      console.log("res?.data?.data?.id", res?.data?.data);
-      console.log("res?.data?.data?.id", res?.data);
-      console.log("res?.data?.data?.id", res);
-
       if (res.status === 200) {
         // 레시피 등록 성공
-        if (imageFile) {
-          // await storageUpload(imageFile, imageName);
-        }
         toast.success("레시피를 수정했습니다.");
         router.replace(`/recipe/${res?.data?.data?.id}`);
       } else {
@@ -188,7 +171,6 @@ const EditPage = ({ params }: EditPageProps) => {
     if (userInput) {
       setIngredients((prevInputs: string[]) => [...prevInputs, userInput]);
       setUserInput("");
-      console.log("ingredients", ingredients);
     }
   };
 
@@ -205,7 +187,6 @@ const EditPage = ({ params }: EditPageProps) => {
     );
     setImageFile(updatedImages);
   };
-  console.log("imageFile111", imageFile);
 
   return (
     <div className="min-h-[100vh] h-full pt-[112px]">
