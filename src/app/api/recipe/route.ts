@@ -72,7 +72,12 @@ export async function GET(req: Request, res: Request) {
 
     console.log("server 전체 목록 가져오기");
 
-    const count = await prisma.recipe.count();
+    const count = await prisma.recipe.count({
+      where: {
+        title: search ? { contains: search } : {},
+        userId: userCheck ? session?.user.id : {},
+      },
+    });
     console.log("count", count);
 
     const recipeData = await prisma.recipe.findMany({
@@ -212,7 +217,6 @@ export async function PUT(req: Request) {
 // 레시피 삭제
 export async function DELETE(req: Request) {
   try {
-
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
