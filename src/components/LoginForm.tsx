@@ -73,6 +73,7 @@ export default function LoginForm() {
                 {...register("email", { required: true })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => setEmail(e.target.value)}
+                autoComplete="username"
               />
 
               {errors?.writer?.type === "required" && (
@@ -95,6 +96,7 @@ export default function LoginForm() {
                 {...register("password", { required: true })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
               />
               {errors?.title?.type === "required" && (
                 <p className="text-xs text-red-500 pt-2">
