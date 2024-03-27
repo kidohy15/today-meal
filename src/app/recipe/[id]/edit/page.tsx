@@ -23,7 +23,6 @@ interface EditPageProps {
 const EditPage = ({ params }: EditPageProps) => {
   const router = useRouter();
   const id = params.id;
-  console.log("id", id);
 
   const [writer, setWriter] = useState<string>("");
   const [recipeName, setRecipeName] = useState<string>("");
@@ -40,10 +39,7 @@ const EditPage = ({ params }: EditPageProps) => {
     return data;
   };
 
-  const {
-    data: recipe,
-    isSuccess,
-  } = useQuery({
+  const { data: recipe, isSuccess } = useQuery({
     queryKey: [`recipe-${id}`],
     queryFn: recipeData,
     enabled: !!id,

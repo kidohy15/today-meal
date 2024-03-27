@@ -22,9 +22,7 @@ export default function Comments({ recipeId }: CommentProps) {
     const res = await axios.get(
       `/api/comments?recipeId=${recipeId}&page=${page}`
     );
-
     const result = res?.data;
-    console.log("comments", result);
 
     return result;
   };

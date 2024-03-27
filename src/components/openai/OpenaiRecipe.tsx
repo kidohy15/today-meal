@@ -62,8 +62,6 @@ export default function Openai() {
       { role: "assistant", content: chatCompletion.choices[0].message.content },
     ]);
 
-    console.log(chatCompletion.choices[0].message.content);
-
     setUserInput("");
     setIsLoading(false);
     setIsOpen(true);

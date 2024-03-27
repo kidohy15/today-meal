@@ -23,10 +23,6 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   const recipeData = async () => {
     const { data: data } = await axios.get(`/api/recipe?id=${id}`);
     writerId(data);
-
-    console.log("data", data);
-    console.log("dataimage", data.image);
-
     const imageName = await getImages(data.image);
 
     return { ...data, imagePath: imageName } as RecipeType;

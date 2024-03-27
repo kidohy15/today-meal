@@ -17,7 +17,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {}, [isOpen]);
-  console.log(isOpen);
 
   return (
     <div className="fixed z-50 mx-auto flex flex-col top-0 w-full">
@@ -78,31 +77,42 @@ const Navbar = () => {
             <Link
               href="/recipe/todayMeal"
               className="navbar__list__item--mobile"
+              onClick={() => setIsOpen(false)}
             >
               레시피 추천받기
             </Link>
-            <Link href="/recipe" className="navbar__list__item--mobile">
+            <Link
+              href="/recipe"
+              className="navbar__list__item--mobile"
+              onClick={() => setIsOpen(false)}
+            >
               레시피 목록
             </Link>
-            <Link href="/recipe/new" className="navbar__list__item--mobile">
+            <Link
+              href="/recipe/new"
+              className="navbar__list__item--mobile"
+              onClick={() => setIsOpen(false)}
+            >
               레시피 등록
             </Link>
             <Link
               href={"/users/mypage"}
               className={
                 menuOn === "item4"
-                  ? "navbar__list__item on"
-                  : "navbar__list__item"
+                  ? "navbar__list__item--mobile on"
+                  : "navbar__list__item--mobile"
               }
+              onClick={() => setIsOpen(false)}
             >
               마이 페이지
             </Link>
             {status === "authenticated" ? (
               <Link
                 href={""}
-                className="navbar__list__item"
+                className="navbar__list__item--mobile"
                 onClick={() => {
                   signOut({ callbackUrl: "http://127.0.0.1:3000/" });
+                  setIsOpen(false);
                 }}
               >
                 로그아웃
@@ -112,9 +122,10 @@ const Navbar = () => {
                 href={"/api/auth/signin"}
                 className={
                   menuOn === "item5"
-                    ? "navbar__list__item on"
-                    : "navbar__list__item"
+                    ? "navbar__list__item--mobile on"
+                    : "navbar__list__item--mobile"
                 }
+                onClick={() => setIsOpen(false)}
               >
                 로그인
               </Link>
