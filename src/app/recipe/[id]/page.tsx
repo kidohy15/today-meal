@@ -52,7 +52,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
         // 삭제 성공하면 메인 페이지로 이동
         if (result.status === 200) {
           toast.success("레시피를 삭제했습니다.");
-          router.replace("/");
+          router.replace("/recipe");
         } else {
           toast.error("다시 시도해주세요.");
         }

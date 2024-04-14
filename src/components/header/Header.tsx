@@ -1,8 +1,9 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import SubNavbar from "./SubNavbar";
+import { useLocation } from 'react-router-dom';
 import { BiMenu } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -11,12 +12,27 @@ const Navbar = () => {
   const router = useRouter();
   const [menuOn, setMenuOn] = useState("");
   const { status } = useSession();
+  const urlPathname = window.location.pathname
+
+  useEffect(() => {
+
+  }, [isOpen]);
+
+  // useLayoutEffect(() => {
+  //   const urlPathname = location.pathname;
+  //   console.log(urlPathname);
+  //   if (urlPathname === "/recipe/todayMeal") {
+  //     setMenuOn("item1")
+  //   } else if (urlPathname === "/recipe") {
+  //     setMenuOn("item2")
+  //   } else {
+  //     setMenuOn("");
+  //   }
+  // },[menuOn])
 
   const handleItemClick = (item: string): void => {
     setMenuOn(item);
   };
-
-  useEffect(() => {}, [isOpen]);
 
   return (
     <div className="fixed z-50 mx-auto flex flex-col top-0 w-full">

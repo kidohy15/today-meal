@@ -92,7 +92,8 @@ const RecipeNewPage = () => {
       if (res.status === 200) {
         // 레시피 등록 성공
         toast.success("레시피를 등록했습니다.");
-        router.replace(`/recipe/${res?.data?.data?.id}`);
+        // router.replace(`/recipe/${res?.data?.data?.id}`);
+        router.replace(`/recipe`);
       } else {
         // 레시피 등록 실패
         toast.error("다시 시도해주세요.");
