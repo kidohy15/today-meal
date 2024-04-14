@@ -22,7 +22,7 @@ function Popup() {
           <div className="w-full absolute top-[30%] left-[50%] ml-[-50%] font-bold text-white">
             <h2 className="text-center text-4xl leading-[300%]">알림</h2>
             <p className="text-center text-lg leading-5">
-              현재 로그인/회원가입 시스템 이슈가 발생하여 조치 중에 있습니다.{" "}
+              현재 로그인/회원가입 시스템 점검 중에 있습니다.{" "}
               <br />
               서비스를 이용하시는 분들께 양해 말씀 전하며 잠시{" "}
               <span className="text-red-400">임시 아이디를 사용</span>
