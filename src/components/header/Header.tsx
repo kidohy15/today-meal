@@ -12,7 +12,7 @@ const Navbar = () => {
   const router = useRouter();
   const [menuOn, setMenuOn] = useState("");
   const { status } = useSession();
-  const urlPathname = window.location.pathname
+  // const urlPathname = window.location.pathname
 
   useEffect(() => {
 
