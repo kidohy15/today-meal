@@ -3,32 +3,28 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import SubNavbar from "./SubNavbar";
-import { useLocation } from 'react-router-dom';
-import { BiMenu } from "react-icons/bi";
-import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const [menuOn, setMenuOn] = useState("");
   const { status } = useSession();
-  // const urlPathname = window.location.pathname
 
   useEffect(() => {
 
-  }, [isOpen]);
+  }, [isOpen, menuOn]);
 
-  // useLayoutEffect(() => {
-  //   const urlPathname = location.pathname;
-  //   console.log(urlPathname);
-  //   if (urlPathname === "/recipe/todayMeal") {
-  //     setMenuOn("item1")
-  //   } else if (urlPathname === "/recipe") {
-  //     setMenuOn("item2")
-  //   } else {
-  //     setMenuOn("");
-  //   }
-  // },[menuOn])
+  useLayoutEffect(() => {
+    const urlPathname = window.location.pathname;
+    console.log(urlPathname);
+    if (urlPathname === "/recipe/todayMeal") {
+      setMenuOn("item1")
+    } else if (urlPathname === "/recipe") {
+      setMenuOn("item2")
+    } else if (urlPathname === "/recipe/new"){
+      setMenuOn("item3");
+    }
+  },[])
 
   const handleItemClick = (item: string): void => {
     setMenuOn(item);
