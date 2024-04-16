@@ -123,7 +123,8 @@ const Navbar = () => {
                 href={""}
                 className="navbar__list__item--mobile"
                 onClick={() => {
-                  signOut({ callbackUrl: "http://127.0.0.1:3000/" });
+                  // signOut({ callbackUrl: "http://127.0.0.1:3000/" });
+                  signOut({ callbackUrl: "/" });
                   setIsOpen(false);
                 }}
               >
@@ -131,8 +132,8 @@ const Navbar = () => {
               </Link>
             ) : (
               <Link
-                // href={"/api/auth/signin"}
-                href={"/users/login"}
+                href={"/api/auth/signIn"}
+                // href={"/users/login"}
                 className={
                   menuOn === "item5"
                     ? "navbar__list__item--mobile on"
