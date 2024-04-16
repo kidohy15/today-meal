@@ -27,7 +27,7 @@ export default function Signupform() {
         // 회원가입 성공
         setIsLoading(false);
         toast.success("회원가입에 성공했습니다.");
-        router.replace("/login");
+        router.replace("/users/login");
       } else {
         // 회원가입 실패
         setIsLoading(false);
