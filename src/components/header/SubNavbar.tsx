@@ -52,14 +52,16 @@ export default function SubNavbar({
             href={""}
             className="navbar__list__item"
             onClick={() => {
-              signOut({ callbackUrl: "http://localhost:3000/" });
+              // signOut({ callbackUrl: "http://localhost:3000/" });
+              signOut({ callbackUrl: "/" });
             }}
           >
             로그아웃
           </Link>
         ) : (
           <Link
-            href={"/api/auth/signin"}
+            // href={"/api/auth/signin"}
+            href={"/users/login"}
             className={
               menuOn === "item5"
                 ? "navbar__list__item on"
