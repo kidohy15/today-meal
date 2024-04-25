@@ -18,7 +18,9 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col justify-center px-6 lg:px-8 h-[100vh]">
-      <Popup />
+      {/* 공지용 임시 팝업 */}
+      {/* <Popup />  */}
+
       <LoginForm />
     </div>
   );
