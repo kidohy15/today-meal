@@ -36,6 +36,13 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {}, []);
 
+  // ==============================
+  // 목록 이동 (로직 테스트, 삭제 하기)
+  const handleList = () => {
+    router.push(`/recipe`);
+  };
+  // ==============================
+
   // 수정
   const handleEdit = () => {
     router.push(`/recipe/${id}/edit`);
@@ -138,6 +145,22 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           </div>
           {session?.user.email === recipe?.writer && (
             <div className="flex justify-end my-2 gap-2">
+              {/* =========================== */}
+              {/* 로직 테스트 삭제 */}
+              <button
+                className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+                onClick={handleList}
+              >
+                목록
+              </button>
+              <button
+                onClick={() => {
+                  router.back();
+                }}
+              >
+                뒤로가기
+              </button>
+              {/* =========================== */}
               <button
                 className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
                 onClick={handleEdit}
