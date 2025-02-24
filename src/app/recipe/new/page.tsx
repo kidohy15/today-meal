@@ -300,7 +300,7 @@ const RecipeNewPage = () => {
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:cursor-pointer focus:shadow-outline"
                 >
-                  버튼
+                  작성하기
                 </button>
               </div>
             </form>

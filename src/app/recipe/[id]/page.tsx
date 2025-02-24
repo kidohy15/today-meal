@@ -153,22 +153,23 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
               >
                 목록
               </button>
-              <button
+              {/* <button
+                className="block bottom-2 right-2 px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none"
                 onClick={() => {
                   router.back();
                 }}
               >
                 뒤로가기
-              </button>
+              </button> */}
               {/* =========================== */}
               <button
-                className="block bottom-2 right-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+                className="block bottom-2 right-2 px-4 py-2 bg-zinc-500 text-white rounded-md hover:bg-zinc-700 focus:outline-none"
                 onClick={handleEdit}
               >
                 수정
               </button>
               <button
-                className="block bottom-2 right-2 px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none"
+                className="block bottom-2 right-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-slate-600 focus:outline-none"
                 onClick={handleDelete}
               >
                 삭제
