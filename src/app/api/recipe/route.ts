@@ -86,8 +86,8 @@ export async function GET(req: Request, res: Request) {
         title: search ? { contains: search } : {},
         userId: userCheck ? session?.user.id : {},
       },
-      take: 28,
-      skip: skipPage * 28,
+      take: 20,
+      skip: skipPage * 20,
       include: {
         user: true,
       },
@@ -97,7 +97,7 @@ export async function GET(req: Request, res: Request) {
       data: recipeData,
       page: parseInt(page),
       totalCount: count,
-      totalPage: Math.ceil(count / 28),
+      totalPage: Math.ceil(count / 20),
     });
   }
 }
