@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,17 +8,18 @@ import Pagination from "./Pagination";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "./loader";
 import { RecipeType } from "@/interface";
+import Image from "next/image";
 
 interface RecipeListProps {
   searchKeyword: string;
   userCheck?: boolean | null;
-  page: string
+  page: string;
 }
 
 export default function RecipeList({
   searchKeyword,
   userCheck,
-  page
+  page,
 }: RecipeListProps) {
   const router = useRouter();
 
@@ -125,10 +126,18 @@ export default function RecipeList({
                 <div className="flex justify-center">
                   {recipe?.image && recipe.image.length !== 0 ? (
                     <div className="flex flex-col justify-center items-center md:w-[200px] h-[200px] overflow-hidden">
-                      <img
+                      {/* <img
                         src={`${recipe.image[0]}`}
                         className="w-[100%] h-[100%] object-cover bg-gray-200 rounded-md flex text-gray-400"
                         alt="레시피 이미지"
+                      /> */}
+                      <Image
+                        src={recipe.image[0]}
+                        width={200}
+                        height={200}
+                        className="object-cover bg-gray-200 rounded-md"
+                        alt="레시피 이미지"
+                        priority // 초기 로딩 속도 향상
                       />
                     </div>
                   ) : (
