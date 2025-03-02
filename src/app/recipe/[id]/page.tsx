@@ -141,7 +141,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="mb-8 py-2">
             <span className="text-lg font-semibold">과정</span>
-            <div className="mt-2">{recipe?.contents}</div>
+            <div className="mt-2 whitespace-pre-line">{recipe?.contents}</div>
           </div>
           {session?.user.email === recipe?.writer && (
             <div className="flex justify-end my-2 gap-2">
