@@ -67,7 +67,14 @@ const authOptions: NextAuthOptions = {
       // @ts-ignore
       async authorize(credentials: any) {
         try {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error("이메일과 비밀번호를 입력해주세요.");
+          }
           const user = await login(credentials);
+          if (!user) {
+            throw new Error("가입되지 않은 이메일입니다.");
+          }
+
           return user;
         } catch (error) {
           console.log("Error: ", error);
