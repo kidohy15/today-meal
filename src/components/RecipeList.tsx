@@ -138,7 +138,7 @@ export default function RecipeList({
                         className="object-cover bg-gray-200 rounded-md"
                         alt="레시피 이미지"
                         priority // 초기 로딩 속도 향상
-                        // unoptimized
+                        unoptimized
                       />
                     </div>
                   ) : (
