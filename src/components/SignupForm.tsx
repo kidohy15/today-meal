@@ -2,164 +2,104 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { AiOutlineUserAdd } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-export default function Signupform() {
+export default function SignupForm() {
   const [error, setError] = useState("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const router = useRouter();
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      // 서버 회원가입 api
-      setIsLoading(true);
-      const result = await axios.post("/api/auth/users", {
-        email: email,
-        password: password,
-      });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  const onSubmit = async () => {
+    if (password !== passwordConfirm) {
+      setError("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    try {
+      const result = await axios.post("/api/auth/users", { email, password });
       if (result.status === 200) {
-        // 회원가입 성공
-        setIsLoading(false);
         toast.success("회원가입에 성공했습니다.");
         router.replace("/users/login");
       } else {
-        // 회원가입 실패
-        setIsLoading(false);
-        toast.error("다시 시도해주세요.");
+        toast.error("회원가입 실패. 다시 시도해주세요.");
       }
     } catch (error) {
-      console.error("error", error);
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("에러가 발생했습니다.");
-      }
-    }
-  };
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { name, value },
-    } = e;
-
-    if (name === "email") {
-      setEmail(value);
-      // 정규식을 email 유효성 체크
-      const validRegex =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-      if (!value?.match(validRegex)) {
-        setError("이메일 형식이 올바르지 않습니다.");
-      } else {
-        setError("");
-      }
-    }
-    if (name === "password") {
-      setPassword(value);
-
-      if (value?.length < 8) {
-        setError("비밀번호는 8자리 이상으로 입력해주세요");
-      } else if (passwordConfirm?.length > 0 && value !== passwordConfirm) {
-        setError("비밀번호와 비밀번호 확인값이 다릅니다. 다시 확인해주세요.");
-      } else {
-        setError("");
-      }
-    }
-    if (name === "password_confirm") {
-      setPasswordConfirm(value);
-
-      if (value?.length < 8) {
-        setError("비밀번호는 8자리 이상으로 입력해주세요");
-      } else if (value !== password) {
-        setError("비밀번호와 비밀번호 확인값이 다릅니다. 다시 확인해주세요.");
-      } else {
-        setError("");
-      }
+      toast.error("에러가 발생했습니다.");
     }
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className=" rounded px-0 py-2 my-4 w-full h-[680px] mx-auto bottom-0"
-    >
-      <div className="bg-slate-200 p-16 mx-auto w-full h-full max-w-xl">
-        <h1 className="mt-30 text-orange-400 text-center text-3xl font-semibold">
+    <div className="flex min-h-screen items-center justify-center bg-[#f9f5f0] px-4">
+      <form
+        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h1 className="text-center text-4xl font-bold text-orange-500">
           TodayMeal
         </h1>
-        <div className="text-center mt-4 text-3xl font-bold text-gray-600">
-          회원가입
-        </div>
-        <div className="mt-10 mx-auto w-full max-w-lg">
-          <div className="block text-gray-700 text-sm font-bold mb-5">
-            <label htmlFor="email">이메일</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={onChange}
-              autoComplete="username"
-            />
-          </div>
-          <div className="block text-gray-700 text-sm font-bold mb-5">
-            <label htmlFor="password">비밀번호</label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="password"
-              name="password"
-              id="password"
-              required
-              onChange={onChange}
-              autoComplete="current-password"
-            />
-          </div>
-          <div className="block text-gray-700 text-sm font-bold mb-5">
-            <label htmlFor="password_confirm">비밀번호 확인</label>
-            <input
-              type="password"
-              name="password_confirm"
-              id="password_confirm"
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={onChange}
-              autoComplete="current-password"
-            />
-          </div>
-          {error && error?.length > 0 && (
-            <div className="p-2 mb-10 text-red-600 text-center">
-              <div>{error}</div>
-            </div>
-          )}
-          <div className="text-center text-sm text-gray-600 mt-10">
-            <span className="mr-2">계정이 이미 있으신가요?</span>
-            <Link
-              href="/users/login"
-              className="text-blue-500 underline font-bold"
-            >
-              로그인하기
-            </Link>
-          </div>
+        <p className="text-center text-gray-600 mt-2">회원가입 후 이용해보세요</p>
 
-          <div className="mt-5 mx-auto w-full max-w-lg">
-            <div className="flex flex-col gap-3">
-              <button
-                type="submit"
-                className="text-white flex gap-2 bg-[#e4a668] hover:bg-[#bc854a]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center"
-              >
-                TodayMeal 회원가입
-              </button>
-            </div>
-          </div>
+        <div className="mt-6">
+          <label className="block text-gray-600 font-semibold mb-1">이메일</label>
+          <input
+            type="email"
+            {...register("email", { required: true })}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="username"
+          />
+          {errors.email && <p className="text-red-500 text-sm mt-1">이메일을 입력해주세요.</p>}
         </div>
-      </div>
-    </form>
+
+        <div className="mt-4">
+          <label className="block text-gray-600 font-semibold mb-1">비밀번호</label>
+          <input
+            type="password"
+            {...register("password", { required: true })}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+          />
+          {errors.password && <p className="text-red-500 text-sm mt-1">비밀번호를 입력해주세요.</p>}
+        </div>
+
+        <div className="mt-4">
+          <label className="block text-gray-600 font-semibold mb-1">비밀번호 확인</label>
+          <input
+            type="password"
+            {...register("passwordConfirm", { required: true })}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            autoComplete="new-password"
+          />
+          {errors.passwordConfirm && <p className="text-red-500 text-sm mt-1">비밀번호 확인을 입력해주세요.</p>}
+          {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+        </div>
+
+        <button
+          type="submit"
+          className="mt-6 w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all"
+        >
+          <AiOutlineUserAdd className="w-5 h-5" />
+          TodayMeal 회원가입
+        </button>
+
+        <div className="text-center mt-6 text-gray-600 text-sm">
+          이미 계정이 있으신가요?{' '}
+          <Link href="/users/login" className="text-orange-500 font-semibold">
+            로그인
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }
