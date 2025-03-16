@@ -6,10 +6,10 @@ function RecipeImage({ src }: { src: string }) {
 
   return (
     <div className="relative w-[200px] h-[200px] overflow-hidden rounded-md">
-      {/* 스켈레톤 UI */}
+      {/* 스켈레톤 */}
       {isLoading && (
         <div className="absolute inset-0 animate-pulse bg-gray-200 flex items-center justify-center">
-          <span className="text-gray-400">로딩 중...</span>
+          <span className="text-gray-400">이미지</span>
         </div>
       )}
 
@@ -23,7 +23,8 @@ function RecipeImage({ src }: { src: string }) {
         }`}
         alt="레시피 이미지"
         unoptimized={false}
-        loading="lazy"
+        // loading="lazy"
+        priority
         onLoad={() => setIsLoading(false)}
       />
     </div>
