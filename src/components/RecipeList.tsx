@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "./loader";
 import { RecipeType } from "@/interface";
 import Image from "next/image";
+import Skeleton from "./Skeleton";
+import RecipeImage from "./RecipeImage";
 
 interface RecipeListProps {
   searchKeyword: string;
@@ -45,8 +47,9 @@ export default function RecipeList({
         }
       );
       const result = res?.data;
-
+      
       return result;
+
     } else {
       const res = await axios.get(`/api/recipe?page=${page}`, {
         params: {
@@ -89,6 +92,7 @@ export default function RecipeList({
     return maskedName;
   };
 
+  // 에러 발생 시
   if (isError) {
     return (
       <div className="w-full h-screen mx-auto pt-[10%] text-red-500 text-center font-semibold">
@@ -97,16 +101,25 @@ export default function RecipeList({
     );
   }
 
+  // 기존 로더
+  // if (isFetching || isLoading) {
+  //   return <Loader className="my-[20%]" />;
+  // }
+
+  // 스켈레톤
   if (isFetching || isLoading) {
-    return <Loader className="my-[20%]" />;
+    return <Skeleton />;
   }
 
-  if (recipes?.data?.length === 0)
+  // 데이터 없을 때
+  if (recipes?.data?.length === 0) {
     return (
       <div className="my-[20%] p-4 border border-e-gray-200 rounded-md text-sm text-center text-gray-400">
         등록된 레시피가 없습니다.
       </div>
     );
+  }
+
   return (
     <>
       <div className="flex justify-center">
@@ -131,15 +144,18 @@ export default function RecipeList({
                         className="w-[100%] h-[100%] object-cover bg-gray-200 rounded-md flex text-gray-400"
                         alt="레시피 이미지"
                       /> */}
-                      <Image
+
+                      <RecipeImage src={recipe.image[0]} />
+                      {/* <Image
                         src={recipe.image[0]}
                         width={200}
                         height={200}
                         className="object-cover bg-gray-200 rounded-md"
                         alt="레시피 이미지"
-                        priority // 초기 로딩 속도 향상
-                        // unoptimized
-                      />
+                        loading="lazy"
+                        // priority // 초기 로딩 속도 향상
+                        unoptimized={false}
+                      /> */}
                     </div>
                   ) : (
                     <div className="w-[200px] h-[200px] bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
