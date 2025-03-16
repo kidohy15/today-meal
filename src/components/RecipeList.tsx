@@ -71,6 +71,7 @@ export default function RecipeList({
     queryKey: [`recipes-${pathname}-${page}`, searchKeyword],
     queryFn: recipesData,
     initialData, // SSR에서 받은 데이터를 초기값으로 설정
+    staleTime: 1000 * 60 * 5, // 5분 동안 캐싱하여 데이터 유지
   }); // 데이터는 data 속성에 있다
 
   // 작성자 정보를 마스킹 처리
