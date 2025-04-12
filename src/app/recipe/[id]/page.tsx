@@ -113,7 +113,9 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             </div>
           </div>
 
-          <span className="text-lg font-semibold">이미지</span>
+          <hr />
+
+          <span className="text-lg font-semibold pt-20">이미지</span>
           <div className="flex items-center gap-7">
             {recipe?.image?.map((image: string, i: any) => (
               <div
@@ -177,6 +179,9 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             </div>
           )}
         </div>
+
+        <hr />
+
         <div className="my-10 p-10">
           <h3 className="py-2 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
             댓글
