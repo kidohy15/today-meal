@@ -94,28 +94,28 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
   return (
     <div className="w-full h-full min-h-[100vh] pt-[112px]">
       <div className="shadow-lg md:max-w-6xl mx-auto h-full min-h-[100vh] px-8 py-12 bg-white border-gray-400 border-2">
-        <h2 className="block text-2xl py-3 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
-          {recipe?.title}
-        </h2>
-
-        <div className="flex flex-col sm:p-10">
+        <div className="block py-5 px-1 mb-5 font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-orange-600">
+          <h2 className="text-2xl">{recipe?.title}</h2>
+          <br />
           <div className="flex justify-between">
-            <div className="sm:my-8">
-              <span className="text-lg font-semibold">작성자</span>{" "}
-              <span>{maskId}</span>
+            <div className="">
+              <p className="text-lg font-semibold">
+                작성자 : <span className="font-normal">{maskId}</span>
+              </p>{" "}
             </div>
-            <div className="sm:my-8 text-xm font-medium leading-5 text-gray-500">
-              <span>생성일</span>
-              <br />
-              <span>
-                {new Date(recipe?.createdAt as Date)?.toLocaleDateString()}
-              </span>
+            <div className="text-gray-500">
+              <p className="text-xm font-medium">
+                생성일 :{" "}
+                <span>
+                  {new Date(recipe?.createdAt as Date)?.toLocaleDateString()}
+                </span>{" "}
+              </p>
             </div>
           </div>
+        </div>
 
-          <hr />
-
-          <span className="text-lg font-semibold pt-20">이미지</span>
+        <div className="flex flex-col sm:p-10">
+          <span className="text-lg font-semibold">이미지</span>
           <div className="flex items-center gap-7">
             {recipe?.image?.map((image: string, i: any) => (
               <div
