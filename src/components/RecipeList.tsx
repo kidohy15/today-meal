@@ -6,9 +6,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Pagination from "./Pagination";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "./loader";
 import { RecipeType } from "@/interface";
-import Image from "next/image";
 import Skeleton from "./Skeleton";
 import RecipeImage from "./RecipeImage";
 
@@ -23,7 +21,7 @@ export default function RecipeList({
   searchKeyword,
   userCheck,
   page,
-  initialData,
+  // initialData,
 }: RecipeListProps) {
   const router = useRouter();
 
@@ -70,7 +68,7 @@ export default function RecipeList({
   } = useQuery({
     queryKey: [`recipes-${pathname}-${page}`, searchKeyword],
     queryFn: recipesData,
-    initialData, // SSR에서 받은 데이터를 초기값으로 설정
+    // initialData, // SSR에서 받은 데이터를 초기값으로 설정
     staleTime: 1000 * 60 * 5, // 5분 동안 캐싱하여 데이터 유지
   }); // 데이터는 data 속성에 있다
 
@@ -102,11 +100,6 @@ export default function RecipeList({
       </div>
     );
   }
-
-  // 기존 로더
-  // if (isFetching || isLoading) {
-  //   return <Loader className="my-[20%]" />;
-  // }
 
   // 스켈레톤
   if (isFetching || isLoading) {
@@ -141,11 +134,6 @@ export default function RecipeList({
                 <div className="flex justify-center">
                   {recipe?.image && recipe.image.length !== 0 ? (
                     <div className="flex flex-col justify-center items-center md:w-[200px] h-[200px] overflow-hidden">
-                      {/* <img
-                        src={`${recipe.image[0]}`}
-                        className="w-[100%] h-[100%] object-cover bg-gray-200 rounded-md flex text-gray-400"
-                        alt="레시피 이미지"
-                      /> */}
 
                       <RecipeImage src={recipe.image[0]} />
                       {/* <Image
@@ -208,19 +196,19 @@ export default function RecipeList({
   );
 }
 
-export async function getServerSideProps(context: any) {
-  const { page = "1", searchKeyword = "", userCheck = false } = context.query;
+// export async function getServerSideProps(context: any) {
+//   const { page = "1", searchKeyword = "", userCheck = false } = context.query;
 
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipe`, {
-    params: { page, searchKeyword, userCheck },
-  });
+//   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipe`, {
+//     params: { page, searchKeyword, userCheck },
+//   });
 
-  return {
-    props: {
-      initialData: res.data, // 서버에서 가져온 데이터 전달
-      // page,
-      // searchKeyword,
-      // userCheck,
-    },
-  };
-}
+//   return {
+//     props: {
+//       initialData: res.data, // 서버에서 가져온 데이터 전달
+//       // page,
+//       // searchKeyword,
+//       // userCheck,
+//     },
+//   };
+// }
