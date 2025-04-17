@@ -115,7 +115,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
         </div>
 
         <div className="flex flex-col sm:p-10">
-          <span className="text-lg font-semibold">이미지</span>
+          <span className="text-xl font-semibold">이미지</span>
           <div className="flex items-center gap-7">
             {recipe?.image?.map((image: string, i: any) => (
               <div
@@ -132,7 +132,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
           </div>
 
           <div className="my-8">
-            <span className="text-lg font-semibold">재료</span>
+            <span className="text-xl font-semibold">재료</span>
             <div>
               {recipe?.ingredients?.map((ingredient: string, i: any) => (
                 <span className="leading-7" key={i}>
@@ -142,7 +142,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
             </div>
           </div>
           <div className="mb-8 py-2">
-            <span className="text-lg font-semibold">과정</span>
+            <span className="text-xl font-semibold">과정</span>
             <div className="mt-2 whitespace-pre-line">{recipe?.contents}</div>
           </div>
           {session?.user.email === recipe?.writer && (
