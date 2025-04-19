@@ -183,7 +183,7 @@ const RecipeDetailPage = ({ params }: { params: { id: string } }) => {
         <hr />
 
         <div className="my-10 p-10">
-          <h3 className="py-2 text-base font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
+          <h3 className="py-2 text-xl font-semibold leading-7 text-gray-900 border-solid border-b-2 border-b-gray-100">
             댓글
           </h3>
           {/* 댓글 */}
